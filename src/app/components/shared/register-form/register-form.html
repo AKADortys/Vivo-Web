@@ -1,0 +1,160 @@
+<form
+  class="container mt-4 p-2 border rounded shadow-lg"
+  style="max-width: 500px"
+  (ngSubmit)="onSubmit()"
+  [formGroup]="userForm"
+  novalidate
+>
+  <h4 class="text-center">Inscription</h4>
+  <!-- prénom -->
+  <div class="mb-3">
+    <label class="form-label">Prénom</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-person"></i></span>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="Votre prénom"
+        formControlName="name"
+        [ngClass]="{
+            'is-invalid':
+              userForm.get('name')?.invalid && userForm.get('name')?.touched,
+            'is-valid':
+              userForm.get('name')?.valid && userForm.get('name')?.touched,
+          }"
+      />
+      <ngb-alert type="danger" [dismissible]="false" class="invalid-feedback">
+        Le prénom est requis (min. 3 caractères).
+      </ngb-alert>
+    </div>
+  </div>
+
+  <!-- NOM -->
+  <div class="mb-3">
+    <label class="form-label">Nom</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Votre nom de famille"
+        formControlName="lastName"
+        [ngClass]="{
+            'is-invalid':
+              userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched,
+            'is-valid':
+              userForm.get('lastName')?.valid && userForm.get('lastName')?.touched,
+          }"
+      />
+      <ngb-alert type="danger" [dismissible]="false" class="invalid-feedback"
+        >Le Nom est requis (min. 3 caractères).</ngb-alert
+      >
+    </div>
+  </div>
+
+  <!-- EMAIL -->
+  <div class="mb-3">
+    <label class="form-label">Email</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="exemple@mail.com"
+        formControlName="mail"
+        [ngClass]="{
+            'is-invalid':
+              userForm.get('mail')?.invalid && userForm.get('mail')?.touched,
+            'is-valid':
+              userForm.get('mail')?.valid && userForm.get('mail')?.touched,
+          }"
+      />
+      <ngb-alert type="danger" [dismissible]="false" class="invalid-feedback"
+        >Adresse email invalide.</ngb-alert
+      >
+    </div>
+  </div>
+
+  <!-- PHONE -->
+  <div class="mb-3">
+    <label class="form-label">Téléphone</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="0412345678"
+        formControlName="phone"
+        [ngClass]="{
+            'is-invalid':
+              userForm.get('phone')?.invalid && userForm.get('phone')?.touched,
+            'is-valid':
+              userForm.get('phone')?.valid && userForm.get('phone')?.touched,
+          }"
+      />
+      <ngb-alert type="danger" [dismissible]="false" class="invalid-feedback"
+        >Numéro de téléphone invalide.</ngb-alert
+      >
+    </div>
+  </div>
+
+  <!-- PASSWORD -->
+  <div class="mb-3">
+    <label class="form-label">Mot de passe</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-lock"></i></span>
+      <input
+        type="password"
+        class="form-control"
+        placeholder="8 caractères, 1 majuscule, 1 minuscule et 1 chiffre"
+        formControlName="password"
+        [ngClass]="{
+            'is-invalid':
+              userForm.get('password')?.invalid && userForm.get('password')?.touched,
+            'is-valid':
+              userForm.get('password')?.valid && userForm.get('password')?.touched,
+          }"
+      />
+      <ngb-alert type="danger" [dismissible]="false" class="invalid-feedback">
+        Le mot de passe doit contenir 8 caractères, dont 1 majuscule et 1
+        chiffre.
+      </ngb-alert>
+    </div>
+  </div>
+
+  <!-- CONFIRM PASSWORD -->
+  <div class="mb-3">
+    <label class="form-label">Confirmez votre mot de passe</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+      <input
+        type="password"
+        class="form-control"
+        placeholder="8 caractères, 1 majuscule, 1 minuscule et 1 chiffre"
+        formControlName="cPassword"
+        [ngClass]="{
+            'is-invalid':
+              userForm.get('cPassword')?.invalid && userForm.get('cPassword')?.touched,
+            'is-valid':
+              userForm.get('cPassword')?.valid && userForm.get('cPassword')?.touched,
+          }"
+      />
+      <ngb-alert type="danger" [dismissible]="false" class="invalid-feedback">
+        La confirmation doit respecter le même format que le mot de passe.
+      </ngb-alert>
+    </div>
+  </div>
+
+  <!-- ERROR MESSAGE -->
+  <div class="mb-3">
+    <ngb-alert *ngIf="errorMessage" type="danger" [dismissible]="true">
+      {{ errorMessage }}
+    </ngb-alert>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="d-flex justify-content-center gap-4">
+    <button class="btn btn-success" type="submit">S'inscrire</button>
+    <button class="btn btn-secondary" type="reset">Réinitialiser</button>
+  </div>
+</form>

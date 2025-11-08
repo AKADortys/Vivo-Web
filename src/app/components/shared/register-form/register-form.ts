@@ -9,7 +9,7 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { NewUser, ResponseUser } from '../../../models/user';
+import { NewUser, ResponseUser } from '../../../interfaces/user';
 import { UserService } from '../../../services/user';
 import { CommonModule } from '@angular/common';
 @Component({

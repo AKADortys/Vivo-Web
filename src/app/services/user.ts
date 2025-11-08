@@ -10,7 +10,7 @@ import {
   PaginatedUsers,
   ResponseUser,
   ResponseUsers,
-} from '../models/user';
+} from '../interfaces/user';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

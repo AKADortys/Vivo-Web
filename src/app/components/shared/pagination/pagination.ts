@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-pagination',
   imports: [CommonModule, FormsModule],
-  standalone: true,
   templateUrl: './pagination.html',
   styleUrl: './pagination.scss',
 })

@@ -1,21 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RegisterForm } from './components/shared/register-form/register-form';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
-import { LoginForm } from './components/shared/login-form/login-form';
 import { UsersList } from './components/shared/users-list/users-list';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    RegisterForm,
-    NgbModule,
-    CommonModule,
-    LoginForm,
-    UsersList,
-  ],
+  standalone: true,
+  imports: [RouterOutlet, NgbModule, UsersList],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

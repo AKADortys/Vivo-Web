@@ -16,9 +16,15 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUsers(page = 1, limit = 10): Observable<ResponseUsers> {
+  getUsers(
+    page = 1,
+    limit = 10,
+    search: string = ''
+  ): Observable<ResponseUsers> {
     return this.http
-      .get<ResponseUsers>(`${this.baseUrl}?page=${page}&limit=${limit}`)
+      .get<ResponseUsers>(
+        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`
+      )
       .pipe(catchError(this.handleError));
   }
 
@@ -26,7 +32,7 @@ export class UserService {
     return this.http
       .get<ResponseUser>(`${this.baseUrl}/${id}`)
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   createUser(user: Partial<NewUser>): Observable<ResponseUser> {
     return this.http

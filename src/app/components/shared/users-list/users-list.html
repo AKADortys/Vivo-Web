@@ -1,0 +1,25 @@
+<div class="mt-4">
+  <app-pagination
+    [page]="currentPage"
+    [totalPages]="totalPages"
+    [limit]="pageSize"
+    [search]="searchText"
+    [total]="totalItems"
+    (changePage)="onPageChange($event)"
+  ></app-pagination>
+  @if (isLoading) {
+  <div class="d-flex justify-content-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  } @else {
+  <div
+    class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-2 row-cols-xl-3 row-cols-xxl-4 g-0 mt-4"
+  >
+    @for (user of users; track user._id) {
+    <app-user-card [user]="user" class="col"></app-user-card>
+    }
+  </div>
+  }
+</div>

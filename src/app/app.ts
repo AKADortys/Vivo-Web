@@ -4,7 +4,7 @@ import { RegisterForm } from './components/shared/register-form/register-form';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { LoginForm } from './components/shared/login-form/login-form';
-import { UserCard } from './components/shared/user-card/user-card';
+import { UsersList } from './components/shared/users-list/users-list';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,7 @@ import { UserCard } from './components/shared/user-card/user-card';
     NgbModule,
     CommonModule,
     LoginForm,
-    UserCard,
+    UsersList,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

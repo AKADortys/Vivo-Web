@@ -1,1 +1,63 @@
-<p>user-card works!</p>
+<div *ngIf="user !== null" class="card mb-4 shadow-sm">
+  <div class="card-header bg-primary text-white">
+    <h5
+      class="card-title mb-0 d-flex justify-content-between align-items-center"
+    >
+      <span>
+        <i class="bi bi-person-circle me-2"></i>
+        {{ user.name }} {{ user.lastName }}
+      </span>
+      <span class="badge bg-{{ user.isActive ? 'success' : 'danger' }}">
+        <i
+          class="bi bi-{{ user.isActive ? 'check-circle' : 'x-circle' }} me-1"
+        ></i>
+        {{ user.isActive ? "Actif" : "Inactif" }}
+      </span>
+    </h5>
+  </div>
+
+  <div class="card-body">
+    <dl class="row mb-0">
+      <dt class="col-sm-4"><i class="bi bi-envelope me-1"></i>Email</dt>
+      <dd class="col-sm-8">
+        <a [href]="'mailto:' + user.mail" class="text-decoration-none">
+          {{ user.mail }}
+        </a>
+      </dd>
+
+      <dt class="col-sm-4"><i class="bi bi-telephone me-1"></i>Téléphone</dt>
+      <dd class="col-sm-8">{{ user.phone }}</dd>
+
+      <dt class="col-sm-4"><i class="bi bi-person-badge me-1"></i>Rôle</dt>
+      <dd class="col-sm-8">
+        <span class="badge bg-secondary">{{ user.role }}</span>
+      </dd>
+
+      <dt class="col-sm-4"><i class="bi bi-key me-1"></i>ID</dt>
+      <dd class="col-sm-8">
+        <small class="text-muted">{{ user._id }}</small>
+      </dd>
+
+      <dt class="col-sm-4"><i class="bi bi-calendar-plus me-1"></i>Créé le</dt>
+      <dd class="col-sm-8">
+        <small class="text-muted">{{ user.createdAt | date : "medium" }}</small>
+      </dd>
+
+      <dt class="col-sm-4">
+        <i class="bi bi-calendar-check me-1"></i>Mis à jour le
+      </dt>
+      <dd class="col-sm-8">
+        <small class="text-muted">{{ user.updatedAt | date : "medium" }}</small>
+      </dd>
+    </dl>
+  </div>
+
+  <div class="card-footer bg-light d-flex justify-content-end">
+    <button class="btn btn-sm btn-outline-primary me-2">
+      <i class="bi bi-pencil me-1"></i>Modifier
+    </button>
+    <button class="btn btn-sm btn-outline-danger">
+      <i class="bi bi-trash me-1"></i>Supprimer
+    </button>
+  </div>
+</div>

@@ -1,1 +1,73 @@
-<p>login-form works!</p>
+<form
+  (ngSubmit)="OnSubmit()"
+  [formGroup]="form"
+  novalidate
+  class="mt-4 p-2 border rounded shadow-lg"
+>
+  <div class="mb-2">
+    <label class="form-label">Email:</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-envelope-at"></i></span>
+      <input
+        formControlName="mail"
+        class="form-control"
+        placeholder="Monmail@exemple.com"
+        [ngClass]="{
+          'is-invalid': form.get('mail')?.invalid && form.get('mail')?.touched,
+          'is-valid': form.get('mail')?.valid && form.get('mail')?.touched
+        }"
+      />
+    </div>
+    <div *ngIf="form.get('mail')?.invalid && form.get('mail')?.touched">
+      <small class="text-danger" *ngIf="form.get('mail')?.errors?.['required']"
+        >L'email est requis.</small
+      >
+      <small class="text-danger" *ngIf="form.get('mail')?.errors?.['email']"
+        >Format d'email invalide.</small
+      >
+    </div>
+  </div>
+
+  <div class="mb-2">
+    <label class="form-label">Mot de passe:</label>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-lock"></i></span>
+      <input
+        type="password"
+        formControlName="password"
+        class="form-control"
+        placeholder="Password123"
+        [ngClass]="{
+          'is-invalid':
+            form.get('password')?.invalid && form.get('password')?.touched,
+          'is-valid':
+            form.get('password')?.valid && form.get('password')?.touched
+        }"
+      />
+    </div>
+    <div *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+      <small
+        *ngIf="form.get('password')?.errors?.['required']"
+        class="text-danger"
+        >Le mot de passe est requis.</small
+      >
+      <small
+        *ngIf="form.get('password')?.errors?.['minlength']"
+        class="text-danger"
+        >Le mot de passe doit comporter au moins 8 caractères.</small
+      >
+    </div>
+  </div>
+  <div class="mb-2">
+    <button class="btn btn-link">Mot de passe oublié ?</button>
+  </div>
+
+  <div class="mb-2 d-flex gap-4 justify-content-center">
+    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">
+      Se connecter
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="onReset()">
+      Réinitialiser
+    </button>
+  </div>
+</form>

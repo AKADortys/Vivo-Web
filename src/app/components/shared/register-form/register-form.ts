@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   FormControl,
   ReactiveFormsModule,
@@ -12,18 +11,23 @@ import {
 import { NewUser, ResponseUser } from '../../../interfaces/user';
 import { UserService } from '../../../services/user';
 import { CommonModule } from '@angular/common';
+import { AlertHandler } from '../../../services/alert-handler';
 @Component({
   selector: 'app-register-form',
   standalone: true,
-  imports: [ReactiveFormsModule, NgbAlertModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './register-form.html',
   styleUrls: ['./register-form.scss'],
 })
 export class RegisterForm {
   userForm: FormGroup;
   errorMessage: string | null = null;
+  isLoading: boolean = false;
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private alertHandler: AlertHandler
+  ) {
     const passwordPattern = '^(?=.*[A-Z])(?=.*\\d).{8,}$';
 
     this.userForm = new FormGroup(
@@ -63,6 +67,7 @@ export class RegisterForm {
   };
 
   onSubmit() {
+    this.isLoading = true;
     if (!this.userForm.valid) return;
 
     const { name, lastName, mail, phone, password } = this.userForm.value;
@@ -70,12 +75,17 @@ export class RegisterForm {
 
     this.userService.createUser(newUser).subscribe({
       next: (response: ResponseUser) => {
-        console.log(response.message);
+        this.alertHandler.showSuccess(
+          'Inscription réussie !',
+          `Bienvenue ${response.data?.name} ${response.data?.lastName} !`
+        );
         this.userForm.reset();
       },
       error: (error: any) => {
         this.errorMessage = error?.error?.message || 'Une erreur est survenue';
-        console.error(error);
+      },
+      complete: () => {
+        this.isLoading = false;
       },
     });
   }

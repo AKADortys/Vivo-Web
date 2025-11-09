@@ -22,7 +22,7 @@ export class AuthService {
     return this.http
       .post<AuthentificationResponse>(`${this.baseUrl}/login`, credentials)
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   Logout(): Observable<void> {
     return this.http

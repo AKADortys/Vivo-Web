@@ -32,7 +32,7 @@ export class UserService {
     return this.http
       .post<ResponseUser>(this.baseUrl, user)
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   updateUser(id: string, user: Partial<UpdateUser>): Observable<ResponseUser> {
     return this.http

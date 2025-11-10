@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UsersList } from './components/shared/users-list/users-list';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgbModule, UsersList],
+  imports: [RouterOutlet, UsersList],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

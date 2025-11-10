@@ -1,59 +1,48 @@
-<div class="container my-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2 class="mb-0">Liste des Utilisateurs</h2>
-    @if (isLoading) {
-    <div class="spinner-border spinner-border-sm text-primary" role="status">
+<div class="container">
+  <!-- Composant de gestion des requêtes (recherche) -->
+  <app-query-handler-bar
+    [searchQuery]="searchQuery()"
+    (searchChange)="onSearchChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)"
+    [PageSize]="itemsPerPage()"
+  />
+  <!-- Composant de pagination -->
+  <app-pagination
+    [totalItems]="totalItems()"
+    [itemsPerPage]="itemsPerPage()"
+    [currentPage]="currentPage()"
+    (pageChange)="onPageChange($event)"
+  />
+  <!-- Affichage des utilisateurs -->
+  <div class="row">
+    @for (user of users(); track user._id) {
+    <div class="col-md-10 col-lg-8 col-xl-6 col-xxl-4 mb-3">
+      <app-user-card [user]="user" />
+    </div>
+    }
+  </div>
+
+  <!-- Affichage du message de chargement -->
+  @if (isLoading) {
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Chargement...</span>
     </div>
-    }
   </div>
+  }
 
+  <!-- Affichage des erreurs -->
+  @if (errorMessage) {
+  <div class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+  }
+
+  <!-- Composant de pagination -->
   <app-pagination
-    [page]="currentPage"
-    [totalPages]="totalPages"
-    [limit]="pageSize"
-    [search]="searchText"
-    [total]="totalItems"
-    (changePage)="onPageChange($event)"
-  >
-  </app-pagination>
-
-  <div class="content-area mt-4">
-    @if (isLoading) {
-    <div class="text-center p-5">
-      <div
-        class="spinner-border text-primary"
-        style="width: 3rem; height: 3rem"
-        role="status"
-      >
-        <span class="visually-hidden">Chargement...</span>
-      </div>
-      <p class="lead mt-3">Chargement des utilisateurs...</p>
-    </div>
-    } @else if (errorMessage) {
-    <div class="alert alert-danger d-flex align-items-center" role="alert">
-      <i class="bi bi-exclamation-triangle-fill me-2 fs-4"></i>
-      <div><strong>Une erreur est survenue :</strong> {{ errorMessage }}</div>
-    </div>
-    } @else if (users) {
-    <div class="row g-3">
-      @for (user of users; track user._id) {
-
-      <div class="col-12 col-md-6 col-lg-4">
-        <app-user-card [user]="user"></app-user-card>
-      </div>
-
-      } @empty {
-
-      <div class="col-12">
-        <div class="alert alert-info text-center" role="alert">
-          <i class="bi bi-info-circle me-2"></i>
-          Aucun utilisateur trouvé.
-        </div>
-      </div>
-
-      }
-    </div>
-    }
-  </div>
+    [totalItems]="totalItems()"
+    [itemsPerPage]="itemsPerPage()"
+    [currentPage]="currentPage()"
+    (pageChange)="onPageChange($event)"
+  />
 </div>

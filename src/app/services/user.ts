@@ -26,7 +26,7 @@ export class UserService {
         `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`
       )
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   getUserById(id: string): Observable<ResponseUser> {
     return this.http

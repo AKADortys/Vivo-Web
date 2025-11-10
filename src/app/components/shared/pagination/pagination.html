@@ -1,72 +1,26 @@
-<div
-  class="d-flex justify-content-between align-items-center flex-wrap p-3 my-3 border-top border-bottom"
->
-  <div class="d-flex flex-wrap gap-3 mb-2 mb-md-0">
-    <div class="input-group input-group-sm">
-      <span class="input-group-text" id="basic-addon-search">
-        <i class="bi bi-search"></i>
-      </span>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Rechercher..."
-        aria-label="Rechercher"
-        aria-describedby="basic-addon-search"
-        [(ngModel)]="search"
-        (keydown.enter)="onSearchChange()"
-      />
-    </div>
-
-    <div class="input-group input-group-sm">
-      <label class="input-group-text" for="limit-select">Par page:</label>
-      <select class="form-select" id="limit-select" [(ngModel)]="limit">
-        <option [value]="5">5</option>
-        <option [value]="10">10</option>
-        <option [value]="25">25</option>
-        <option [value]="50">50</option>
-      </select>
-    </div>
-    <button class="btn btn-primary" (click)="onSearchChange()">
-      Rechercher
-    </button>
-  </div>
-
-  @if (total > 0) {
-  <div class="d-flex align-items-center gap-3">
-    <span class="text-muted small">
-      <strong>{{ total }}</strong>
-      @if (total > 1) { résultats } @else { résultat }
-    </span>
-
-    @if (totalPages > 1) {
-    <div class="btn-group btn-group-sm" role="group" aria-label="Pagination">
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        (click)="previousPage()"
-        [disabled]="page <= 1"
-      >
+<nav aria-label="Pagination">
+  <ul class="pagination justify-content-center">
+    <!-- Bouton Précédent -->
+    <li class="page-item" [class.disabled]="currentPage() === 1">
+      <button class="page-link" (click)="prevPage()" aria-label="Précédent">
         <i class="bi bi-chevron-left"></i>
-        <span class="visually-hidden">Précédent</span>
       </button>
+    </li>
 
-      <span class="btn btn-light disabled text-dark" style="cursor: default">
-        Page {{ page }} / {{ totalPages }}
-      </span>
-
-      <button
-        type="button"
-        class="btn btn-outline-primary"
-        (click)="nextPage()"
-        [disabled]="page >= totalPages"
-      >
-        <i class="bi bi-chevron-right"></i>
-        <span class="visually-hidden">Suivant</span>
+    <!-- Numéros de page -->
+    @for (page of pages(); track page) {
+    <li class="page-item" [class.active]="page === currentPage()">
+      <button class="page-link" (click)="goToPage(page)">
+        {{ page }}
       </button>
-    </div>
+    </li>
     }
-  </div>
-  } @else {
-  <span class="text-muted small">Aucun résultat trouvé.</span>
-  }
-</div>
+
+    <!-- Bouton Suivant -->
+    <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+      <button class="page-link" (click)="nextPage()" aria-label="Suivant">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </li>
+  </ul>
+</nav>

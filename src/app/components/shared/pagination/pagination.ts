@@ -1,61 +1,49 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, input, output, computed, Input } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
-  imports: [CommonModule, FormsModule],
+  imports: [],
+  standalone: true,
   templateUrl: './pagination.html',
   styleUrl: './pagination.scss',
 })
 export class Pagination {
-  @Input() page!: number;
-  @Input() totalPages!: number;
-  @Input() limit!: number;
-  @Input() search: string = '';
-  @Input() total!: number;
+  // Entrées (signals)
+  @Input() searchQuery?: string;
+  totalItems = input.required<number>();
+  itemsPerPage = input<number>(10);
+  currentPage = input.required<number>();
 
-  @Output() changePage = new EventEmitter<{
-    search: string;
-    page: number;
-    limit: number;
-  }>();
+  // Sorties (événements)
+  pageChange = output<number>();
 
-  previousPage(): void {
-    if (this.page > 1) {
-      this.changePage.emit({
-        search: this.search,
-        page: this.page - 1,
-        limit: this.limit,
-      });
+  // Calcul du nombre total de pages
+  totalPages = computed(() =>
+    Math.ceil(this.totalItems() / this.itemsPerPage())
+  );
+
+  // Tableau des numéros de page à afficher
+  pages = computed(() => {
+    const pages: number[] = [];
+    for (let i = 1; i <= this.totalPages(); i++) {
+      pages.push(i);
     }
+    return pages;
+  });
+
+  // Gestion du changement de page
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages()) {
+      this.pageChange.emit(page);
+    }
+  }
+
+  // Pages précédentes/suivantes
+  prevPage(): void {
+    this.goToPage(this.currentPage() - 1);
   }
 
   nextPage(): void {
-    if (this.page < this.totalPages) {
-      this.changePage.emit({
-        search: this.search,
-        page: this.page + 1,
-        limit: this.limit,
-      });
-    }
-  }
-
-  onSearchChange(): void {
-    this.page = 1;
-    this.changePage.emit({
-      search: this.search,
-      page: this.page,
-      limit: this.limit,
-    });
-  }
-
-  onLimitChange(): void {
-    this.page = 1;
-    this.changePage.emit({
-      search: this.search,
-      page: this.page,
-      limit: this.limit,
-    });
+    this.goToPage(this.currentPage() + 1);
   }
 }

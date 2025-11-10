@@ -1,22 +1,25 @@
-<div class="container">
-  <!-- Composant de gestion des requêtes (recherche) -->
-  <app-query-handler-bar
-    [searchQuery]="searchQuery()"
-    (searchChange)="onSearchChange($event)"
-    (pageSizeChange)="onPageSizeChange($event)"
-    [PageSize]="itemsPerPage()"
-  />
-  <!-- Composant de pagination -->
-  <app-pagination
-    [totalItems]="totalItems()"
-    [itemsPerPage]="itemsPerPage()"
-    [currentPage]="currentPage()"
-    (pageChange)="onPageChange($event)"
-  />
+<div class="container rounded p-4 my-4 border shadow-sm">
+  <h3 class="display-5">Liste des utilisateurs</h3>
   <!-- Affichage des utilisateurs -->
-  <div class="row">
+  <div class="row justify-content-around">
+    <!-- Composant de gestion des requêtes (recherche) -->
+    <app-query-handler-bar
+      [searchQuery]="searchQuery()"
+      (searchChange)="onSearchChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+      [PageSize]="itemsPerPage()"
+      class="col-12 col-md-10 mx-auto"
+    />
+    <!-- Composant de pagination -->
+    <app-pagination
+      [totalItems]="totalItems()"
+      [itemsPerPage]="itemsPerPage()"
+      [currentPage]="currentPage()"
+      (pageChange)="onPageChange($event)"
+      class="col-12"
+    />
     @for (user of users(); track user._id) {
-    <div class="col-md-10 col-lg-8 col-xl-6 col-xxl-4 mb-3">
+    <div class="col-md-10 col-lg-9 col-xl-6 col-xxl-4 mb-3">
       <app-user-card [user]="user" />
     </div>
     }

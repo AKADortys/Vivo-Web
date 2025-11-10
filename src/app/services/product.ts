@@ -17,9 +17,11 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(page = 1, limit = 10): Observable<ResponseProducts> {
+  getProducts(page = 1, limit = 10, search = ''): Observable<ResponseProducts> {
     return this.http
-      .get<ResponseProducts>(`${this.baseUrl}?page=${page}&limit=${limit}`)
+      .get<ResponseProducts>(
+        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`
+      )
       .pipe(catchError(this.handleError));
   }
 

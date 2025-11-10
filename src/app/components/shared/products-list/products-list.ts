@@ -1,20 +1,18 @@
-import { Component, OnInit, signal, ViewChild } from '@angular/core';
-import { User, ResponseUsers } from '../../../interfaces/user';
-import { UserService } from '../../../services/user';
-import { UserCard } from '../user-card/user-card';
+import { Component, Query, signal } from '@angular/core';
+import { Product, ResponseProducts } from '../../../interfaces/product';
+import { ProductService } from '../../../services/product';
 import { Pagination } from '../pagination/pagination';
 import { QueryHandlerBar } from '../query-handler-bar/query-handler-bar';
-import { Modal } from '../modal/modal';
+import { ProductCard } from '../product-card/product-card';
 
 @Component({
-  selector: 'app-users-list',
-  imports: [UserCard, Pagination, QueryHandlerBar],
-  standalone: true,
-  templateUrl: './users-list.html',
-  styleUrl: './users-list.scss',
+  selector: 'app-products-list',
+  imports: [QueryHandlerBar, Pagination, ProductCard],
+  templateUrl: './products-list.html',
+  styleUrl: './products-list.scss',
 })
-export class UsersList implements OnInit {
-  users = signal<User[]>([]);
+export class ProductsList {
+  products = signal<Product[]>([]);
   isLoading: boolean;
   errorMessage: string | null = null;
   totalItems = signal<number>(0);
@@ -22,7 +20,7 @@ export class UsersList implements OnInit {
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   searchQuery = signal<string>('');
-  constructor(private userService: UserService) {
+  constructor(private productService: ProductService) {
     this.isLoading = false;
   }
 
@@ -40,22 +38,22 @@ export class UsersList implements OnInit {
     search: string = ''
   ) {
     this.resetProps();
-    this.userService.getUsers(page, limit, search).subscribe({
-      next: (response: ResponseUsers) => {
-        this.users.set(response?.data?.users || []);
+    this.productService.getProducts(page, limit, search).subscribe({
+      next: (response: ResponseProducts) => {
+        this.products.set(response?.data?.products || []);
         this.currentPage.set(response.data?.page || 1);
         this.itemsPerPage.set(limit);
-        this.totalItems.set(response.data?.total || this.users().length);
+        this.totalItems.set(response.data?.total || this.products().length);
         this.totalPages.set(Math.ceil(this.totalItems() / this.itemsPerPage()));
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error loading users:', error);
+        console.error('Error loading products:', error);
         this.isLoading = false;
-        this.errorMessage = 'Erreur lors du chargement des utilisateurs';
+        this.errorMessage = 'Erreur lors du chargement des produits';
       },
       complete: () => {
-        console.log('User loading completed.');
+        console.log('Product loading completed.');
       },
     });
   }

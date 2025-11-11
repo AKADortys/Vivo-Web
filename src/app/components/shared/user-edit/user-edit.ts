@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -22,16 +29,13 @@ import { AlertHandler } from '../../../services/alert-handler';
 export class UserEdit implements OnInit {
   @Output() save = new EventEmitter<boolean>();
   userForm!: FormGroup;
-  isLoading: boolean = false;
+  isLoading = signal<boolean>(false);
 
-  // Internal property to hold the user data
   private _user: User | null = null;
 
-  // Setter for the @Input() 'user' to react to data changes from the parent
   @Input()
   set user(value: User | null) {
     this._user = value;
-    // When the input changes AND the form is ready, update the form immediately
     if (value && this.userForm) {
       this.patchFormValues(value);
     }
@@ -57,20 +61,26 @@ export class UserEdit implements OnInit {
   initializeForm(): void {
     const passwordPattern = '^(?=.*[A-Z])(?=.*\\d).{8,}$';
 
-    this.userForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      lastName: new FormControl('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      password: new FormControl('', [Validators.pattern(passwordPattern)]),
-      cPassword: new FormControl('', [Validators.pattern(passwordPattern)]),
-      phone: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^(?:(?:\\+33|0)[1-9])(?:[\\s.-]?\\d{2}){4}$'),
-      ]),
-      mail: new FormControl('', [Validators.required, Validators.email]),
-    });
+    this.userForm = new FormGroup(
+      {
+        name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        lastName: new FormControl('', [
+          Validators.required,
+          Validators.minLength(3),
+        ]),
+        password: new FormControl('', [Validators.pattern(passwordPattern)]),
+        cPassword: new FormControl('', [Validators.pattern(passwordPattern)]),
+        phone: new FormControl('', [
+          Validators.required,
+          Validators.pattern('^(?:(?:\\+33|0)[67]\\d{8}|(?:\\+32|0)4\\d{8})$'),
+        ]),
+        mail: new FormControl('', [Validators.required, Validators.email]),
+      },
+      { validators: this.passwordsMatch }
+    );
   }
 
   patchFormValues(user: User): void {
@@ -83,7 +93,6 @@ export class UserEdit implements OnInit {
     this.userForm.get('password')?.setValue('');
     this.userForm.get('cPassword')?.setValue('');
 
-    // Rerun form validation
     this.userForm.updateValueAndValidity();
   }
 
@@ -101,31 +110,51 @@ export class UserEdit implements OnInit {
   };
 
   onSubmit() {
-    if (this.userForm.valid && this._user) {
-      this.isLoading = true;
+    if (this.userForm.valid && this._user!._id) {
+      this.isLoading.set(true);
 
-      const formValue = { ...this.userForm.value };
+      const formValue: any = { ...this.userForm.value };
 
       delete formValue.cPassword;
 
-      if (formValue.password === '') {
-        delete formValue.password;
-      }
-
-      this.httpService.updateUser(this._user._id, formValue).subscribe({
-        next: () => {
-          this.alertHandler.showSuccess('User updated successfully', 'success');
-          this.isLoading = false;
-          this.save.emit(true);
-        },
-        error: (error) => {
-          this.alertHandler.showError(
-            'Error updating user',
-            error.error.message || 'Unknown error'
-          );
-          this.isLoading = false;
-        },
+      (Object.keys(formValue) as (keyof User)[]).forEach((key) => {
+        if (formValue[key] === '' || formValue[key] === this.user![key]) {
+          delete formValue[key];
+        }
       });
+
+      if (Object.keys(formValue).length < 1) {
+        this.isLoading.set(false);
+        return this.alertHandler.showInfo(
+          'Fournissez au moins une modification'
+        );
+      }
+      this.alertHandler
+        .showConfirm('Confirmer les modification ?')
+        .then((confirm) => {
+          if (confirm) {
+            this.httpService.updateUser(this._user!._id, formValue).subscribe({
+              next: () => {
+                this.alertHandler.showSuccess(
+                  'User updated successfully',
+                  'success'
+                );
+                this.isLoading.set(false);
+                this.save.emit(true);
+              },
+              error: (error) => {
+                this.alertHandler.showError(
+                  'Error updating user',
+                  error.error.message || 'Unknown error'
+                );
+                this.isLoading.set(false);
+              },
+            });
+          } else {
+            this.isLoading.set(false);
+            return;
+          }
+        });
     }
   }
 }

@@ -39,4 +39,17 @@ export class AlertHandler {
       text: message,
     });
   }
+
+  showConfirm(
+    message: string,
+    title: string = 'En êtes-vous certain ?'
+  ): Promise<boolean> {
+    return Swal.fire({
+      title,
+      text: message,
+      showDenyButton: true,
+      confirmButtonText: 'Oui',
+      denyButtonText: 'Non',
+    }).then((result) => result.isConfirmed);
+  }
 }

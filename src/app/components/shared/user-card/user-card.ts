@@ -2,10 +2,11 @@ import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { User } from '../../../interfaces/user';
 import { FormatDatePipe } from '../../../pipes/format-date-pipe';
+import { RemoveUser } from '../remove-user/remove-user';
 
 @Component({
   selector: 'app-user-card',
-  imports: [CommonModule, FormatDatePipe],
+  imports: [CommonModule, FormatDatePipe, RemoveUser],
   standalone: true,
   templateUrl: './user-card.html',
   styleUrl: './user-card.scss',
@@ -13,13 +14,13 @@ import { FormatDatePipe } from '../../../pipes/format-date-pipe';
 export class UserCard {
   user = input.required<User>();
   @Output() editUser = new EventEmitter<User>();
-  @Output() removeUser = new EventEmitter<string>();
+  @Output() removeUser = new EventEmitter<boolean>();
 
   public onEdit() {
     this.editUser.emit(this.user());
   }
 
   public onRemove() {
-    this.removeUser.emit(this.user()._id);
+    this.removeUser.emit(true);
   }
 }

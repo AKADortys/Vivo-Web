@@ -44,7 +44,7 @@ export class UserService {
     return this.http
       .put<ResponseUser>(`${this.baseUrl}/${id}`, user)
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   deleteUser(id: string): Observable<ResponseUser> {
     return this.http

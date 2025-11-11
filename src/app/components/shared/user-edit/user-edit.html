@@ -137,11 +137,11 @@
     <button
       type="submit"
       class="btn btn-primary px-4 d-flex align-items-center"
-      [disabled]="userForm.invalid || isLoading"
+      [disabled]="userForm.invalid || isLoading()"
     >
       <i class="bi bi-save me-2"></i>
 
-      @if (!isLoading) { Enregistrer } @else {
+      @if (!isLoading()) { Enregistrer } @else {
       <span
         class="spinner-border spinner-border-sm ms-2"
         role="status"

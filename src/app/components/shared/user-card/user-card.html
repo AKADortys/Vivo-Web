@@ -57,9 +57,10 @@
     <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit()">
       <i class="bi bi-pencil me-1"></i>Modifier
     </button>
-    <button class="btn btn-sm btn-outline-danger" (click)="onRemove()">
-      <i class="bi bi-trash me-1"></i>Supprimer
-    </button>
+    <app-remove-user
+      [userId]="user()._id"
+      (removed)="(onRemove)"
+    ></app-remove-user>
   </div>
 </div>
 }

@@ -1,34 +1,37 @@
+<div>
+  <h3 class="display-5">Listes des produits</h3>
+  <!-- Composant de gestion des requêtes (recherche) -->
+  <app-query-handler-bar
+    [searchQuery]="searchQuery()"
+    (searchChange)="onSearchChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)"
+    [PageSize]="itemsPerPage()"
+    class="col-12 col-md-10 mx-auto"
+  />
+</div>
+<!-- Composant de pagination -->
+<app-pagination
+  [totalItems]="totalItems()"
+  [itemsPerPage]="itemsPerPage()"
+  [currentPage]="currentPage()"
+  (pageChange)="onPageChange($event)"
+  class="col-12"
+/>
 <div class="container rounded p-4 my-4 border shadow-sm">
   <!-- Affichage des utilisateurs -->
   <div class="row justify-content-around">
-    <!-- Composant de gestion des requêtes (recherche) -->
-    <app-query-handler-bar
-      [searchQuery]="searchQuery()"
-      (searchChange)="onSearchChange($event)"
-      (pageSizeChange)="onPageSizeChange($event)"
-      [PageSize]="itemsPerPage()"
-      class="col-12 col-md-10 mx-auto"
-    />
-    <!-- Composant de pagination -->
-    <app-pagination
-      [totalItems]="totalItems()"
-      [itemsPerPage]="itemsPerPage()"
-      [currentPage]="currentPage()"
-      (pageChange)="onPageChange($event)"
-      class="col-12"
-    />
     @for (product of products(); track product._id) {
     <div class="col-12 col-md-6 col-lg-4 mb-4" [class.loading]="isLoading">
       <app-product-card [product]="product" />
     </div>
     }
-    <!-- Composant de pagination -->
-    <app-pagination
-      [totalItems]="totalItems()"
-      [itemsPerPage]="itemsPerPage()"
-      [currentPage]="currentPage()"
-      (pageChange)="onPageChange($event)"
-      class="col-12"
-    />
   </div>
 </div>
+<!-- Composant de pagination -->
+<app-pagination
+  [totalItems]="totalItems()"
+  [itemsPerPage]="itemsPerPage()"
+  [currentPage]="currentPage()"
+  (pageChange)="onPageChange($event)"
+  class="col-12"
+/>

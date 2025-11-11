@@ -38,7 +38,6 @@ export class LoginForm {
       const credentials = this.form.value;
       this.authService.Login(credentials).subscribe({
         next: (response) => {
-          console.log('Login successful:', response);
           this.alertHandler.showSuccess(
             'Connexion réussie !',
             `Bienvenue ${response.data?.name} ${response.data?.lastName} !`

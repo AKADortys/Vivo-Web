@@ -175,7 +175,11 @@
   </div>
   <!-- BUTTONS -->
   <div class="d-flex justify-content-center gap-4">
-    <button [disabled]="isLoading" class="btn btn-success" type="submit">
+    <button
+      [disabled]="isLoading || userForm.invalid"
+      class="btn btn-success"
+      type="submit"
+    >
       S'inscrire
     </button>
     <button [disabled]="isLoading" class="btn btn-secondary" type="reset">

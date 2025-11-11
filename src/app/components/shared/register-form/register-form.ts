@@ -80,9 +80,11 @@ export class RegisterForm {
           `Bienvenue ${response.data?.name} ${response.data?.lastName} !`
         );
         this.userForm.reset();
+        this.isLoading = false;
       },
       error: (error: any) => {
         this.errorMessage = error?.error?.message || 'Une erreur est survenue';
+        this.isLoading = false;
       },
       complete: () => {
         this.isLoading = false;

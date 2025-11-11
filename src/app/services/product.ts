@@ -23,7 +23,7 @@ export class ProductService {
         `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`
       )
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   getProductById(id: string): Observable<ResponseProduct> {
     return this.http

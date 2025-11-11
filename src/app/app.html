@@ -1,7 +1,11 @@
-<div
-  class="d-md-flex flex-wrap gap-2 justify-content-center align-items-center"
->
-  <app-users-list class="col-11 col-xxl-10" />
-  <app-products-list class="col-11 col-xxl-10" />
+<div class="container">
+  <div
+    class="d-md-flex flex-wrap gap-0 justify-content-evenly align-items-center"
+  >
+    <app-login-form class="col-11 col-xxl-4 mb-4 mb-md-0" />
+    <app-register-form class="col-11 col-xxl-4 mb-4 mb-md-0" />
+    <app-users-list class="col-11 col-xxl-10" />
+    <app-products-list class="col-11 col-xxl-10" />
+  </div>
 </div>
 <router-outlet />

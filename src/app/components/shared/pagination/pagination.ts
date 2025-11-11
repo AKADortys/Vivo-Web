@@ -9,7 +9,6 @@ import { Component, input, output, computed, Input } from '@angular/core';
 })
 export class Pagination {
   // Entrées (signals)
-  @Input() searchQuery?: string;
   totalItems = input.required<number>();
   itemsPerPage = input<number>(10);
   currentPage = input.required<number>();

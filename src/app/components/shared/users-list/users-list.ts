@@ -5,33 +5,34 @@ import { UserCard } from '../user-card/user-card';
 import { Pagination } from '../pagination/pagination';
 import { QueryHandlerBar } from '../query-handler-bar/query-handler-bar';
 import { Modal } from '../modal/modal';
+import { UserEdit } from '../user-edit/user-edit';
 
 @Component({
   selector: 'app-users-list',
-  imports: [UserCard, Pagination, QueryHandlerBar],
+  imports: [UserCard, Pagination, QueryHandlerBar, UserEdit, Modal],
   standalone: true,
   templateUrl: './users-list.html',
   styleUrl: './users-list.scss',
 })
 export class UsersList implements OnInit {
+  @ViewChild('editModal') myModal!: Modal;
   users = signal<User[]>([]);
-  isLoading: boolean;
+  isLoading = signal<boolean>(false);
   errorMessage: string | null = null;
   totalItems = signal<number>(0);
   itemsPerPage = signal<number>(10);
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   searchQuery = signal<string>('');
-  constructor(private userService: UserService) {
-    this.isLoading = false;
-  }
+  selectedUser = signal<User | null>(null);
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.loadUsers();
   }
 
   resetProps() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     this.errorMessage = null;
   }
   loadUsers(
@@ -47,11 +48,11 @@ export class UsersList implements OnInit {
         this.itemsPerPage.set(limit);
         this.totalItems.set(response.data?.total || this.users().length);
         this.totalPages.set(Math.ceil(this.totalItems() / this.itemsPerPage()));
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
       error: (error) => {
         console.error('Error loading users:', error);
-        this.isLoading = false;
+        this.isLoading.set(false);
         this.errorMessage = 'Erreur lors du chargement des utilisateurs';
       },
       complete: () => {
@@ -73,5 +74,13 @@ export class UsersList implements OnInit {
   onPageChange(page: number) {
     this.currentPage.set(page);
     this.loadUsers(page, this.itemsPerPage(), this.searchQuery());
+  }
+
+  onEditUser(user: User) {
+    this.selectedUser.set(user);
+    this.openModal();
+  }
+  openModal() {
+    this.myModal.open();
   }
 }

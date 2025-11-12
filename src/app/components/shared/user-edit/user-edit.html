@@ -1,20 +1,22 @@
 <form
   [formGroup]="userForm"
   (ngSubmit)="onSubmit()"
-  class="p-4 border rounded-4 shadow-sm bg-white"
+  novalidate
+  class="p-4 bg-light rounded-4 shadow-sm border"
 >
-  <h5 class="mb-4">
-    <i class="bi bi-person-gear me-2 text-primary"></i>Modifier l'utilisateur
-  </h5>
+  <h4 class="mb-4">
+    <i class="bi bi-person-gear text-primary me-2"></i>Modifier l'utilisateur
+  </h4>
 
   <!-- Prénom -->
   <div class="mb-3">
-    <label for="name" class="form-label fw-semibold">Prénom</label>
+    <label class="form-label fw-semibold">
+      <i class="bi bi-person me-1 text-primary"></i>Prénom
+    </label>
     <input
-      id="name"
       type="text"
-      formControlName="name"
       class="form-control"
+      formControlName="name"
       [class.is-invalid]="
         userForm.get('name')?.invalid && userForm.get('name')?.touched
       "
@@ -30,14 +32,15 @@
     }
   </div>
 
-  <!-- Nom de famille -->
+  <!-- Nom -->
   <div class="mb-3">
-    <label for="lastName" class="form-label fw-semibold">Nom</label>
+    <label class="form-label fw-semibold">
+      <i class="bi bi-person-badge me-1 text-primary"></i>Nom
+    </label>
     <input
-      id="lastName"
       type="text"
-      formControlName="lastName"
       class="form-control"
+      formControlName="lastName"
       [class.is-invalid]="
         userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched
       "
@@ -55,12 +58,13 @@
 
   <!-- Email -->
   <div class="mb-3">
-    <label for="mail" class="form-label fw-semibold">Email</label>
+    <label class="form-label fw-semibold">
+      <i class="bi bi-envelope me-1 text-primary"></i>Email
+    </label>
     <input
-      id="mail"
       type="email"
-      formControlName="mail"
       class="form-control"
+      formControlName="mail"
       [class.is-invalid]="
         userForm.get('mail')?.invalid && userForm.get('mail')?.touched
       "
@@ -76,12 +80,13 @@
 
   <!-- Téléphone -->
   <div class="mb-3">
-    <label for="phone" class="form-label fw-semibold">Téléphone</label>
+    <label class="form-label fw-semibold">
+      <i class="bi bi-telephone me-1 text-primary"></i>Téléphone
+    </label>
     <input
-      id="phone"
       type="text"
-      formControlName="phone"
       class="form-control"
+      formControlName="phone"
       [class.is-invalid]="
         userForm.get('phone')?.invalid && userForm.get('phone')?.touched
       "
@@ -97,12 +102,13 @@
 
   <!-- Mot de passe -->
   <div class="mb-3">
-    <label for="password" class="form-label fw-semibold">Mot de passe</label>
+    <label class="form-label fw-semibold">
+      <i class="bi bi-lock me-1 text-primary"></i>Mot de passe
+    </label>
     <input
-      id="password"
       type="password"
-      formControlName="password"
       class="form-control"
+      formControlName="password"
       [class.is-invalid]="
         userForm.get('password')?.invalid && userForm.get('password')?.touched
       "
@@ -114,15 +120,14 @@
   </div>
 
   <!-- Confirmation du mot de passe -->
-  <div class="mb-3">
-    <label for="cPassword" class="form-label fw-semibold"
-      >Confirmer le mot de passe</label
-    >
+  <div class="mb-4">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-lock-fill me-1 text-primary"></i>Confirmer le mot de passe
+    </label>
     <input
-      id="cPassword"
       type="password"
-      formControlName="cPassword"
       class="form-control"
+      formControlName="cPassword"
       [class.is-invalid]="userForm.errors?.['passwordsMismatch'] && userForm.get('cPassword')?.touched"
       placeholder="********"
     />
@@ -132,23 +137,19 @@
     }
   </div>
 
-  <!-- Bouton avec spinner -->
-  <div class="d-flex justify-content-end mt-4">
-    <button
-      type="submit"
-      class="btn btn-primary px-4 d-flex align-items-center"
-      [disabled]="userForm.invalid || isLoading()"
-    >
-      <i class="bi bi-save me-2"></i>
-
-      @if (!isLoading()) { Enregistrer } @else {
-      <span
-        class="spinner-border spinner-border-sm ms-2"
-        role="status"
-        aria-hidden="true"
-      ></span>
-      <span class="ms-2">En cours...</span>
-      }
-    </button>
-  </div>
+  <!-- Bouton -->
+  <button
+    type="submit"
+    class="btn btn-primary w-100 py-2 d-flex justify-content-center align-items-center"
+    [disabled]="userForm.invalid || isLoading()"
+  >
+    <i class="bi bi-save me-2"></i>
+    @if (!isLoading()) { Enregistrer } @else {
+    <span
+      class="spinner-border spinner-border-sm me-2"
+      role="status"
+      aria-hidden="true"
+    ></span>
+    En cours... }
+  </button>
 </form>

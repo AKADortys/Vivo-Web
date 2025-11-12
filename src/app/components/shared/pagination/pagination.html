@@ -1,5 +1,5 @@
 <nav aria-label="Pagination">
-  <ul class="pagination justify-content-start">
+  <ul class="pagination justify-content-start align-items-center shadow-sm">
     <!-- Bouton Précédent -->
     <li class="page-item" [class.disabled]="currentPage() === 1">
       <button class="page-link" (click)="prevPage()" aria-label="Précédent">
@@ -22,6 +22,8 @@
         <i class="bi bi-chevron-right"></i>
       </button>
     </li>
-    <span class="mx-auto">{{ totalItems() }} <strong>éléments</strong></span>
+    <span class="mx-auto badge rounded-pill bg-primary"
+      >{{ totalItems() }} {{ totalItems() > 1 ? "éléments" : "élément" }}</span
+    >
   </ul>
 </nav>

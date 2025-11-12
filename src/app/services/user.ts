@@ -50,7 +50,7 @@ export class UserService {
     return this.http
       .delete<ResponseUser>(`${this.baseUrl}/${id}`)
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   private handleError(error: any) {
     console.error('HTTP Error:', error.message || error);

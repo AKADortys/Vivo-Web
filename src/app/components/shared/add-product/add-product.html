@@ -1,0 +1,112 @@
+<form
+  [formGroup]="productForm"
+  (ngSubmit)="onSubmit()"
+  novalidate
+  class="p-4 bg-light rounded-4 shadow-sm border"
+>
+  <h4 class="mb-4">
+    <i class="bi bi-box-seam text-primary me-2"></i>Créer un produit
+  </h4>
+
+  <!-- Libellé -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-tag me-1 text-primary"></i>Libellé
+    </label>
+    <input
+      type="text"
+      class="form-control"
+      [class.is-invalid]="isInvalid('label')"
+      formControlName="label"
+      placeholder="Nom du produit"
+    />
+
+    @if (isInvalid('label')) {
+    <div class="invalid-feedback">
+      @if (f['label'].errors?.['required']) { Le libellé est requis. } @if
+      (f['label'].errors?.['minlength']) { Le libellé doit contenir au moins 2
+      caractères. }
+    </div>
+    }
+  </div>
+
+  <!-- Description -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-card-text me-1 text-primary"></i>Description
+    </label>
+    <textarea
+      rows="3"
+      class="form-control"
+      [class.is-invalid]="isInvalid('description')"
+      formControlName="description"
+      placeholder="Décrivez le produit"
+    ></textarea>
+
+    @if (isInvalid('description')) {
+    <div class="invalid-feedback">
+      @if (f['description'].errors?.['required']) { La description est requise.
+      } @if (f['description'].errors?.['minlength']) { La description doit
+      contenir au moins 10 caractères. }
+    </div>
+    }
+  </div>
+
+  <!-- Prix -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-currency-euro me-1 text-primary"></i>Prix
+    </label>
+    <input
+      type="number"
+      class="form-control"
+      [class.is-invalid]="isInvalid('price')"
+      formControlName="price"
+      placeholder="0.00"
+      step="0.01"
+      min="0"
+    />
+
+    @if (isInvalid('price')) {
+    <div class="invalid-feedback">
+      @if (f['price'].errors?.['required']) { Le prix est requis. } @if
+      (f['price'].errors?.['min']) { Le prix doit être supérieur ou égal à 0. }
+    </div>
+    }
+  </div>
+
+  <!-- Catégorie -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-grid-1x2 me-1 text-primary"></i>Catégorie
+    </label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="category"
+      placeholder="Ex: Électronique, Maison..."
+    />
+  </div>
+
+  <!-- Disponibilité -->
+  <div class="form-check form-switch mb-4">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      formControlName="available"
+      id="availableSwitch"
+    />
+    <label class="form-check-label fw-semibold" for="availableSwitch">
+      <i class="bi bi-check-circle me-1 text-primary"></i>Disponible
+    </label>
+  </div>
+
+  <!-- Bouton -->
+  <button
+    type="submit"
+    [disabled]="isLoading()"
+    class="btn btn-primary w-100 py-2"
+  >
+    <i class="bi bi-plus-circle me-1"></i>Créer le produit
+  </button>
+</form>

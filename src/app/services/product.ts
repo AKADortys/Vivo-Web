@@ -35,7 +35,7 @@ export class ProductService {
     return this.http
       .post<ResponseProduct>(this.baseUrl, product)
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   updateProduct(
     id: string,

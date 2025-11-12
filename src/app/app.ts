@@ -4,12 +4,19 @@ import { UsersList } from './components/shared/users-list/users-list';
 import { ProductsList } from './components/shared/products-list/products-list';
 import { LoginForm } from './components/shared/login-form/login-form';
 import { RegisterForm } from './components/shared/register-form/register-form';
-import { UserEdit } from './components/shared/user-edit/user-edit';
+import { AddProduct } from './components/shared/add-product/add-product';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, UsersList, ProductsList, LoginForm, RegisterForm],
+  imports: [
+    RouterOutlet,
+    UsersList,
+    ProductsList,
+    LoginForm,
+    RegisterForm,
+    AddProduct,
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

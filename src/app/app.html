@@ -41,6 +41,14 @@
         </li>
       </ul>
     </div>
+    @if(user){
+    <div>
+      <span class="text-primary">
+        {{ user.name }}
+      </span>
+      <app-logout-button />
+    </div>
+    }
   </div>
 </nav>
 

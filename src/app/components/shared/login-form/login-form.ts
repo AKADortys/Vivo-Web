@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../services/auth';
 import { AlertHandler } from '../../../services/alert-handler';
+import { AuthUserService } from '../../../services/auth-user';
+import { User } from '../../../interfaces/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -21,7 +24,9 @@ export class LoginForm {
 
   constructor(
     private authService: AuthService,
-    private alertHandler: AlertHandler
+    private alertHandler: AlertHandler,
+    private AuthUService: AuthUserService,
+    private router: Router
   ) {}
 
   form: FormGroup = new FormGroup({
@@ -43,6 +48,8 @@ export class LoginForm {
             `Bienvenue ${response.data?.name} ${response.data?.lastName} !`
           );
           this.form.reset();
+          this.AuthUService.setUser(response.data ?? null);
+          this.router.navigate(['/']);
         },
         error: (error) => {
           console.error('Login failed:', error);

@@ -21,9 +21,9 @@ export class AuthUserService {
   setUser(user: User | null): void {
     this.userSubject.next(user);
     if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('Vivo-web-user', JSON.stringify(user));
     } else {
-      localStorage.removeItem('user');
+      localStorage.removeItem('Vivo-web-user');
     }
   }
 

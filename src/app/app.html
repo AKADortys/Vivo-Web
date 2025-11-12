@@ -1,14 +1,120 @@
-<div class="">
-  <div
-    class="d-md-flex flex-wrap gap-0 justify-content-evenly align-items-center"
-  >
-    <app-add-product
-      class="col-11 col-sm-10 col-md-9 col-lg-8 col-xl-6 col-xxl-4"
-    />
-    <app-login-form class="col-11 col-xxl-4 mb-4 mb-md-0" />
-    <app-register-form class="col-11 col-xxl-4 mb-4 mb-md-0" />
-    <app-users-list class="col-11 col-xxl-9 card p-2" />
-    <app-products-list class="col-11 col-xxl-9 card p-2" />
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/">
+      <i class="bi bi-house-door-fill me-2"></i>Au P'tit Vivo
+    </a>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item me-3">
+          <a class="nav-link" routerLink="/" routerLinkActive="active">
+            <i class="bi bi-house me-1"></i>Accueil
+          </a>
+        </li>
+        <li class="nav-item me-3">
+          <a class="nav-link" routerLink="/products" routerLinkActive="active">
+            <i class="bi bi-shop me-1"></i>Produits
+          </a>
+        </li>
+        <li class="nav-item me-3">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">
+            <i class="bi bi-box-arrow-in-right me-1"></i>Connexion
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-light px-3 py-1" routerLink="/register">
+            <i class="bi bi-person-plus me-1"></i>Inscription
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- LAYOUT PRINCIPAL -->
+<div class="container-fluid" style="padding-top: 70px">
+  <div class="row">
+    <!-- SIDEBAR -->
+    <nav
+      id="sidebarMenu"
+      class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse border-end vh-100 position-fixed top-0 start-0 mt-5 pt-3"
+    >
+      <ul class="nav flex-column">
+        <li class="nav-item mb-1">
+          <a
+            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            routerLink="/"
+            routerLinkActive="active"
+          >
+            <i class="bi bi-house-door-fill me-2"></i>Accueil
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a
+            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            routerLink="/products"
+            routerLinkActive="active"
+          >
+            <i class="bi bi-shop me-2"></i>Produits
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a
+            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            routerLink="/dashboard"
+            routerLinkActive="active"
+          >
+            <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a
+            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            routerLink="/register"
+            routerLinkActive="active"
+          >
+            <i class="bi bi-person-plus me-2"></i>Inscription
+          </a>
+        </li>
+        <li class="nav-item mb-1">
+          <a
+            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            routerLink="/login"
+            routerLinkActive="active"
+          >
+            <i class="bi bi-box-arrow-in-right me-2"></i>Connexion
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            routerLink="/reset-password"
+            routerLinkActive="active"
+          >
+            <i class="bi bi-arrow-repeat me-2"></i>Réinitialiser mot de passe
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- CONTENU -->
+    <main
+      class="col-md-9 ms-sm-auto col-lg-10 offset-lg-2 px-md-4 py-4 bg-white min-vh-100"
+    >
+      <router-outlet></router-outlet>
+    </main>
   </div>
 </div>
-<router-outlet />

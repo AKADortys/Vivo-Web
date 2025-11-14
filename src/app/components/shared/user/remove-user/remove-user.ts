@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, signal } from '@angular/core';
-import { UserService } from '../../../services/user';
-import { AlertHandler } from '../../../services/alert-handler';
+import { UserService } from '../../../../services/user';
+import { AlertHandler } from '../../../../services/alert-handler';
 
 @Component({
   selector: 'app-remove-user',

@@ -1,6 +1,6 @@
 import { Component, Input, computed } from '@angular/core';
-import { Product } from '../../../interfaces/product';
-import { FormatDatePipe } from '../../../pipes/format-date-pipe';
+import { Product } from '../../../../interfaces/product';
+import { FormatDatePipe } from '../../../../pipes/format-date-pipe';
 
 @Component({
   selector: 'app-product-card',

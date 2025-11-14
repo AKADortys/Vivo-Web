@@ -15,9 +15,9 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { UserService } from '../../../services/user';
-import { User } from '../../../interfaces/user';
-import { AlertHandler } from '../../../services/alert-handler';
+import { UserService } from '../../../../services/user';
+import { User } from '../../../../interfaces/user';
+import { AlertHandler } from '../../../../services/alert-handler';
 
 @Component({
   selector: 'app-user-edit',

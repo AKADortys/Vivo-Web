@@ -1,8 +1,8 @@
 import { Component, Query, signal } from '@angular/core';
-import { Product, ResponseProducts } from '../../../interfaces/product';
-import { ProductService } from '../../../services/product';
-import { Pagination } from '../pagination/pagination';
-import { QueryHandlerBar } from '../query-handler-bar/query-handler-bar';
+import { Product, ResponseProducts } from '../../../../interfaces/product';
+import { ProductService } from '../../../../services/product';
+import { Pagination } from '../../utils/pagination/pagination';
+import { QueryHandlerBar } from '../../utils/query-handler-bar/query-handler-bar';
 import { ProductCard } from '../product-card/product-card';
 
 @Component({

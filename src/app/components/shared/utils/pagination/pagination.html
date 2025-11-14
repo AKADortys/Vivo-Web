@@ -1,5 +1,7 @@
 <nav aria-label="Pagination">
-  <ul class="pagination justify-content-start align-items-center shadow-sm">
+  <ul
+    class="pagination justify-content-start align-items-center bg-light p-1 rounded-2"
+  >
     <!-- Bouton Précédent -->
     <li class="page-item" [class.disabled]="currentPage() === 1">
       <button class="page-link" (click)="prevPage()" aria-label="Précédent">

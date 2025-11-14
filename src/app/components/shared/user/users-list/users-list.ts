@@ -1,10 +1,10 @@
 import { Component, OnInit, signal, ViewChild } from '@angular/core';
-import { User, ResponseUsers } from '../../../interfaces/user';
-import { UserService } from '../../../services/user';
+import { User, ResponseUsers } from '../../../../interfaces/user';
+import { UserService } from '../../../../services/user';
 import { UserCard } from '../user-card/user-card';
-import { Pagination } from '../pagination/pagination';
-import { QueryHandlerBar } from '../query-handler-bar/query-handler-bar';
-import { Modal } from '../modal/modal';
+import { Pagination } from '../../utils/pagination/pagination';
+import { QueryHandlerBar } from '../../utils/query-handler-bar/query-handler-bar';
+import { Modal } from '../../utils/modal/modal';
 import { UserEdit } from '../user-edit/user-edit';
 
 @Component({

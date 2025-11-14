@@ -2,8 +2,8 @@ import { Component, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ProductService } from '../../../services/product';
-import { AlertHandler } from '../../../services/alert-handler';
+import { ProductService } from '../../../../services/product';
+import { AlertHandler } from '../../../../services/alert-handler';
 @Component({
   selector: 'app-add-product',
   standalone: true,

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, input, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../interfaces/user';
-import { FormatDatePipe } from '../../../pipes/format-date-pipe';
+import { User } from '../../../../interfaces/user';
+import { FormatDatePipe } from '../../../../pipes/format-date-pipe';
 import { RemoveUser } from '../remove-user/remove-user';
 
 @Component({

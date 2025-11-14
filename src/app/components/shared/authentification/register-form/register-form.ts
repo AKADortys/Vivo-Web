@@ -8,10 +8,10 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { NewUser, ResponseUser } from '../../../interfaces/user';
-import { UserService } from '../../../services/user';
+import { NewUser, ResponseUser } from '../../../../interfaces/user';
+import { UserService } from '../../../../services/user';
 import { CommonModule } from '@angular/common';
-import { AlertHandler } from '../../../services/alert-handler';
+import { AlertHandler } from '../../../../services/alert-handler';
 @Component({
   selector: 'app-register-form',
   standalone: true,

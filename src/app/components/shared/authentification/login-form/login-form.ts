@@ -6,10 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AuthService } from '../../../services/auth';
-import { AlertHandler } from '../../../services/alert-handler';
-import { AuthUserService } from '../../../services/auth-user';
-import { User } from '../../../interfaces/user';
+import { AuthService } from '../../../../services/auth';
+import { AlertHandler } from '../../../../services/alert-handler';
+import { AuthUserService } from '../../../../services/auth-user';
+import { User } from '../../../../interfaces/user';
 import { Router } from '@angular/router';
 
 @Component({

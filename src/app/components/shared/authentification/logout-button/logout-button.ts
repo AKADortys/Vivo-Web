@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../../services/auth';
-import { AlertHandler } from '../../../services/alert-handler';
-import { AuthUserService } from '../../../services/auth-user';
+import { AuthService } from '../../../../services/auth';
+import { AlertHandler } from '../../../../services/alert-handler';
+import { AuthUserService } from '../../../../services/auth-user';
 import { Router } from '@angular/router';
 
 @Component({

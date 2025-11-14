@@ -21,7 +21,7 @@
   <!-- Affichage des utilisateurs -->
   <div class="row g-0 justify-content-around">
     @for (user of users(); track user._id) {
-    <div class="col-md-10 col-lg-9 col-xl-7 col-xxl-5 mb-3">
+    <div class="col-12 col-md-10 col-xxl-6 mb-4">
       <app-user-card
         [user]="user"
         (editUser)="onEditUser($event)"

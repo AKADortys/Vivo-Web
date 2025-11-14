@@ -4,6 +4,7 @@ import { RegisterForm } from '../../shared/authentification/register-form/regist
 @Component({
   selector: 'app-register',
   imports: [RegisterForm],
+  standalone: true,
   templateUrl: './register.html',
   styleUrl: './register.scss',
 })

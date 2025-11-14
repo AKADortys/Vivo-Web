@@ -30,7 +30,13 @@
             <i class="bi bi-shop me-1"></i>Produits
           </a>
         </li>
-        @if(user){
+        @if(user){ @if(user.role === "admin"){
+        <li class="nav-item me-3">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
+          </a>
+        </li>
+        }
         <li class="nav-item me-2">
           <span class="text-primary">
             {{ user.name }}
@@ -62,12 +68,12 @@
     <!-- SIDEBAR -->
     <nav
       id="sidebarMenu"
-      class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse border-end vh-100 position-fixed top-0 start-0 mt-5 pt-3"
+      class="col-md-3 col-lg-2 d-md-block bg-secondary sidebar collapse border-end vh-100 position-fixed top-0 start-0 mt-5 pt-3"
     >
       <ul class="nav flex-column">
         <li class="nav-item mb-1">
           <a
-            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            class="nav-link text-light d-flex align-items-center px-3 py-2"
             routerLink="/"
             routerLinkActive="active"
           >
@@ -76,7 +82,7 @@
         </li>
         <li class="nav-item mb-1">
           <a
-            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            class="nav-link text-light d-flex align-items-center px-3 py-2"
             routerLink="/products"
             routerLinkActive="active"
           >
@@ -86,7 +92,7 @@
         @if(!user){
         <li class="nav-item mb-1">
           <a
-            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            class="nav-link text-light d-flex align-items-center px-3 py-2"
             routerLink="/register"
             routerLinkActive="active"
           >
@@ -95,27 +101,27 @@
         </li>
         <li class="nav-item mb-1">
           <a
-            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            class="nav-link text-light d-flex align-items-center px-3 py-2"
             routerLink="/login"
             routerLinkActive="active"
           >
             <i class="bi bi-box-arrow-in-right me-2"></i>Connexion
           </a>
         </li>
-        }@else {
+        }@else { @if(user.role ==="admin"){
         <li class="nav-item mb-1">
           <a
-            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            class="nav-link text-light d-flex align-items-center px-3 py-2"
             routerLink="/dashboard"
             routerLinkActive="active"
           >
             <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
           </a>
         </li>
-        }
+        } }
         <li class="nav-item">
           <a
-            class="nav-link text-dark d-flex align-items-center px-3 py-2"
+            class="nav-link text-light d-flex align-items-center px-3 py-2"
             routerLink="/reset-password"
             routerLinkActive="active"
           >

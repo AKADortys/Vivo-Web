@@ -29,6 +29,12 @@ export class ProductEdit implements OnInit {
 
   productForm!: FormGroup;
   isLoading = signal<boolean>(false);
+  categoryOption = signal<string[]>([
+    'Plat principal',
+    'Dessert',
+    'Boisson',
+    'Divers',
+  ]);
   private _product: Product | null = null;
 
   @Input()
@@ -62,7 +68,7 @@ export class ProductEdit implements OnInit {
         Validators.minLength(20),
       ]),
       price: new FormControl(null, [Validators.required, Validators.min(0.01)]),
-      category: new FormControl('', [Validators.required]),
+      category: new FormControl([Validators.required]),
       available: new FormControl(false, [Validators.required]),
     });
   }

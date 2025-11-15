@@ -1,4 +1,4 @@
-import { Component, Query, signal, ViewChild } from '@angular/core';
+import { Component, signal, ViewChild } from '@angular/core';
 import { Product, ResponseProducts } from '../../../../interfaces/product';
 import { ProductService } from '../../../../services/product';
 import { Pagination } from '../../utils/pagination/pagination';

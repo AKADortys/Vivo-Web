@@ -85,17 +85,11 @@
     <label class="form-label fw-semibold">
       <i class="bi bi-list-ul me-1 text-primary"></i>Catégorie
     </label>
-    <input
-      type="text"
-      class="form-control"
-      formControlName="category"
-      [class.is-invalid]="
-        productForm.get('category')?.invalid &&
-        productForm.get('category')?.touched
-      "
-      placeholder="Entrez la catégorie du produit"
-    />
-
+    <select formControlName="category" class="form-select">
+      @for(option of categoryOption();track option){
+      <option value="{{ option }}">{{ option }}</option>
+      }
+    </select>
     @if (productForm.get('category')?.errors?.['required']) {
     <div class="invalid-feedback">La catégorie est requise.</div>
     }

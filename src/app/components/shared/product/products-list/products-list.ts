@@ -63,9 +63,6 @@ export class ProductsList {
         this.isLoading.set(false);
         this.errorMessage.set('Erreur lors du chargement des produits');
       },
-      complete: () => {
-        console.log('Product loading completed.');
-      },
     });
   }
 

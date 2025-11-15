@@ -60,12 +60,8 @@ export class UsersList implements OnInit {
         this.isLoading.set(false);
       },
       error: (error) => {
-        console.error('Error loading users:', error);
         this.isLoading.set(false);
-        this.errorMessage.set('Erreur lors du chargement des utilisateurs');
-      },
-      complete: () => {
-        console.log('User loading completed.');
+        this.errorMessage.set('Error loading users:' + error.error.message);
       },
     });
   }

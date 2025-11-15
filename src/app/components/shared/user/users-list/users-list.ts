@@ -80,6 +80,12 @@ export class UsersList implements OnInit {
     this.selectedUser.set(user);
     this.openModal();
   }
+
+  onEditedUser() {
+    this.myModal.close();
+    this.loadUsers(this.currentPage(), this.itemsPerPage(), this.searchQuery());
+  }
+
   openModal() {
     this.myModal.open();
   }

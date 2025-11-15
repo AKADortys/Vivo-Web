@@ -1,38 +1,40 @@
-import { Component, Query, signal } from '@angular/core';
+import { Component, Query, signal, ViewChild } from '@angular/core';
 import { Product, ResponseProducts } from '../../../../interfaces/product';
 import { ProductService } from '../../../../services/product';
 import { Pagination } from '../../utils/pagination/pagination';
 import { QueryHandlerBar } from '../../utils/query-handler-bar/query-handler-bar';
 import { ProductCard } from '../product-card/product-card';
+import { Modal } from '../../utils/modal/modal';
+import { ProductEdit } from '../product-edit/product-edit';
 
 @Component({
   selector: 'app-products-list',
-  imports: [QueryHandlerBar, Pagination, ProductCard],
+  imports: [QueryHandlerBar, Pagination, ProductCard, Modal, ProductEdit],
   templateUrl: './products-list.html',
   styleUrl: './products-list.scss',
 })
 export class ProductsList {
+  @ViewChild('editModal') modal!: Modal;
   products = signal<Product[]>([]);
-  isLoading: boolean;
-  errorMessage: string | null = null;
+  isLoading = signal<boolean>(false);
+  errorMessage = signal<string | null>(null);
   totalItems = signal<number>(0);
   itemsPerPage = signal<number>(10);
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   searchQuery = signal<string>('');
-  constructor(private productService: ProductService) {
-    this.isLoading = false;
-  }
+  selectedProduct = signal<Product | null>(null);
+  constructor(private productService: ProductService) {}
 
   ngOnInit() {
-    this.loadUsers();
+    this.loadProduct();
   }
 
   resetProps() {
-    this.isLoading = true;
-    this.errorMessage = null;
+    this.isLoading.set(true);
+    this.errorMessage.set(null);
   }
-  loadUsers(
+  loadProduct(
     page: number = this.currentPage(),
     limit: number = this.itemsPerPage(),
     search: string = ''
@@ -45,12 +47,12 @@ export class ProductsList {
         this.itemsPerPage.set(limit);
         this.totalItems.set(response.data?.total || this.products().length);
         this.totalPages.set(Math.ceil(this.totalItems() / this.itemsPerPage()));
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
       error: (error) => {
         console.error('Error loading products:', error);
-        this.isLoading = false;
-        this.errorMessage = 'Erreur lors du chargement des produits';
+        this.isLoading.set(false);
+        this.errorMessage.set('Erreur lors du chargement des produits');
       },
       complete: () => {
         console.log('Product loading completed.');
@@ -60,16 +62,25 @@ export class ProductsList {
 
   onSearchChange(query: string): void {
     this.searchQuery.set(query);
-    this.loadUsers(1, this.itemsPerPage(), query);
+    this.loadProduct(1, this.itemsPerPage(), query);
   }
 
   onPageSizeChange(size: number): void {
     this.itemsPerPage.set(size);
-    this.loadUsers(1, size, this.searchQuery());
+    this.loadProduct(1, size, this.searchQuery());
   }
 
   onPageChange(page: number) {
     this.currentPage.set(page);
-    this.loadUsers(page, this.itemsPerPage(), this.searchQuery());
+    this.loadProduct(page, this.itemsPerPage(), this.searchQuery());
+  }
+
+  onEditProduct(prod: Product): void {
+    this.selectedProduct.set(prod);
+    this.modal.open();
+  }
+
+  onRemoveProduct(): void {
+    this.loadProduct();
   }
 }

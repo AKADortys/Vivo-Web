@@ -1,13 +1,13 @@
 export interface Product {
-  readonly _id: string;
+  _id: string;
   label: string;
   description: string;
   price: number;
   category: string;
   available: boolean;
-  readonly createdAt: string;
-  readonly updatedAt: string;
-  readonly __v: number;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 
 export interface NewProduct {

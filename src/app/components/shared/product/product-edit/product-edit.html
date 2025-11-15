@@ -1,0 +1,144 @@
+<form
+  [formGroup]="productForm"
+  (ngSubmit)="onSubmit()"
+  novalidate
+  class="p-4 bg-light rounded-4 shadow-sm border"
+>
+  <h4 class="mb-4">
+    <i class="bi bi-box-seam text-primary me-2"></i>Modifier le produit
+  </h4>
+
+  <!-- Label -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-tag me-1 text-primary"></i>Label
+    </label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="label"
+      [class.is-invalid]="
+        productForm.get('label')?.invalid && productForm.get('label')?.touched
+      "
+      placeholder="Entrez le label du produit"
+    />
+
+    @if (productForm.get('label')?.errors?.['required']) {
+    <div class="invalid-feedback">Le label est requis.</div>
+    } @else if (productForm.get('label')?.errors?.['minlength']) {
+    <div class="invalid-feedback">
+      Le label doit contenir au moins 5 caractères.
+    </div>
+    }
+  </div>
+
+  <!-- Description -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-card-text me-1 text-primary"></i>Description
+    </label>
+    <textarea
+      class="form-control"
+      rows="3"
+      formControlName="description"
+      [class.is-invalid]="
+        productForm.get('description')?.invalid &&
+        productForm.get('description')?.touched
+      "
+      placeholder="Entrez une description"
+    ></textarea>
+
+    @if (productForm.get('description')?.errors?.['required']) {
+    <div class="invalid-feedback">La description est requise.</div>
+    } @else if (productForm.get('description')?.errors?.['minlength']) {
+    <div class="invalid-feedback">
+      La description doit contenir au moins 20 caractères.
+    </div>
+    }
+  </div>
+
+  <!-- Prix -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-cash-stack me-1 text-primary"></i>Prix
+    </label>
+    <input
+      type="number"
+      step="0.01"
+      class="form-control"
+      formControlName="price"
+      [class.is-invalid]="
+        productForm.get('price')?.invalid && productForm.get('price')?.touched
+      "
+      placeholder="Ex: 19.99"
+    />
+
+    @if (productForm.get('price')?.errors?.['required']) {
+    <div class="invalid-feedback">Le prix est requis.</div>
+    } @else if (productForm.get('price')?.errors?.['min']) {
+    <div class="invalid-feedback">Le prix doit être supérieur à 0.</div>
+    }
+  </div>
+
+  <!-- Catégorie -->
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-list-ul me-1 text-primary"></i>Catégorie
+    </label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="category"
+      [class.is-invalid]="
+        productForm.get('category')?.invalid &&
+        productForm.get('category')?.touched
+      "
+      placeholder="Entrez la catégorie du produit"
+    />
+
+    @if (productForm.get('category')?.errors?.['required']) {
+    <div class="invalid-feedback">La catégorie est requise.</div>
+    }
+  </div>
+
+  <!-- Disponibilité -->
+  <div class="mb-4">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-toggle-on me-1 text-primary"></i>Disponible
+    </label>
+    <select
+      class="form-select"
+      formControlName="available"
+      [class.is-invalid]="
+        productForm.get('available')?.invalid &&
+        productForm.get('available')?.touched
+      "
+    >
+      <option value="">Sélectionnez</option>
+      <option value="true">Oui</option>
+      <option value="false">Non</option>
+    </select>
+
+    @if (productForm.get('available')?.errors?.['required']) {
+    <div class="invalid-feedback">
+      Veuillez indiquer si le produit est disponible.
+    </div>
+    }
+  </div>
+
+  <!-- Bouton -->
+  <button
+    type="submit"
+    class="btn btn-primary w-100 py-2 d-flex justify-content-center align-items-center"
+    [disabled]="productForm.invalid || isLoading()"
+  >
+    <i class="bi bi-save me-2"></i>
+    @if (!isLoading()) { Enregistrer } @else {
+    <span
+      class="spinner-border spinner-border-sm me-2"
+      role="status"
+      aria-hidden="true"
+    ></span>
+    En cours... }
+  </button>
+</form>

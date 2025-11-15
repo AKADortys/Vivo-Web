@@ -54,6 +54,8 @@
   [currentPage]="currentPage()"
   (pageChange)="onPageChange($event)"
 />
+
+<!-- Modal Edit -->
 <app-modal #editModal title="Eddition utilisateur">
   <app-user-edit
     [user]="selectedUser()"

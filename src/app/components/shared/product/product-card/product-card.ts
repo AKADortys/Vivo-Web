@@ -1,4 +1,4 @@
-import { Component, Input, computed } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { Product } from '../../../../interfaces/product';
 import { FormatDatePipe } from '../../../../pipes/format-date-pipe';
 
@@ -9,5 +9,15 @@ import { FormatDatePipe } from '../../../../pipes/format-date-pipe';
   styleUrl: './product-card.scss',
 })
 export class ProductCard {
-  @Input() product: Product | null = null;
+  product = input.required<Product>();
+  @Output() editProduct = new EventEmitter<Product>();
+  @Output() removeProduct = new EventEmitter<boolean>();
+
+  public onEdit() {
+    this.editProduct.emit(this.product());
+  }
+
+  public onRemove() {
+    this.removeProduct.emit(true);
+  }
 }

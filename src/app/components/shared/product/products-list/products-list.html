@@ -21,8 +21,12 @@
   <!-- Affichage des utilisateurs -->
   <div class="row justify-content-around">
     @for (product of products(); track product._id) {
-    <div class="col-12 col-md-10 col-xl-6 mb-4" [class.loading]="isLoading">
-      <app-product-card [product]="product" />
+    <div class="col-12 col-md-10 col-xl-6 mb-4" [class.loading]="isLoading()">
+      <app-product-card
+        [product]="product"
+        (editProduct)="onEditProduct($event)"
+        (removeProduct)="onRemoveProduct()"
+      />
     </div>
     }
   </div>
@@ -35,3 +39,8 @@
   (pageChange)="onPageChange($event)"
   class="col-12"
 />
+
+<!-- Modal Edit -->
+<app-modal #editModal title="Eddition produit">
+  <app-product-edit [product]="selectedProduct()" (save)="loadProduct()" />
+</app-modal>

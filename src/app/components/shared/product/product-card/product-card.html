@@ -1,19 +1,19 @@
-@if (product) {
+@if (product()) {
 <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
   <div
     class="card-header bg-light d-flex justify-content-between align-items-center py-3 px-4"
   >
     <h5 class="mb-0 fw-semibold text-dark">
-      <i class="bi bi-box-seam me-2 text-primary"></i>{{ product.label }}
+      <i class="bi bi-box-seam me-2 text-primary"></i>{{ product().label }}
     </h5>
     <span
       class="badge px-3 py-2 rounded-pill {{
-        product.available
+        product().available
           ? 'bg-success-subtle text-success'
           : 'bg-danger-subtle text-danger'
       }}"
     >
-      {{ product.available ? "Disponible" : "Indisponible" }}
+      {{ product().available ? "Disponible" : "Indisponible" }}
     </span>
   </div>
 
@@ -22,19 +22,19 @@
       <small class="text-muted d-block mb-1">
         <i class="bi bi-tag me-1"></i>Catégorie
       </small>
-      <span class="fw-medium">{{ product.category }}</span>
+      <span class="fw-medium">{{ product().category }}</span>
     </div>
 
     <p class="text-secondary mb-4">
-      {{ product.description }}
+      {{ product().description }}
     </p>
 
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="text-primary mb-0 fw-bold">
-        <i class="bi bi-currency-euro me-1"></i>{{ product.price }}
+        <i class="bi bi-currency-euro me-1"></i>{{ product().price }}
       </h5>
       <div>
-        <button class="btn btn-sm btn-outline-primary me-2">
+        <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit()">
           <i class="bi bi-pencil-square me-1"></i>Modifier
         </button>
         <button class="btn btn-sm btn-outline-danger">
@@ -48,11 +48,11 @@
     >
       <span>
         <i class="bi bi-calendar-plus me-1"></i>Créé le
-        {{ product.createdAt | formatDate }}
+        {{ product().createdAt | formatDate }}
       </span>
       <span>
         <i class="bi bi-calendar-check me-1"></i>Mis à jour le
-        {{ product.updatedAt | formatDate }}
+        {{ product().updatedAt | formatDate }}
       </span>
     </div>
   </div>

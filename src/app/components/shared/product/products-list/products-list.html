@@ -17,11 +17,11 @@
   (pageChange)="onPageChange($event)"
   class="col-12"
 />
-<div class="container rounded p-4 my-4 border shadow-sm">
+<div class="container-fluid rounded p-4 border shadow-sm">
   <!-- Affichage des utilisateurs -->
   <div class="row justify-content-around">
     @for (product of products(); track product._id) {
-    <div class="col-12 col-md-10 col-xl-6 mb-4" [class.loading]="isLoading()">
+    <div class="col-12 col-md-10 col-xl-6 mb-2" [class.loading]="isLoading()">
       <app-product-card
         [product]="product"
         (editProduct)="onEditProduct($event)"
@@ -42,5 +42,5 @@
 
 <!-- Modal Edit -->
 <app-modal #editModal title="Eddition produit">
-  <app-product-edit [product]="selectedProduct()" (save)="loadProduct()" />
+  <app-product-edit [product]="selectedProduct()" (save)="onEditedProduct()" />
 </app-modal>

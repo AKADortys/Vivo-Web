@@ -80,6 +80,11 @@ export class ProductsList {
     this.modal.open();
   }
 
+  onEditedProduct(): void {
+    this.modal.close();
+    this.loadProduct();
+  }
+
   onRemoveProduct(): void {
     this.loadProduct();
   }

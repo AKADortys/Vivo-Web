@@ -1,10 +1,11 @@
 import { Component, EventEmitter, input, Output } from '@angular/core';
 import { Product } from '../../../../interfaces/product';
 import { FormatDatePipe } from '../../../../pipes/format-date-pipe';
+import { RemoveProduct } from '../remove-product/remove-product';
 
 @Component({
   selector: 'app-product-card',
-  imports: [FormatDatePipe],
+  imports: [FormatDatePipe, RemoveProduct],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss',
 })

@@ -37,9 +37,10 @@
         <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit()">
           <i class="bi bi-pencil-square me-1"></i>Modifier
         </button>
-        <button class="btn btn-sm btn-outline-danger">
-          <i class="bi bi-trash me-1"></i>Supprimer
-        </button>
+        <app-remove-product
+          (onRemoved)="onRemove()"
+          [productId]="product()._id"
+        />
       </div>
     </div>
 

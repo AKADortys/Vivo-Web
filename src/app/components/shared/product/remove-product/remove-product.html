@@ -1,0 +1,13 @@
+<button
+  class="btn btn-sm btn-outline-danger me-2"
+  [disabled]="isLoading() || !productId"
+  (click)="onRemove()"
+  title="Supprimer ce produit définitivement"
+>
+  @if(isLoading()){
+  <span> <i class="fa fa-spinner fa-spin"></i> Suppression... </span>
+  }@else{
+  <i class="bi bi-trash3-fill"></i>
+  <span>Supprimer</span>
+  }
+</button>

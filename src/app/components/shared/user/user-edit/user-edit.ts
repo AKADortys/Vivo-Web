@@ -138,8 +138,8 @@ export class UserEdit implements OnInit {
             this.httpService.updateUser(this._user!._id, formValue).subscribe({
               next: () => {
                 this.alertHandler.showSuccess(
-                  'User updated successfully',
-                  'success'
+                  'Utilisateur modifié !',
+                  'Succès'
                 );
                 this.isLoading.set(false);
                 this.save.emit(true);

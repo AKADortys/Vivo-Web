@@ -6,19 +6,28 @@ import { Pagination } from '../../utils/pagination/pagination';
 import { QueryHandlerBar } from '../../utils/query-handler-bar/query-handler-bar';
 import { Modal } from '../../utils/modal/modal';
 import { UserEdit } from '../user-edit/user-edit';
+import { RegisterForm } from '../../authentification/register-form/register-form';
 
 @Component({
   selector: 'app-users-list',
-  imports: [UserCard, Pagination, QueryHandlerBar, UserEdit, Modal],
+  imports: [
+    UserCard,
+    Pagination,
+    QueryHandlerBar,
+    UserEdit,
+    Modal,
+    RegisterForm,
+  ],
   standalone: true,
   templateUrl: './users-list.html',
   styleUrl: './users-list.scss',
 })
 export class UsersList implements OnInit {
-  @ViewChild('editModal') myModal!: Modal;
+  @ViewChild('editModal') editModal!: Modal;
+  @ViewChild('addModal') addModal!: Modal;
   users = signal<User[]>([]);
   isLoading = signal<boolean>(false);
-  errorMessage: string | null = null;
+  errorMessage = signal<string | null>(null);
   totalItems = signal<number>(0);
   itemsPerPage = signal<number>(10);
   currentPage = signal<number>(1);
@@ -33,7 +42,7 @@ export class UsersList implements OnInit {
 
   resetProps() {
     this.isLoading.set(true);
-    this.errorMessage = null;
+    this.errorMessage.set(null);
   }
   loadUsers(
     page: number = this.currentPage(),
@@ -53,7 +62,7 @@ export class UsersList implements OnInit {
       error: (error) => {
         console.error('Error loading users:', error);
         this.isLoading.set(false);
-        this.errorMessage = 'Erreur lors du chargement des utilisateurs';
+        this.errorMessage.set('Erreur lors du chargement des utilisateurs');
       },
       complete: () => {
         console.log('User loading completed.');
@@ -78,16 +87,21 @@ export class UsersList implements OnInit {
 
   onEditUser(user: User) {
     this.selectedUser.set(user);
-    this.openModal();
+    this.editModal.open();
   }
 
   onEditedUser() {
-    this.myModal.close();
+    this.editModal.close();
     this.loadUsers(this.currentPage(), this.itemsPerPage(), this.searchQuery());
   }
 
-  openModal() {
-    this.myModal.open();
+  onAddUser() {
+    this.addModal.open();
+  }
+
+  onAddedUser() {
+    this.addModal.close();
+    this.loadUsers();
   }
 
   public onRemoveUser(): void {

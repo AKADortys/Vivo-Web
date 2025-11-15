@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -14,6 +14,7 @@ import { AlertHandler } from '../../../../services/alert-handler';
 export class AddProduct {
   productForm!: FormGroup;
   isLoading = signal<boolean>(false);
+  @Output() submited = new EventEmitter<boolean>(false);
 
   constructor(
     private fb: FormBuilder,
@@ -48,6 +49,7 @@ export class AddProduct {
       next: (response) => {
         this.alertHandler.showSuccess('Produit ajouté !', response.message);
         this.isLoading.set(false);
+        this.submited.emit(true);
       },
       error: (error) => {
         this.alertHandler.showError(

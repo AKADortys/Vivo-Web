@@ -6,15 +6,24 @@ import { QueryHandlerBar } from '../../utils/query-handler-bar/query-handler-bar
 import { ProductCard } from '../product-card/product-card';
 import { Modal } from '../../utils/modal/modal';
 import { ProductEdit } from '../product-edit/product-edit';
+import { AddProduct } from '../add-product/add-product';
 
 @Component({
   selector: 'app-products-list',
-  imports: [QueryHandlerBar, Pagination, ProductCard, Modal, ProductEdit],
+  imports: [
+    QueryHandlerBar,
+    Pagination,
+    ProductCard,
+    Modal,
+    ProductEdit,
+    AddProduct,
+  ],
   templateUrl: './products-list.html',
   styleUrl: './products-list.scss',
 })
 export class ProductsList {
-  @ViewChild('editModal') modal!: Modal;
+  @ViewChild('editModal') editModal!: Modal;
+  @ViewChild('addModal') addModal!: Modal;
   products = signal<Product[]>([]);
   isLoading = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
@@ -77,11 +86,20 @@ export class ProductsList {
 
   onEditProduct(prod: Product): void {
     this.selectedProduct.set(prod);
-    this.modal.open();
+    this.editModal.open();
   }
 
   onEditedProduct(): void {
-    this.modal.close();
+    this.editModal.close();
+    this.loadProduct();
+  }
+
+  onAddProduct() {
+    this.addModal.open();
+  }
+
+  onAddedProduct() {
+    this.addModal.close();
     this.loadProduct();
   }
 

@@ -1,13 +1,19 @@
-<div class="mb-2 col-12 col-md-8 col-xxl-6">
-  <h3 class="display-5">Liste des utilisateurs</h3>
+<h3 class="display-5">Liste des utilisateurs</h3>
+<div class="mb-2 row justify-content-around align-items-start">
   <!-- Composant de gestion des requêtes (recherche) -->
   <app-query-handler-bar
     [searchQuery]="searchQuery()"
     (searchChange)="onSearchChange($event)"
     (pageSizeChange)="onPageSizeChange($event)"
     [PageSize]="itemsPerPage()"
-    class="col-12 col-md-10 mx-auto"
+    class="col-12 col-md-8"
   />
+  <button
+    class="col-12 col-md-4 col-xl-3 col-xxl-2 btn btn-primary btn-lg"
+    (click)="onAddUser()"
+  >
+    <i class="bi bi-plus-circle-fill"></i> Ajouter
+  </button>
 </div>
 <!-- Composant de pagination -->
 <app-pagination
@@ -41,9 +47,9 @@
   }
 
   <!-- Affichage des erreurs -->
-  @if (errorMessage) {
-  <div class="alert alert-danger position-absolute">
-    {{ errorMessage }}
+  @if (errorMessage()) {
+  <div class="alert alert-danger text-center">
+    {{ errorMessage() }}
   </div>
   }
 </div>
@@ -54,6 +60,10 @@
   [currentPage]="currentPage()"
   (pageChange)="onPageChange($event)"
 />
+
+<app-modal #addModal title="Ajout utilisateur">
+  <app-register-form (submited)="onAddedUser()" />
+</app-modal>
 
 <!-- Modal Edit -->
 <app-modal #editModal title="Eddition utilisateur">

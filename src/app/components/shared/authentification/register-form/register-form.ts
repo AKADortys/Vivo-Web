@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
   FormControl,
   ReactiveFormsModule,
@@ -23,6 +23,7 @@ export class RegisterForm {
   userForm: FormGroup;
   errorMessage: string | null = null;
   isLoading: boolean = false;
+  @Output() submited = new EventEmitter<boolean>(false);
 
   constructor(
     private userService: UserService,
@@ -81,6 +82,7 @@ export class RegisterForm {
         );
         this.userForm.reset();
         this.isLoading = false;
+        this.submited.emit(true);
       },
       error: (error: any) => {
         this.errorMessage = error?.error?.message || 'Une erreur est survenue';

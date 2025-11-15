@@ -1,13 +1,19 @@
-<div class="mb-2 col-12 col-md-8 col-xxl-6">
-  <h3 class="display-5">Listes des produits</h3>
+<h3 class="display-5">Listes des produits</h3>
+<div class="mb-2 row justify-content-around align-items-start">
   <!-- Composant de gestion des requêtes (recherche) -->
   <app-query-handler-bar
     [searchQuery]="searchQuery()"
     (searchChange)="onSearchChange($event)"
     (pageSizeChange)="onPageSizeChange($event)"
     [PageSize]="itemsPerPage()"
-    class="col-12 col-md-10 mx-auto"
+    class="col-12 col-md-8"
   />
+  <button
+    class="col-12 col-md-4 col-xl-3 col-xxl-2 btn btn-primary btn-lg"
+    (click)="onAddProduct()"
+  >
+    <i class="bi bi-plus-circle-fill"></i> Ajouter
+  </button>
 </div>
 <!-- Composant de pagination -->
 <app-pagination
@@ -39,6 +45,10 @@
   (pageChange)="onPageChange($event)"
   class="col-12"
 />
+
+<app-modal #addModal title="Ajouter un produit">
+  <app-add-product (submited)="onAddedProduct()" />
+</app-modal>
 
 <!-- Modal Edit -->
 <app-modal #editModal title="Eddition produit">

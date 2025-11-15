@@ -90,7 +90,7 @@ export class UsersList implements OnInit {
     this.myModal.open();
   }
 
-  public onRemoveUser() {
+  public onRemoveUser(): void {
     this.loadUsers();
   }
 }

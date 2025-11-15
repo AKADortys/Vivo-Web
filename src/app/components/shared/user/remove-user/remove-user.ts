@@ -10,7 +10,7 @@ import { AlertHandler } from '../../../../services/alert-handler';
 })
 export class RemoveUser {
   @Input() userId?: string;
-  @Output() removed = new EventEmitter<boolean>();
+  @Output() removed = new EventEmitter<boolean>(false);
   isLoading = signal<boolean>(false);
 
   constructor(

@@ -78,6 +78,7 @@ export class UserEdit implements OnInit {
           Validators.pattern('^(?:(?:\\+33|0)[67]\\d{8}|(?:\\+32|0)4\\d{8})$'),
         ]),
         mail: new FormControl('', [Validators.required, Validators.email]),
+        isActive: new FormControl(),
       },
       { validators: this.passwordsMatch }
     );
@@ -89,6 +90,7 @@ export class UserEdit implements OnInit {
       lastName: user.lastName,
       phone: user.phone,
       mail: user.mail,
+      isActive: user.isActive,
     });
     this.userForm.get('password')?.setValue('');
     this.userForm.get('cPassword')?.setValue('');

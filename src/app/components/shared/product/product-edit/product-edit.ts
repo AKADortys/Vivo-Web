@@ -91,9 +91,7 @@ export class ProductEdit implements OnInit {
 
       // Si la valeur est différente, on l'ajoute
       if (newValue !== oldValue && newValue !== null && newValue !== '') {
-        // Conversion string → boolean pour "available"
-        if (key === 'available') payload[key] = (newValue === 'true') as any;
-        else payload[key] = newValue as any;
+        payload[key] = newValue as any;
       }
     }
 

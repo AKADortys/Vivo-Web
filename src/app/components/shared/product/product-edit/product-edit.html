@@ -102,28 +102,17 @@
   </div>
 
   <!-- Disponibilité -->
-  <div class="mb-4">
-    <label class="form-label fw-semibold">
-      <i class="bi bi-toggle-on me-1 text-primary"></i>Disponible
-    </label>
-    <select
-      class="form-select"
+  <div class="mb-4 form-check form-switch">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      role="switch"
+      id="switchCheckChecked"
       formControlName="available"
-      [class.is-invalid]="
-        productForm.get('available')?.invalid &&
-        productForm.get('available')?.touched
-      "
+    />
+    <label class="form-check-label" for="switchCheckChecked"
+      >Disponibilité</label
     >
-      <option value="">Sélectionnez</option>
-      <option value="true">Oui</option>
-      <option value="false">Non</option>
-    </select>
-
-    @if (productForm.get('available')?.errors?.['required']) {
-    <div class="invalid-feedback">
-      Veuillez indiquer si le produit est disponible.
-    </div>
-    }
   </div>
 
   <!-- Bouton -->

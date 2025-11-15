@@ -1,4 +1,55 @@
 <div class="row col-12 p-2 border rounded-2 shadow-lg">
-  <app-users-list class="" />
-  <app-products-list class="" />
+  <div class="accordion" id="mainAccordion">
+    <!-- USERS -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingUsers">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseUsers"
+          aria-expanded="true"
+          aria-controls="collapseUsers"
+        >
+          Utilisateurs
+        </button>
+      </h2>
+      <div
+        id="collapseUsers"
+        class="accordion-collapse collapse show"
+        aria-labelledby="headingUsers"
+        data-bs-parent="#mainAccordion"
+      >
+        <div class="accordion-body">
+          <app-users-list></app-users-list>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingProducts">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseProducts"
+          aria-expanded="false"
+          aria-controls="collapseProducts"
+        >
+          Produits
+        </button>
+      </h2>
+      <div
+        id="collapseProducts"
+        class="accordion-collapse collapse"
+        aria-labelledby="headingProducts"
+        data-bs-parent="#mainAccordion"
+      >
+        <div class="accordion-body">
+          <app-products-list></app-products-list>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

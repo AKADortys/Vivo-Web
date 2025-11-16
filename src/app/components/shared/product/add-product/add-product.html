@@ -77,15 +77,13 @@
 
   <!-- Catégorie -->
   <div class="mb-3">
-    <label class="form-label fw-semibold">
-      <i class="bi bi-grid-1x2 me-1 text-primary"></i>Catégorie
-    </label>
-    <input
-      type="text"
-      class="form-control"
-      formControlName="category"
-      placeholder="Ex: Électronique, Maison..."
-    />
+    <label class="form-label fw-semibold">Catégorie</label>
+    <select class="form-select" formControlName="category">
+      <option value="">Sélectionnez une catégorie</option>
+      @for(item of categoryOption(); track item){
+      <option value="{{ item }}">{{ item }}</option>
+      }
+    </select>
   </div>
 
   <!-- Disponibilité -->

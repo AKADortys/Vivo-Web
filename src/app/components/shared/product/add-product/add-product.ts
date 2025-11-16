@@ -14,6 +14,12 @@ import { AlertHandler } from '../../../../services/alert-handler';
 export class AddProduct {
   productForm!: FormGroup;
   isLoading = signal<boolean>(false);
+  categoryOption = signal<string[]>([
+    'Plat principal',
+    'Dessert',
+    'Boisson',
+    'Divers',
+  ]);
   @Output() submited = new EventEmitter<boolean>(false);
 
   constructor(

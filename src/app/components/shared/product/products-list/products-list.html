@@ -27,7 +27,7 @@
   <!-- Affichage des utilisateurs -->
   <div class="row justify-content-around">
     @for (product of products(); track product._id) {
-    <div class="col-12 col-md-10 col-xl-6 mb-2" [class.loading]="isLoading()">
+    <div class="col-12 col-xxl-6 mb-2" [class.loading]="isLoading()">
       <app-product-card
         [product]="product"
         (editProduct)="onEditProduct($event)"

@@ -44,13 +44,13 @@ export class ProductService {
     return this.http
       .put<ResponseProduct>(`${this.baseUrl}/${id}`, product)
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   deleteProduct(id: string): Observable<ResponseProduct> {
     return this.http
       .delete<ResponseProduct>(`${this.baseUrl}/${id}`)
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   private handleError(error: any) {
     console.error('HTTP Error:', error.message || error);

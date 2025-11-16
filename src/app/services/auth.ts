@@ -28,7 +28,7 @@ export class AuthService {
     return this.http
       .post<void>(`${this.baseUrl}/logout`, {})
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   ResetPassword(email: string): Observable<void> {
     return this.http

@@ -9,12 +9,11 @@ import {
 import { AuthService } from '../../../../services/auth';
 import { AlertHandler } from '../../../../services/alert-handler';
 import { AuthUserService } from '../../../../services/auth-user';
-import { User } from '../../../../interfaces/user';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   standalone: true,
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',

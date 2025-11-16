@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, signal } from '@angular/core';
 import {
   FormControl,
   ReactiveFormsModule,
@@ -21,8 +21,7 @@ import { AlertHandler } from '../../../../services/alert-handler';
 })
 export class RegisterForm {
   userForm: FormGroup;
-  errorMessage: string | null = null;
-  isLoading: boolean = false;
+  isLoading = signal<boolean>(false);
   @Output() submited = new EventEmitter<boolean>(false);
 
   constructor(
@@ -68,7 +67,7 @@ export class RegisterForm {
   };
 
   onSubmit() {
-    this.isLoading = true;
+    this.isLoading.set(true);
     if (!this.userForm.valid) return;
 
     const { name, lastName, mail, phone, password } = this.userForm.value;
@@ -81,15 +80,18 @@ export class RegisterForm {
           `Bienvenue ${response.data?.name} ${response.data?.lastName} !`
         );
         this.userForm.reset();
-        this.isLoading = false;
+        this.isLoading.set(false);
         this.submited.emit(true);
       },
       error: (error: any) => {
-        this.errorMessage = error?.error?.message || 'Une erreur est survenue';
-        this.isLoading = false;
+        this.alertHandler.showError(
+          error.error.message || error.message,
+          'Erreur'
+        );
+        this.isLoading.set(false);
       },
       complete: () => {
-        this.isLoading = false;
+        this.isLoading.set(false);
       },
     });
   }

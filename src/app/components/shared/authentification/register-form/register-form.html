@@ -167,22 +167,16 @@
       </p>
     </div>
   </div>
-  <!-- ERROR MESSAGE -->
-  <div class="mb-3">
-    <p *ngIf="errorMessage" class="text-danger">
-      {{ errorMessage }}
-    </p>
-  </div>
   <!-- BUTTONS -->
   <div class="d-flex justify-content-center gap-4">
     <button
-      [disabled]="isLoading || userForm.invalid"
+      [disabled]="isLoading() || userForm.invalid"
       class="btn btn-success"
       type="submit"
     >
       S'inscrire
     </button>
-    <button [disabled]="isLoading" class="btn btn-secondary" type="reset">
+    <button [disabled]="isLoading()" class="btn btn-secondary" type="reset">
       Réinitialiser
     </button>
   </div>

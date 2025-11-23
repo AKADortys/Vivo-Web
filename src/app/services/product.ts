@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../environements/environement';
 import {
   NewProduct,
   ResponseProduct,
@@ -13,14 +14,14 @@ import {
   providedIn: 'root',
 })
 export class ProductService {
-  private readonly baseUrl = `http://localhost:3000/products`;
+  private readonly baseUrl = `${environment.apiUrl}products`;
 
   constructor(private http: HttpClient) {}
 
   getProducts(page = 1, limit = 10, search = ''): Observable<ResponseProducts> {
     return this.http
       .get<ResponseProducts>(
-        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`
+        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`,
       )
       .pipe(catchError(this.handleError));
   } //
@@ -39,7 +40,7 @@ export class ProductService {
 
   updateProduct(
     id: string,
-    product: Partial<UpdateProduct>
+    product: Partial<UpdateProduct>,
   ): Observable<ResponseProduct> {
     return this.http
       .put<ResponseProduct>(`${this.baseUrl}/${id}`, product)

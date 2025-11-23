@@ -9,21 +9,22 @@ import {
   ResponseUser,
   ResponseUsers,
 } from '../interfaces/user';
+import { environment } from '../../environements/environement';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  private readonly baseUrl = `http://localhost:3000/users`;
+  private readonly baseUrl = `${environment.apiUrl}users`;
 
   constructor(private http: HttpClient) {}
 
   getUsers(
     page = 1,
     limit = 10,
-    search: string = ''
+    search: string = '',
   ): Observable<ResponseUsers> {
     return this.http
       .get<ResponseUsers>(
-        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`
+        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`,
       )
       .pipe(catchError(this.handleError));
   } //

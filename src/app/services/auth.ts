@@ -6,18 +6,19 @@ import {
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
+import { environment } from '../../environements/environement';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly baseUrl = `http://localhost:3000/auth`;
+  private readonly baseUrl = `${environment.apiUrl}auth`;
 
   constructor(private http: HttpClient) {}
 
   Login(
-    credentials: AuthentificationRequest
+    credentials: AuthentificationRequest,
   ): Observable<AuthentificationResponse> {
     return this.http
       .post<AuthentificationResponse>(`${this.baseUrl}/login`, credentials)

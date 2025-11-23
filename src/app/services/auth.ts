@@ -49,7 +49,7 @@ export class AuthService {
     return this.http
       .patch<void>(`${this.baseUrl}/confirm-account`, { token })
       .pipe(catchError(this.handleError));
-  }
+  } //
 
   private handleError(error: any) {
     console.error('HTTP Error:', error.message || error);

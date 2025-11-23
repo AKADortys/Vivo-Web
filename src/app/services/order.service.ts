@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../environements/environement';
 import {
   NewOrder,
   ResponseOrder,
@@ -12,7 +13,7 @@ import {
   providedIn: 'root',
 })
 export class OrderService {
-  private readonly baseUrl = `http://localhost:3000/orders`;
+  private readonly baseUrl = `${environment.apiUrl}orders`;
   constructor(private readonly http: HttpClient) {}
 
   private handleError(error: any) {
@@ -20,6 +21,7 @@ export class OrderService {
     return throwError(() => error);
   }
   getOrders(page = 1, limit = 10, search = ''): Observable<ResponseOrders> {
+    search = encodeURIComponent(search || '');
     return this.http
       .get<ResponseOrders>(
         `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`

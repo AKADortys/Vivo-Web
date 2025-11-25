@@ -52,4 +52,39 @@ export class AlertHandler {
       denyButtonText: 'Non',
     }).then((result) => result.isConfirmed);
   }
+
+  resetPassword(): void {
+    Swal.fire({
+      title: 'Indiquez votre adresse mail',
+      icon: 'question',
+      input: 'email',
+      inputAttributes: { autocapitalize: 'off' },
+      showCancelButton: true,
+      confirmButtonText: 'Envoyer ma demande',
+      showLoaderOnConfirm: true,
+      cancelButtonText: 'Retour',
+      allowOutsideClick: () => !Swal.isLoading(),
+      preConfirm: (mail: string) => {
+        return this.authService
+          .ResetPassword(mail)
+          .toPromise()
+          .then(
+            () => {
+              this.showSuccess(
+                'Votre demande a été traitée, surveillez votre boîte mail',
+                'Succès'
+              );
+              return true;
+            },
+            (err) => {
+              this.showError(
+                err.error.message || err.message,
+                "Une erreur s'est produite"
+              );
+              return false;
+            }
+          );
+      },
+    });
+  }
 }

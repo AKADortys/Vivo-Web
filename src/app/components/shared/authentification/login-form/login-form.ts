@@ -9,11 +9,11 @@ import {
 import { AuthService } from '../../../../services/auth';
 import { AlertHandler } from '../../../../services/alert-handler';
 import { AuthUserService } from '../../../../services/auth-user';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule],
   standalone: true,
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
@@ -73,5 +73,9 @@ export class LoginForm {
 
   onReset() {
     this.form.reset();
+  }
+
+  showReset() {
+    this.alertHandler.resetPassword();
   }
 }

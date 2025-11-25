@@ -18,7 +18,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   Login(
-    credentials: AuthentificationRequest,
+    credentials: AuthentificationRequest
   ): Observable<AuthentificationResponse> {
     return this.http
       .post<AuthentificationResponse>(`${this.baseUrl}/login`, credentials)
@@ -31,15 +31,15 @@ export class AuthService {
       .pipe(catchError(this.handleError));
   } //
 
-  ResetPassword(email: string): Observable<void> {
+  ResetPassword(mail: string): Observable<void> {
     return this.http
-      .post<void>(`${this.baseUrl}/password-reset`, { email })
+      .post<void>(`${this.baseUrl}/password-reset`, { mail })
       .pipe(catchError(this.handleError));
-  }
+  } //
 
-  PasswordChange(token: string, newPassword: string): Observable<void> {
+  PasswordChange(token: string | null, newPassword: string): Observable<void> {
     return this.http
-      .post<void>(`${this.baseUrl}/password-change`, {
+      .patch<void>(`${this.baseUrl}/password-recovery`, {
         token,
         newPassword,
       })

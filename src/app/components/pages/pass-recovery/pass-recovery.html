@@ -1,0 +1,79 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="container py-4 d-flex flex-column gap-3"
+>
+  <!-- Password -->
+  <div class="form-group">
+    <label for="password" class="form-label">
+      <i class="bi bi-lock-fill me-1"></i>
+      Nouveau mot de passe
+    </label>
+
+    <input
+      id="password"
+      type="password"
+      class="form-control"
+      formControlName="password"
+      placeholder="Votre nouveau mot de passe"
+    />
+
+    @if (form.get('password')?.touched && form.get('password')?.invalid) {
+    <div class="text-danger mt-1 small">
+      @if (form.get('password')?.errors?.['required']) {
+      <div>Champ requis.</div>
+      } @if (form.get('password')?.errors?.['pattern']) {
+      <div>
+        Doit contenir au moins 8 caractères, dont 1 majuscule et 1 chiffre.
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Confirm Password -->
+  <div class="form-group">
+    <label for="cPassword" class="form-label">
+      <i class="bi bi-lock-fill me-1"></i>
+      Confirmer le mot de passe
+    </label>
+
+    <input
+      id="cPassword"
+      type="password"
+      class="form-control"
+      formControlName="cPassword"
+      placeholder="Confirmez le mot de passe"
+    />
+
+    @if (form.get('cPassword')?.touched && form.get('cPassword')?.invalid) {
+    <div class="text-danger mt-1 small">
+      @if (form.get('cPassword')?.errors?.['required']) {
+      <div>Champ requis.</div>
+      } @if (form.get('cPassword')?.errors?.['pattern']) {
+      <div>
+        Doit contenir au moins 8 caractères, dont 1 majuscule et 1 chiffre.
+      </div>
+      }
+    </div>
+    }
+  </div>
+
+  <!-- Mismatch error -->
+  @if (form.errors?.['passwordsMismatch'] && form.touched) {
+  <div class="alert alert-danger py-2">
+    <i class="bi bi-exclamation-triangle-fill me-1"></i>
+    Les mots de passe ne correspondent pas.
+  </div>
+  }
+
+  <!-- Submit -->
+  <button
+    type="submit"
+    class="btn btn-primary w-100 mt-2"
+    [disabled]="form.invalid"
+  >
+    <i class="bi bi-check-circle me-1"></i>
+    Modifier le mot de passe
+  </button>
+</form>

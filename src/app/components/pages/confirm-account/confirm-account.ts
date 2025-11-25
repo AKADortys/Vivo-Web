@@ -29,7 +29,7 @@ export class ConfirmAccount implements OnInit {
         next: async () => {
           await this.alertHandler.showSuccess(
             'Votre compte a été confirmé ! Vous allez être redirigé vers le formulaire de connexion',
-            'Succés'
+            'Succès'
           );
           this.router.navigate(['/login']);
         },

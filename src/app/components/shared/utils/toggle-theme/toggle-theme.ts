@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-toggle-theme',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './toggle-theme.html',
   styleUrl: './toggle-theme.scss',
 })
 export class ToggleTheme implements OnInit {
   private key = 'theme';
+  currentTheme = signal<boolean>(true);
 
   ngOnInit(): void {
     this.initTheme();
+    this.currentTheme.set(this.isDark());
   }
   setTheme(theme: 'light' | 'dark') {
     document.documentElement.setAttribute('data-bs-theme', theme);

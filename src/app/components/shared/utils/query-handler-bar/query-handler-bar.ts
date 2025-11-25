@@ -1,7 +1,5 @@
 import { Component, input, output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Modal } from '../modal/modal';
-
 @Component({
   selector: 'app-query-handler-bar',
   imports: [FormsModule],

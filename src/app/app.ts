@@ -4,6 +4,7 @@ import { AuthUserService } from './services/auth-user';
 import { User } from './interfaces/user';
 import { LogoutButton } from './components/shared/authentification/logout-button/logout-button';
 import { AsyncPipe } from '@angular/common';
+import { ToggleTheme } from './components/shared/utils/toggle-theme/toggle-theme';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { AsyncPipe } from '@angular/common';
     RouterLinkActive,
     LogoutButton,
     AsyncPipe,
+    ToggleTheme,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

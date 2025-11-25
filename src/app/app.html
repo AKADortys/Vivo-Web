@@ -58,6 +58,7 @@
         </li>
         }
       </ul>
+      <app-toggle-theme />
     </div>
   </div>
 </nav>
@@ -123,21 +124,12 @@
           </a>
         </li>
         } }
-        <li class="nav-item">
-          <a
-            class="nav-link text-light d-flex align-items-center px-3 py-2"
-            routerLink="/reset-password"
-            routerLinkActive="active"
-          >
-            <i class="bi bi-arrow-repeat me-2"></i>Réinitialiser mot de passe
-          </a>
-        </li>
       </ul>
     </nav>
 
     <!-- CONTENU -->
     <main
-      class="col-md-9 ms-sm-auto col-lg-10 offset-lg-2 px-md-4 py-4 bg-white min-vh-100"
+      class="col-md-9 ms-sm-auto col-lg-10 offset-lg-2 px-md-4 py-4 min-vh-100"
     >
       <router-outlet></router-outlet>
     </main>

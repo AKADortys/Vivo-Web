@@ -7,7 +7,6 @@ import { Modal } from '../../utils/modal/modal';
 import { UserEdit } from '../user-edit/user-edit';
 import { RegisterForm } from '../../authentification/register-form/register-form';
 import { QueryHandleUser } from '../query-handle-user/query-handle-user';
-import { filter } from 'rxjs';
 import { UserTable } from '../user-table/user-table';
 
 @Component({
@@ -43,12 +42,12 @@ export class UsersList implements OnInit {
     pageSize: 10,
   });
   displayMode = signal<'card' | 'table'>('card');
+
   constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.loadUsers();
   }
-
   resetProps() {
     this.isLoading.set(true);
     this.errorMessage.set(null);
@@ -81,33 +80,39 @@ export class UsersList implements OnInit {
     this.currentPage.set(1);
     this.loadUsers();
   }
-
-  onPageChange(page: number) {
-    this.currentPage.set(page);
-    this.loadUsers();
-  }
-
-  onEditUser(user: User) {
-    this.selectedUser.set(user);
-    this.editModal.open();
-  }
-
-  onEditedUser() {
-    this.editModal.close();
-    this.loadUsers();
+  onFilterReset() {
+    const resetfilter = {
+      search: '',
+      isActive: true,
+      startDate: null,
+      endDate: null,
+      pageSize: 10,
+    };
+    this.paginatedFilter.set(resetfilter);
+    this.loadUsers(1);
   }
   setDisplayMode(mode: 'card' | 'table') {
     this.displayMode.set(mode);
   }
+  onPageChange(page: number) {
+    this.currentPage.set(page);
+    this.loadUsers();
+  }
+  onEditUser(user: User) {
+    this.selectedUser.set(user);
+    this.editModal.open();
+  }
+  onEditedUser() {
+    this.editModal.close();
+    this.loadUsers();
+  }
   onAddUser() {
     this.addModal.open();
   }
-
   onAddedUser() {
     this.addModal.close();
     this.loadUsers();
   }
-
   public onRemoveUser(): void {
     this.loadUsers();
   }

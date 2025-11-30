@@ -16,8 +16,13 @@ export class QueryHandleUser {
   pageSizeOptions = [5, 10, 25, 50, 100];
 
   @Output() filterChange = new EventEmitter<UserFilter>();
+  @Output() filterReset = new EventEmitter<void>();
 
   emitFilter(): void {
     this.filterChange.emit(this.filters);
+  }
+
+  resetFilter(): void {
+    this.filterReset.emit();
   }
 }

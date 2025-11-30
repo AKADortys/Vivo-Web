@@ -1,6 +1,6 @@
 <div class="mb-2 row justify-content-start gap-3 align-items-start">
   <button
-    class="col-12 col-md-4 col-xl-3 col-xxl-2 btn btn-outline-primary btn-lg"
+    class="col-10 mx-auto btn btn-outline-primary btn-lg"
     (click)="onAddUser()"
   >
     <i class="bi bi-plus-circle-fill"></i> Ajouter
@@ -8,6 +8,7 @@
   <app-query-handle-user
     [filters]="paginatedFilter()"
     (filterChange)="onFilterChange($event)"
+    (filterReset)="onFilterReset()"
   />
   <div class="btn-group mb-3">
     <button

@@ -9,6 +9,25 @@
     [filters]="paginatedFilter()"
     (filterChange)="onFilterChange($event)"
   />
+  <div class="btn-group mb-3">
+    <button
+      class="btn"
+      [class.btn-primary]="displayMode() === 'card'"
+      [class.btn-outline-primary]="displayMode() !== 'card'"
+      (click)="setDisplayMode('card')"
+    >
+      Cartes
+    </button>
+
+    <button
+      class="btn"
+      [class.btn-primary]="displayMode() === 'table'"
+      [class.btn-outline-primary]="displayMode() !== 'table'"
+      (click)="setDisplayMode('table')"
+    >
+      Tableau
+    </button>
+  </div>
 </div>
 <!-- Composant de pagination -->
 <app-pagination
@@ -19,7 +38,40 @@
   class="col-12"
 />
 <div class="container rounded p-4 my-4 border shadow-sm">
-  <!-- Affichage des utilisateurs -->
+  <!-- MODE TABLE -->
+  @if (displayMode() === 'table') {
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Email</th>
+          <th>Téléphone</th>
+          <th>Rôle</th>
+          <th>Actif</th>
+          <th>Créé le</th>
+          <th>Maj</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (user of users(); track user._id) {
+        <tr
+          app-user-table
+          [user]="user"
+          (editUser)="onEditUser($event)"
+          (removeUser)="onRemoveUser()"
+        ></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+
+  <!-- MODE CARDS -->
+  @if (displayMode() === 'card') {
   <div class="row justify-content-around">
     @for (user of users(); track user._id) {
     <div class="col-12 col-md-10 col-xxl-6 mb-4">
@@ -31,6 +83,7 @@
     </div>
     }
   </div>
+  }
 
   <!-- Affichage du message de chargement -->
   @if (isLoading()) {

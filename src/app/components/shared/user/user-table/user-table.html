@@ -1,0 +1,22 @@
+<td>{{ user().lastName }}</td>
+<td>{{ user().name }}</td>
+<td>{{ user().mail }}</td>
+<td>{{ user().phone }}</td>
+<td>{{ user().role }}</td>
+<td>
+  <span
+    class="badge"
+    [class.bg-success]="user().isActive"
+    [class.bg-danger]="!user().isActive"
+  >
+    {{ user().isActive ? "Actif" : "Inactif" }}
+  </span>
+</td>
+<td>{{ user().createdAt | formatDate }}</td>
+<td>{{ user().updatedAt | formatDate }}</td>
+
+<td class="text-end">
+  <button class="btn btn-primary me-2" (click)="onEdit()">Modifier</button>
+
+  <app-remove-user [userId]="user()._id" (removed)="onRemove()" />
+</td>

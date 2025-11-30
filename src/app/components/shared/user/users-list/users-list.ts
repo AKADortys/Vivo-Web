@@ -8,11 +8,13 @@ import { UserEdit } from '../user-edit/user-edit';
 import { RegisterForm } from '../../authentification/register-form/register-form';
 import { QueryHandleUser } from '../query-handle-user/query-handle-user';
 import { filter } from 'rxjs';
+import { UserTable } from '../user-table/user-table';
 
 @Component({
   selector: 'app-users-list',
   imports: [
     UserCard,
+    UserTable,
     Pagination,
     UserEdit,
     Modal,
@@ -40,6 +42,7 @@ export class UsersList implements OnInit {
     endDate: null,
     pageSize: 10,
   });
+  displayMode = signal<'card' | 'table'>('card');
   constructor(private userService: UserService) {}
 
   ngOnInit() {
@@ -93,7 +96,9 @@ export class UsersList implements OnInit {
     this.editModal.close();
     this.loadUsers();
   }
-
+  setDisplayMode(mode: 'card' | 'table') {
+    this.displayMode.set(mode);
+  }
   onAddUser() {
     this.addModal.open();
   }

@@ -26,7 +26,7 @@
           id="search-input"
           type="text"
           class="form-control"
-          [(ngModel)]="filters()!.search"
+          [(ngModel)]="filters.search"
           (ngModelChange)="emitFilter()"
           placeholder="Entrez un nom ou un email"
           [ngModelOptions]="{ standalone: true }"
@@ -38,7 +38,7 @@
         <select
           id="status-select"
           class="form-select"
-          [(ngModel)]="filters()!.isActive"
+          [(ngModel)]="filters.isActive"
           (change)="emitFilter()"
           [ngModelOptions]="{ standalone: true }"
         >
@@ -55,14 +55,12 @@
         <select
           id="page-size-select"
           class="form-select"
-          [(ngModel)]="filters()!.pageSize"
+          [(ngModel)]="filters.pageSize"
           (change)="emitFilter()"
           [ngModelOptions]="{ standalone: true }"
         >
-          @for (size of pageSizeOptions; track size) {
-          <option [ngValue]="size">
-            {{ size }}
-          </option>
+          @for(size of pageSizeOptions; track size){
+          <option [ngValue]="size">{{ size }}</option>
           }
         </select>
       </div>
@@ -73,7 +71,7 @@
           id="start-date-input"
           type="date"
           class="form-control"
-          [(ngModel)]="filters()!.startDate"
+          [(ngModel)]="filters.startDate"
           (change)="emitFilter()"
           [ngModelOptions]="{ standalone: true }"
         />
@@ -85,7 +83,7 @@
           id="end-date-input"
           type="date"
           class="form-control"
-          [(ngModel)]="filters()!.endDate"
+          [(ngModel)]="filters.endDate"
           (change)="emitFilter()"
           [ngModelOptions]="{ standalone: true }"
         />

@@ -1,13 +1,5 @@
 <h3 class="display-5">Listes des produits</h3>
 <div class="mb-2 row justify-content-around align-items-start">
-  <!-- Composant de gestion des requêtes (recherche) -->
-  <app-query-handler-bar
-    [searchQuery]="searchQuery()"
-    (searchChange)="onSearchChange($event)"
-    (pageSizeChange)="onPageSizeChange($event)"
-    [PageSize]="itemsPerPage()"
-    class="col-12 col-md-8"
-  />
   <button
     class="col-12 col-md-4 col-xl-3 col-xxl-2 btn btn-outline-primary btn-lg"
     (click)="onAddProduct()"

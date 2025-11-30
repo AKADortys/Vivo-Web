@@ -11,6 +11,7 @@ export class AlertHandler {
   showSuccess(message: string, title: string = 'Succès') {
     Swal.fire({
       icon: 'success',
+      theme: 'bootstrap-5',
       title,
       text: message,
     });
@@ -19,6 +20,7 @@ export class AlertHandler {
   showError(message: string, title: string = 'Erreur') {
     Swal.fire({
       icon: 'error',
+      theme: 'bootstrap-5',
       title,
       text: message,
     });
@@ -28,6 +30,7 @@ export class AlertHandler {
     Swal.fire({
       icon: 'info',
       title,
+      theme: 'bootstrap-5',
       text: message,
     });
   }
@@ -35,6 +38,7 @@ export class AlertHandler {
   showWarning(message: string, title: string = 'Attention') {
     Swal.fire({
       icon: 'warning',
+      theme: 'bootstrap-5',
       title,
       text: message,
     });
@@ -45,6 +49,7 @@ export class AlertHandler {
     title: string = 'En êtes-vous certain ?'
   ): Promise<boolean> {
     return Swal.fire({
+      theme: 'bootstrap-5',
       title,
       text: message,
       showDenyButton: true,
@@ -55,6 +60,7 @@ export class AlertHandler {
 
   resetPassword(): void {
     Swal.fire({
+      theme: 'bootstrap-5',
       title: 'Indiquez votre adresse mail',
       icon: 'question',
       input: 'email',

@@ -1,6 +1,6 @@
 // src/app/services/user.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import {
@@ -8,6 +8,7 @@ import {
   UpdateUser,
   ResponseUser,
   ResponseUsers,
+  UserFilter,
 } from '../interfaces/user';
 import { environment } from '../../environements/environement';
 
@@ -20,12 +21,34 @@ export class UserService {
   getUsers(
     page = 1,
     limit = 10,
-    search: string = '',
+    filter: UserFilter
   ): Observable<ResponseUsers> {
+    let params = new HttpParams();
+
+    params = params.set('page', page.toString());
+    params = params.set('limit', limit.toString());
+
+    // Ajouter les filtres optionnels si les valeurs existent
+    if (filter.search) {
+      params = params.set('search', filter.search);
+    }
+
+    // Le statut isActive est un boolean, donc nous le convertissons en chaîne.
+    // Il doit être vérifié explicitement contre null/undefined car false est une valeur valide.
+    if (filter.isActive !== null && filter.isActive !== undefined) {
+      params = params.set('isActive', filter.isActive.toString());
+    }
+
+    if (filter.startDate) {
+      params = params.set('startDate', filter.startDate);
+    }
+
+    if (filter.endDate) {
+      params = params.set('endDate', filter.endDate);
+    }
+
     return this.http
-      .get<ResponseUsers>(
-        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`,
-      )
+      .get<ResponseUsers>(this.baseUrl, { params: params })
       .pipe(catchError(this.handleError));
   } //
 

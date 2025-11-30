@@ -45,3 +45,11 @@ export interface PaginatedUsers {
   page: number;
   totalPages: number;
 }
+
+export interface UserFilter {
+  search?: string;
+  isActive?: boolean;
+  startDate?: string | null;
+  endDate?: string | null;
+  pageSize?: number;
+}

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QueryHandlerBar } from './query-handler-bar';
+import { QueryHandleUser } from './query-handle-user';
 
-describe('QueryHandlerBar', () => {
-  let component: QueryHandlerBar;
-  let fixture: ComponentFixture<QueryHandlerBar>;
+describe('QueryHandleUser', () => {
+  let component: QueryHandleUser;
+  let fixture: ComponentFixture<QueryHandleUser>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [QueryHandlerBar]
+      imports: [QueryHandleUser]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(QueryHandlerBar);
+    fixture = TestBed.createComponent(QueryHandleUser);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

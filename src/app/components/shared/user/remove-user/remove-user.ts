@@ -22,7 +22,7 @@ export class RemoveUser {
     if (this.userId) {
       this.isLoading.set(true);
       this.alertHandler
-        .showConfirm('Voulez vous vraiment supprimé cet élément ?')
+        .showConfirm('Voulez vous vraiment supprimer cet utilisateur ?')
         .then((confirm) => {
           if (!confirm) {
             this.isLoading.set(false);

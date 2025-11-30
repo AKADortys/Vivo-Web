@@ -1,24 +1,19 @@
-<h3 class="display-5">Liste des utilisateurs</h3>
-<div class="mb-2 row justify-content-around align-items-start">
-  <!-- Composant de gestion des requêtes (recherche) -->
-  <app-query-handler-bar
-    [searchQuery]="searchQuery()"
-    (searchChange)="onSearchChange($event)"
-    (pageSizeChange)="onPageSizeChange($event)"
-    [PageSize]="itemsPerPage()"
-    class="col-12 col-md-8"
-  />
+<div class="mb-2 row justify-content-start gap-3 align-items-start">
   <button
     class="col-12 col-md-4 col-xl-3 col-xxl-2 btn btn-outline-primary btn-lg"
     (click)="onAddUser()"
   >
     <i class="bi bi-plus-circle-fill"></i> Ajouter
   </button>
+  <app-query-handle-user
+    [filters]="paginatedFilter()"
+    (filterChange)="onFilterChange($event)"
+  />
 </div>
 <!-- Composant de pagination -->
 <app-pagination
   [totalItems]="totalItems()"
-  [itemsPerPage]="itemsPerPage()"
+  [itemsPerPage]="paginatedFilter().pageSize!"
   [currentPage]="currentPage()"
   (pageChange)="onPageChange($event)"
   class="col-12"
@@ -56,7 +51,7 @@
 <!-- Composant de pagination -->
 <app-pagination
   [totalItems]="totalItems()"
-  [itemsPerPage]="itemsPerPage()"
+  [itemsPerPage]="paginatedFilter().pageSize!"
   [currentPage]="currentPage()"
   (pageChange)="onPageChange($event)"
 />

@@ -2,7 +2,6 @@ import { Component, signal, ViewChild } from '@angular/core';
 import { Product, ResponseProducts } from '../../../../interfaces/product';
 import { ProductService } from '../../../../services/product';
 import { Pagination } from '../../utils/pagination/pagination';
-import { QueryHandlerBar } from '../../utils/query-handler-bar/query-handler-bar';
 import { ProductCard } from '../product-card/product-card';
 import { Modal } from '../../utils/modal/modal';
 import { ProductEdit } from '../product-edit/product-edit';
@@ -10,14 +9,7 @@ import { AddProduct } from '../add-product/add-product';
 
 @Component({
   selector: 'app-products-list',
-  imports: [
-    QueryHandlerBar,
-    Pagination,
-    ProductCard,
-    Modal,
-    ProductEdit,
-    AddProduct,
-  ],
+  imports: [Pagination, ProductCard, Modal, ProductEdit, AddProduct],
   templateUrl: './products-list.html',
   styleUrl: './products-list.scss',
 })

@@ -1,0 +1,95 @@
+<div class="mb-3">
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#filtersCollapsePanel"
+    aria-expanded="false"
+    aria-controls="filtersCollapsePanel"
+  >
+    <i class="bi bi-funnel-fill me-2"></i> Afficher/Masquer les Filtres
+  </button>
+</div>
+
+<div class="collapse" id="filtersCollapsePanel">
+  <div class="card card-body">
+    <h5 class="mb-3">
+      <i class="bi bi-funnel-fill me-2"></i> Options de Filtrage
+    </h5>
+
+    <div class="row g-3 align-items-end">
+      <div class="col-12 col-md-4">
+        <label for="search-input" class="form-label"
+          >Recherche par nom/email :</label
+        >
+        <input
+          id="search-input"
+          type="text"
+          class="form-control"
+          [(ngModel)]="filters()!.search"
+          (ngModelChange)="emitFilter()"
+          placeholder="Entrez un nom ou un email"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+
+      <div class="col-6 col-md-4">
+        <label for="status-select" class="form-label">Statut :</label>
+        <select
+          id="status-select"
+          class="form-select"
+          [(ngModel)]="filters()!.isActive"
+          (change)="emitFilter()"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          <option [ngValue]="null">Tous</option>
+          <option [ngValue]="true">Actif</option>
+          <option [ngValue]="false">Inactif</option>
+        </select>
+      </div>
+
+      <div class="col-6 col-md-4">
+        <label for="page-size-select" class="form-label"
+          >Utilisateurs par page :</label
+        >
+        <select
+          id="page-size-select"
+          class="form-select"
+          [(ngModel)]="filters()!.pageSize"
+          (change)="emitFilter()"
+          [ngModelOptions]="{ standalone: true }"
+        >
+          @for (size of pageSizeOptions; track size) {
+          <option [ngValue]="size">
+            {{ size }}
+          </option>
+          }
+        </select>
+      </div>
+
+      <div class="col-6 col-md-4">
+        <label for="start-date-input" class="form-label">Date de début :</label>
+        <input
+          id="start-date-input"
+          type="date"
+          class="form-control"
+          [(ngModel)]="filters()!.startDate"
+          (change)="emitFilter()"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+
+      <div class="col-6 col-md-4">
+        <label for="end-date-input" class="form-label">Date de fin :</label>
+        <input
+          id="end-date-input"
+          type="date"
+          class="form-control"
+          [(ngModel)]="filters()!.endDate"
+          (change)="emitFilter()"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </div>
+    </div>
+  </div>
+</div>

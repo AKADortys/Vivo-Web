@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { environment } from '../../environements/environement';
 import {
   NewProduct,
+  ProductFilter,
   ResponseProduct,
   ResponseProducts,
   UpdateProduct,
@@ -18,13 +19,45 @@ export class ProductService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(page = 1, limit = 10, search = ''): Observable<ResponseProducts> {
+  getProducts(
+    page = 1,
+    limit = 10,
+    filter: ProductFilter
+  ): Observable<ResponseProducts> {
+    const params: string[] = [];
+
+    params.push(`page=${page}`);
+    params.push(`limit=${limit}`);
+
+    if (filter.search)
+      params.push(`search=${encodeURIComponent(filter.search)}`);
+    if (filter.category)
+      params.push(`category=${encodeURIComponent(filter.category)}`);
+    if (filter.available !== undefined)
+      params.push(`available=${filter.available}`);
+
+    if (filter.minPrice !== undefined && filter.minPrice !== null)
+      params.push(`minPrice=${filter.minPrice}`);
+
+    if (filter.maxPrice !== undefined && filter.maxPrice !== null)
+      params.push(`maxPrice=${filter.maxPrice}`);
+
+    if (filter.label) params.push(`label=${encodeURIComponent(filter.label)}`);
+
+    if (filter.startDate)
+      params.push(
+        `startDate=${encodeURIComponent(filter.startDate.toString())}`
+      );
+
+    if (filter.endDate)
+      params.push(`endDate=${encodeURIComponent(filter.endDate.toString())}`);
+
+    const query = params.join('&');
+
     return this.http
-      .get<ResponseProducts>(
-        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`,
-      )
+      .get<ResponseProducts>(`${this.baseUrl}?${query}`)
       .pipe(catchError(this.handleError));
-  } //
+  }
 
   getProductById(id: string): Observable<ResponseProduct> {
     return this.http
@@ -40,7 +73,7 @@ export class ProductService {
 
   updateProduct(
     id: string,
-    product: Partial<UpdateProduct>,
+    product: Partial<UpdateProduct>
   ): Observable<ResponseProduct> {
     return this.http
       .put<ResponseProduct>(`${this.baseUrl}/${id}`, product)

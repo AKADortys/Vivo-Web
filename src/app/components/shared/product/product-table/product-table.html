@@ -1,0 +1,19 @@
+<td>{{ product().label }}</td>
+<td>{{ product().description }}</td>
+<td>{{ product().category }}</td>
+<td>{{ product().price }} eu</td>
+<td>{{ product().createdAt | formatDate }}</td>
+<td>{{ product().updatedAt | formatDate }}</td>
+<td>
+  <span
+    class="badge"
+    [class.bg-success]="product().available"
+    [class.bg-danger]="!product().available"
+  >
+  </span
+  >{{ product().available ? "Disponible" : "Indisponible" }}
+</td>
+<td class="text-end">
+  <button class="btn btn-outline-primary" (click)="onEdit()">Modifier</button>
+  <app-remove-product [productId]="product()._id" (onRemoved)="onRemove()" />
+</td>

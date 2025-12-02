@@ -1,22 +1,63 @@
-<h3 class="display-5">Listes des produits</h3>
-<div class="mb-2 row justify-content-around align-items-start">
+<div class="mb-2 row justify-content-start gap-3 align-items-start">
   <button
-    class="col-12 col-md-4 col-xl-3 col-xxl-2 btn btn-outline-primary btn-lg"
+    class="col-10 mx-auto btn btn-outline-primary btn-lg"
     (click)="onAddProduct()"
   >
     <i class="bi bi-plus-circle-fill"></i> Ajouter
   </button>
+
+  <app-query-handle-product
+    [filters]="paginatedFilter()"
+    (filterChange)="onFilterChange($event)"
+    (filterReset)="onFilterReset()"
+  />
+  <!--Toggle display mode-->
+  <div class="btn-group mb-3">
+    <button
+      class="btn"
+      [class.btn-primary]="displayMode() === 'card'"
+      [class.btn-outline-primary]="displayMode() !== 'card'"
+      (click)="setDisplayMode('card')"
+    >
+      Cartes
+    </button>
+
+    <button
+      class="btn"
+      [class.btn-primary]="displayMode() === 'table'"
+      [class.btn-outline-primary]="displayMode() !== 'table'"
+      (click)="setDisplayMode('table')"
+    >
+      Tableau
+    </button>
+  </div>
+  <!-- Affichage du message de chargement -->
+  @if (isLoading()) {
+  <div class="text-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+  </div>
+  }
+
+  <!-- Affichage des erreurs -->
+  @if (errorMessage()) {
+  <div class="alert alert-danger text-center mx-auto">
+    {{ errorMessage() }}
+  </div>
+  }
 </div>
 <!-- Composant de pagination -->
 <app-pagination
   [totalItems]="totalItems()"
-  [itemsPerPage]="itemsPerPage()"
+  [itemsPerPage]="paginatedFilter().pageSize!"
   [currentPage]="currentPage()"
   (pageChange)="onPageChange($event)"
   class="col-12"
 />
 <div class="container-fluid rounded p-4 border shadow-sm">
   <!-- Affichage des utilisateurs -->
+  @if(displayMode()==='card'){
   <div class="row justify-content-around">
     @for (product of products(); track product._id) {
     <div class="col-12 col-xxl-6 mb-2" [class.loading]="isLoading()">
@@ -28,11 +69,39 @@
     </div>
     }
   </div>
+  } @if(displayMode() === 'table'){
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Label</th>
+          <th>Description</th>
+          <th>Catégorie</th>
+          <th>Prix</th>
+          <th>Créé le</th>
+          <th>MaJ</th>
+          <th>Disponible</th>
+          <th class="text-end">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(product of products(); track product._id){
+        <tr
+          app-product-table
+          [product]="product"
+          (editProduct)="onEditProduct($event)"
+          (removeProduct)="onRemoveProduct()"
+        ></tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
 </div>
 <!-- Composant de pagination -->
 <app-pagination
   [totalItems]="totalItems()"
-  [itemsPerPage]="itemsPerPage()"
+  [itemsPerPage]="paginatedFilter().pageSize!"
   [currentPage]="currentPage()"
   (pageChange)="onPageChange($event)"
   class="col-12"

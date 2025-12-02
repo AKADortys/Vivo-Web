@@ -1,15 +1,18 @@
 <div class="mb-2 row justify-content-start gap-3 align-items-start">
+  <!--button ajout-->
   <button
     class="col-10 mx-auto btn btn-outline-primary btn-lg"
     (click)="onAddUser()"
   >
     <i class="bi bi-plus-circle-fill"></i> Ajouter
   </button>
+  <!--Barre de recherche-->
   <app-query-handle-user
     [filters]="paginatedFilter()"
     (filterChange)="onFilterChange($event)"
     (filterReset)="onFilterReset()"
   />
+  <!--Toggle display mode-->
   <div class="btn-group mb-3">
     <button
       class="btn"
@@ -38,7 +41,7 @@
   (pageChange)="onPageChange($event)"
   class="col-12"
 />
-<div class="container rounded p-4 my-4 border shadow-sm">
+<div class="container rounded p-4 my-4">
   <!-- MODE TABLE -->
   @if (displayMode() === 'table') {
   <div class="table-responsive">

@@ -28,13 +28,9 @@ export class UserService {
     params = params.set('page', page.toString());
     params = params.set('limit', limit.toString());
 
-    // Ajouter les filtres optionnels si les valeurs existent
     if (filter.search) {
       params = params.set('search', filter.search);
     }
-
-    // Le statut isActive est un boolean, donc nous le convertissons en chaîne.
-    // Il doit être vérifié explicitement contre null/undefined car false est une valeur valide.
     if (filter.isActive !== null && filter.isActive !== undefined) {
       params = params.set('isActive', filter.isActive.toString());
     }

@@ -42,3 +42,14 @@ export interface ResponseProducts {
   message: string;
   data?: PaginatedProducts;
 }
+export interface ProductFilter {
+  search?: string;
+  category?: string;
+  available?: boolean;
+  minPrice?: number | string;
+  maxPrice?: number | string;
+  label?: string;
+  startDate?: string | Date;
+  endDate?: string | Date;
+  pageSize?: number;
+}

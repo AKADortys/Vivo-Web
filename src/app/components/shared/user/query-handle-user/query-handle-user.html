@@ -1,46 +1,41 @@
-<div class="mb-3">
-  <button
-    class="btn btn-primary"
-    type="button"
+<div class="card shadow-sm">
+  <!-- En-tête du panneau collapsible -->
+  <div
+    class="card-header d-flex justify-content-between align-items-center"
+    style="cursor: pointer"
     data-bs-toggle="collapse"
     data-bs-target="#filtersCollapsePanel"
-    aria-expanded="false"
-    aria-controls="filtersCollapsePanel"
   >
-    <i class="bi bi-funnel-fill me-2"></i> Afficher/Masquer les Filtres
-  </button>
-</div>
+    <h5 class="mb-0 fw-bold"><i class="bi bi-funnel"></i> Filtres</h5>
+    <i class="bi bi-chevron-down"></i>
+  </div>
 
-<div class="collapse" id="filtersCollapsePanel">
-  <div class="card card-body">
-    <h5 class="mb-3">
-      <i class="bi bi-funnel-fill me-2"></i> Options de Filtrage
-    </h5>
-
-    <div class="row g-3 align-items-end">
-      <div class="col-12 col-md-4">
-        <label for="search-input" class="form-label"
-          >Recherche par nom/email :</label
-        >
+  <!-- Contenu du panneau collapsible -->
+  <div id="filtersCollapsePanel" class="collapse show">
+    <div class="card-body">
+      <!-- Recherche -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          <i class="bi bi-search"></i> Recherche (nom/email)
+        </label>
         <input
-          id="search-input"
           type="text"
           class="form-control"
+          placeholder="Entrez un nom ou un email"
           [(ngModel)]="filters.search"
           (ngModelChange)="emitFilter()"
-          placeholder="Entrez un nom ou un email"
-          [ngModelOptions]="{ standalone: true }"
         />
       </div>
 
-      <div class="col-6 col-md-4">
-        <label for="status-select" class="form-label">Statut :</label>
+      <!-- Statut -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          <i class="bi bi-person-check"></i> Statut
+        </label>
         <select
-          id="status-select"
           class="form-select"
           [(ngModel)]="filters.isActive"
-          (change)="emitFilter()"
-          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="emitFilter()"
         >
           <option [ngValue]="null">Tous</option>
           <option [ngValue]="true">Actif</option>
@@ -48,16 +43,15 @@
         </select>
       </div>
 
-      <div class="col-6 col-md-4">
-        <label for="page-size-select" class="form-label"
-          >Utilisateurs par page :</label
-        >
+      <!-- Nombre d’utilisateurs -->
+      <div class="mb-3">
+        <label class="form-label fw-bold">
+          <i class="bi bi-list-nested"></i> Utilisateurs par page
+        </label>
         <select
-          id="page-size-select"
           class="form-select"
           [(ngModel)]="filters.pageSize"
-          (change)="emitFilter()"
-          [ngModelOptions]="{ standalone: true }"
+          (ngModelChange)="emitFilter()"
         >
           @for(size of pageSizeOptions; track size){
           <option [ngValue]="size">{{ size }}</option>
@@ -65,32 +59,40 @@
         </select>
       </div>
 
-      <div class="col-6 col-md-4">
-        <label for="start-date-input" class="form-label">Date de début :</label>
-        <input
-          id="start-date-input"
-          type="date"
-          class="form-control"
-          [(ngModel)]="filters.startDate"
-          (change)="emitFilter()"
-          [ngModelOptions]="{ standalone: true }"
-        />
+      <!-- Dates -->
+      <div class="row mb-3">
+        <div class="col-6">
+          <label class="form-label fw-bold">
+            <i class="bi bi-calendar-event"></i> Date de début
+          </label>
+          <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="filters.startDate"
+            (ngModelChange)="emitFilter()"
+          />
+        </div>
+
+        <div class="col-6">
+          <label class="form-label fw-bold">
+            <i class="bi bi-calendar-check"></i> Date de fin
+          </label>
+          <input
+            type="date"
+            class="form-control"
+            [(ngModel)]="filters.endDate"
+            (ngModelChange)="emitFilter()"
+          />
+        </div>
       </div>
 
-      <div class="col-6 col-md-4">
-        <label for="end-date-input" class="form-label">Date de fin :</label>
-        <input
-          id="end-date-input"
-          type="date"
-          class="form-control"
-          [(ngModel)]="filters.endDate"
-          (change)="emitFilter()"
-          [ngModelOptions]="{ standalone: true }"
-        />
-      </div>
-      <div class="col-6 col-md-4">
-        <button class="btn btn-secondary" (click)="resetFilter()">
-          Réinitialiser filtres
+      <!-- Actions -->
+      <div class="d-flex justify-content-between mt-4">
+        <button
+          class="btn btn-outline-secondary d-flex align-items-center gap-2"
+          (click)="resetFilter()"
+        >
+          <i class="bi bi-arrow-counterclockwise"></i> Réinitialiser
         </button>
       </div>
     </div>

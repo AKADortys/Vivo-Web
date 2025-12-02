@@ -34,13 +34,7 @@ export class UsersList implements OnInit {
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   selectedUser = signal<User | null>(null);
-  paginatedFilter = signal<UserFilter>({
-    search: '',
-    isActive: true,
-    startDate: null,
-    endDate: null,
-    pageSize: 10,
-  });
+  paginatedFilter = signal<UserFilter>({});
   displayMode = signal<'card' | 'table'>('card');
 
   constructor(private userService: UserService) {}
@@ -81,13 +75,7 @@ export class UsersList implements OnInit {
     this.loadUsers();
   }
   onFilterReset() {
-    const resetfilter = {
-      search: '',
-      isActive: true,
-      startDate: null,
-      endDate: null,
-      pageSize: 10,
-    };
+    const resetfilter = {};
     this.paginatedFilter.set(resetfilter);
     this.loadUsers(1);
   }
@@ -113,7 +101,7 @@ export class UsersList implements OnInit {
     this.addModal.close();
     this.loadUsers();
   }
-  public onRemoveUser(): void {
+  onRemoveUser(): void {
     this.loadUsers();
   }
 }

@@ -16,7 +16,9 @@
 <td>{{ user().updatedAt | formatDate }}</td>
 
 <td class="text-end">
-  <button class="btn btn-primary me-2" (click)="onEdit()">Modifier</button>
+  <button class="btn btn-outline-primary mx-1" (click)="onEdit()">
+    Modifier
+  </button>
 
   <app-remove-user [userId]="user()._id" (removed)="onRemove()" />
 </td>

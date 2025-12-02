@@ -10,7 +10,7 @@ import { Component, input, output, computed, Input } from '@angular/core';
 export class Pagination {
   // Entrées (signals)
   totalItems = input.required<number>();
-  itemsPerPage = input<number>(10);
+  itemsPerPage = input.required<number>();
   currentPage = input.required<number>();
 
   // Sorties (événements)

@@ -10,10 +10,12 @@
     [class.bg-success]="product().available"
     [class.bg-danger]="!product().available"
   >
-  </span
-  >{{ product().available ? "Disponible" : "Indisponible" }}
+    {{ product().available ? "Disponible" : "Indisponible" }}
+  </span>
 </td>
 <td class="text-end">
-  <button class="btn btn-outline-primary" (click)="onEdit()">Modifier</button>
+  <button class="btn btn-outline-primary mx-1" (click)="onEdit()">
+    Modifier
+  </button>
   <app-remove-product [productId]="product()._id" (onRemoved)="onRemove()" />
 </td>

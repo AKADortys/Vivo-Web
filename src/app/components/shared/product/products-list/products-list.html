@@ -3,7 +3,7 @@
     class="col-10 mx-auto btn btn-outline-primary btn-lg"
     (click)="onAddProduct()"
   >
-    <i class="bi bi-plus-circle-fill"></i> Ajouter
+    <i class="bi bi-plus-circle-fill"></i> Ajouter un produit
   </button>
 
   <app-query-handle-product
@@ -55,7 +55,7 @@
   (pageChange)="onPageChange($event)"
   class="col-12"
 />
-<div class="container-fluid rounded p-4 border shadow-sm">
+<div class="container-fluid rounded p-4">
   <!-- Affichage des utilisateurs -->
   @if(displayMode()==='card'){
   <div class="row justify-content-around">

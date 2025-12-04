@@ -3,14 +3,19 @@ export interface OrderProduct {
   productId: {
     _id: string;
     label: string;
-  };
+  } | null;
   quantity: number;
   price: number;
 }
 
+export interface OrderUserId {
+  _id: string;
+  mail: string;
+}
+
 export interface Order {
   readonly _id: string;
-  userId: string;
+  userId: OrderUserId | null;
   products: OrderProduct[];
   deliveryAddress: string;
   status: string;

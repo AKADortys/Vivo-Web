@@ -4,11 +4,11 @@
 </td>
 
 <td>
-  {{ order().userId }}
+  {{ order().userId?.mail ? order().userId?.mail : "Utilisateur introuvable" }}
 </td>
 
 <td>
-  {{ order().deliveryAddress }}
+  {{ order().deliveryAddress ? order().deliveryAddress : "En magasin" }}
 </td>
 
 <td>

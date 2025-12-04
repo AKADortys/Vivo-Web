@@ -5,3 +5,28 @@
   (removeOrder)="loadOrders()"
 />
 }
+<!-- <table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Utilisateur</th>
+      <th>Adresse</th>
+      <th>Statut</th>
+      <th>Total</th>
+      <th>Créé</th>
+      <th>Modifié</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @for (o of orders(); track o._id){
+    <tr
+      app-order-table
+      [order]="o"
+      (editOrder)="loadOrders()"
+      (removeOrder)="loadOrders()"
+    ></tr>
+    }
+  </tbody>
+</table> -->

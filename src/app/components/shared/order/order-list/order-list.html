@@ -1,0 +1,7 @@
+@for (o of orders(); track o._id){
+<app-order-card
+  [order]="o"
+  (editOrder)="loadOrders()"
+  (removeOrder)="loadOrders()"
+/>
+}

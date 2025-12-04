@@ -1,0 +1,36 @@
+<!-- Ligne d’un tableau de commandes -->
+<td>
+  {{ order()._id }}
+</td>
+
+<td>
+  {{ order().userId }}
+</td>
+
+<td>
+  {{ order().deliveryAddress }}
+</td>
+
+<td>
+  {{ order().status }}
+</td>
+
+<td>{{ order().totalPrice }} €</td>
+
+<td>
+  {{ order().createdAt | formatDate }}
+</td>
+
+<td>
+  {{ order().updatedAt | formatDate }}
+</td>
+
+<td>
+  <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit()">
+    <i class="bi bi-pencil-square"></i>
+  </button>
+
+  <button class="btn btn-sm btn-outline-danger" (click)="onRemove()">
+    <i class="bi bi-trash"></i>
+  </button>
+</td>

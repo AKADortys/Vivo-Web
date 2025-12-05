@@ -26,11 +26,14 @@
 </td>
 
 <td>
-  <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit()">
-    <i class="bi bi-pencil-square"></i>
-  </button>
-
-  <button class="btn btn-sm btn-outline-danger" (click)="onRemove()">
-    <i class="bi bi-trash"></i>
-  </button>
+  <app-validate-order-btn
+    (editOrder)="onRemove()"
+    [orderId]="order()._id"
+    [displayMode]="true"
+  />
+  <app-refuse-order-btn
+    (editOrder)="onRemove()"
+    [orderId]="order()._id"
+    [displayMode]="true"
+  />
 </td>

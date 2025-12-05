@@ -1,70 +1,62 @@
 <div class="card shadow-sm mb-3">
-  <div class="card-header d-flex justify-content-between align-items-center">
+  <div
+    class="card-header d-flex justify-content-between align-items-center flex-column flex-md-row gap-2"
+  >
     <span class="fw-bold">
       <i class="bi bi-receipt"></i>
       Commande #{{ order()._id }}
     </span>
-
-    <div>
-      <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit()">
-        <i class="bi bi-pencil-square"></i>
-      </button>
-
-      <button class="btn btn-sm btn-outline-danger" (click)="onRemove()">
-        <i class="bi bi-trash"></i>
-      </button>
-    </div>
   </div>
 
   <div class="card-body">
     <h5 class="card-title mb-3">
       <i class="bi bi-person-circle mx-2"></i>
-      <strong>Client :</strong
-      >{{
-        order().userId?.mail ? order().userId?.mail : "Utilisateur introuvable"
-      }}
+      <strong>Client :</strong>
+      <span class="ms-1">
+        {{
+          order().userId?.mail
+            ? order().userId?.mail
+            : "Utilisateur introuvable"
+        }}
+      </span>
     </h5>
 
     <p class="mb-2">
       <i class="bi bi-geo-alt mx-2"></i>
       <strong>Adresse :</strong>
-      {{ order().deliveryAddress ? order().deliveryAddress : "En magasin" }}
+      <span class="ms-1">
+        {{ order().deliveryAddress ? order().deliveryAddress : "En magasin" }}
+      </span>
     </p>
 
     <p class="mb-2">
       <i class="bi bi-info-circle mx-2"></i>
       <strong>Statut :</strong>
-      <span>
-        {{ order().status }}
-      </span>
+      <span class="ms-1">{{ order().status }}</span>
     </p>
 
     <p class="mb-2">
       <i class="bi bi-cash-coin mx-2"></i>
       <strong>Total :</strong>
-      <span class="badge bg-success"> {{ order().totalPrice }} € </span>
+      <span class="ms-1">{{ order().totalPrice }} €</span>
     </p>
 
     <p class="mb-2">
       <i class="bi bi-calendar-plus mx-2"></i>
       <strong>Créée :</strong>
-      <span class="badge bg-light text-dark">
-        {{ order().createdAt | formatDate }}
-      </span>
+      <span class="ms-1">{{ order().createdAt | formatDate }}</span>
     </p>
 
     <p class="mb-3">
       <i class="bi bi-calendar-check mx-2"></i>
       <strong>Modifiée :</strong>
-      <span class="badge bg-light text-dark">
-        {{ order().updatedAt | formatDate }}
-      </span>
+      <span class="ms-1">{{ order().updatedAt | formatDate }}</span>
     </p>
 
     <hr />
 
     <button
-      class="btn btn-outline-dark w-100 d-flex justify-content-between align-items-center"
+      class="btn btn-outline-primary w-100 d-flex justify-content-between align-items-center"
       type="button"
       data-bs-toggle="collapse"
       [attr.data-bs-target]="'#collapse-' + order()._id"
@@ -85,19 +77,29 @@
             <span>
               <i class="bi bi-tag"></i>
               {{
-                p.productId?.label ? p.productId?.label : "Produits introuvable"
+                p.productId?.label ? p.productId?.label : "Produit introuvable"
               }}
             </span>
 
-            <span class="text-nowrap">
-              <span class="badge bg-secondary">
-                {{ p.quantity }} × {{ p.price }} €
-              </span>
+            <span class="text-nowrap ms-2">
+              {{ p.quantity }} x {{ p.price }} €
             </span>
           </div>
         </li>
         }
       </ul>
+      <div class="d-flex gap-2">
+        <app-validate-order-btn
+          (editOrder)="onRemove()"
+          [orderId]="order()._id"
+          [displayMode]="false"
+        />
+        <app-refuse-order-btn
+          (editOrder)="onRemove()"
+          [orderId]="order()._id"
+          [displayMode]="false"
+        />
+      </div>
       } @else {
       <div class="text-center text-muted py-3">
         <i class="bi bi-box"></i>

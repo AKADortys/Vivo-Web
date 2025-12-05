@@ -53,13 +53,15 @@
 
 <div class="container-fluid rounded p-4">
   @if(displayMode()==='card'){
-  <div class="container-fluid p-4">
+  <div class="row justify-content-around">
     @for (o of orders(); track o._id){
-    <app-order-card
-      [order]="o"
-      (editOrder)="loadOrders()"
-      (removeOrder)="loadOrders()"
-    />
+    <div class="col-12 col-xxl-6 mb-2" [class.loading]="isLoading()">
+      <app-order-card
+        [order]="o"
+        (editOrder)="loadOrders()"
+        (removeOrder)="loadOrders()"
+      />
+    </div>
     }
   </div>
   }@if(displayMode() === 'table'){

@@ -1,9 +1,11 @@
 import { Component, EventEmitter, input, Output } from '@angular/core';
 import { FormatDatePipe } from '../../../../pipes/format-date-pipe';
 import { Order } from '../../../../interfaces/order';
+import { ValidateOrderBtn } from '../validate-order-btn/validate-order-btn';
+import { RefuseOrderBtn } from '../refuse-order-btn/refuse-order-btn';
 @Component({
   selector: 'app-order-card',
-  imports: [FormatDatePipe],
+  imports: [FormatDatePipe, ValidateOrderBtn, RefuseOrderBtn],
   templateUrl: './order-card.html',
   styleUrl: './order-card.scss',
 })

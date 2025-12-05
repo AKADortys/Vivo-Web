@@ -50,11 +50,10 @@
   (pageChange)="onPageChange($event)"
   class="col-12"
 />
-
 <div class="container-fluid rounded p-4">
-  @if(displayMode()==='card'){
+  @if (displayMode() === 'card') { @if (orders().length > 0) {
   <div class="row justify-content-around">
-    @for (o of orders(); track o._id){
+    @for (o of orders(); track o._id) {
     <div class="col-12 col-xxl-6 mb-2" [class.loading]="isLoading()">
       <app-order-card
         [order]="o"
@@ -64,7 +63,13 @@
     </div>
     }
   </div>
-  }@if(displayMode() === 'table'){
+  } @else {
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-info text-center">Aucune commande</div>
+    </div>
+  </div>
+  } }@if (displayMode() === 'table') { @if (orders().length > 0) {
   <div class="table-responsive">
     <table class="table table-striped">
       <thead>
@@ -79,9 +84,8 @@
           <th>Actions</th>
         </tr>
       </thead>
-
       <tbody>
-        @for (o of orders(); track o._id){
+        @for (o of orders(); track o._id) {
         <tr
           app-order-table
           [order]="o"
@@ -92,7 +96,13 @@
       </tbody>
     </table>
   </div>
-  }
+  } @else {
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-info text-center">Aucune commande</div>
+    </div>
+  </div>
+  } }
 </div>
 <!-- Composant de pagination -->
 <app-pagination

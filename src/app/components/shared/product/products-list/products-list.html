@@ -56,8 +56,8 @@
   class="col-12"
 />
 <div class="container-fluid rounded p-4">
-  <!-- Affichage des utilisateurs -->
-  @if(displayMode()==='card'){
+  <!-- Vue Card -->
+  @if (displayMode() === 'card') { @if (products().length > 0) {
   <div class="row justify-content-around">
     @for (product of products(); track product._id) {
     <div class="col-12 col-xxl-6 mb-2" [class.loading]="isLoading()">
@@ -69,7 +69,16 @@
     </div>
     }
   </div>
-  } @if(displayMode() === 'table'){
+  } @else {
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-info text-center">Aucun produit disponible</div>
+    </div>
+  </div>
+  } }
+
+  <!-- Vue Table -->
+  @if (displayMode() === 'table') { @if (products().length > 0) {
   <div class="table-responsive">
     <table class="table table-striped align-middle">
       <thead class="table-light">
@@ -85,7 +94,7 @@
         </tr>
       </thead>
       <tbody>
-        @for(product of products(); track product._id){
+        @for (product of products(); track product._id) {
         <tr
           app-product-table
           [product]="product"
@@ -96,8 +105,15 @@
       </tbody>
     </table>
   </div>
-  }
+  } @else {
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-info text-center">Aucun produit disponible</div>
+    </div>
+  </div>
+  } }
 </div>
+
 <!-- Composant de pagination -->
 <app-pagination
   [totalItems]="totalItems()"

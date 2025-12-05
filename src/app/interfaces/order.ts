@@ -61,3 +61,14 @@ export interface ResponseOrders {
   message: string;
   data?: PaginatedOrders;
 }
+export interface OrderFilters {
+  status?: string;
+  productId?: string;
+  minQty?: number;
+  minPrice?: number;
+  maxPrice?: number;
+  startDate?: string;
+  endDate?: string;
+  pageSize?: number;
+  address?: string;
+}

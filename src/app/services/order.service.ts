@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environements/environement';
 import {
   NewOrder,
+  OrderFilters,
   ResponseOrder,
   ResponseOrders,
   UpdateOrder,
@@ -20,12 +21,36 @@ export class OrderService {
     console.error('HTTP Error:', error.message || error);
     return throwError(() => error);
   }
-  getOrders(page = 1, limit = 10, search = ''): Observable<ResponseOrders> {
-    search = encodeURIComponent(search || '');
+  getOrders(
+    page = 1,
+    limit = 10,
+    filter: OrderFilters
+  ): Observable<ResponseOrders> {
+    let params = new HttpParams();
+
+    params = params.set('page', page.toString());
+    params = params.set('limit', limit.toString());
+
+    if (filter.status) params = params.set('status', filter.status);
+
+    if (filter.address) params = params.set('address', filter.address);
+
+    if (filter.productId) params = params.set('productId', filter.productId);
+
+    if (filter.minQty) params = params.set('minQty', filter.minQty);
+
+    if (filter.minPrice !== undefined && filter.minPrice !== null)
+      params = params.set('minPrice', filter.minPrice);
+
+    if (filter.maxPrice !== undefined && filter.maxPrice !== null)
+      params = params.set('maxPrice', filter.maxPrice);
+
+    if (filter.startDate) params = params.set('startDate', filter.startDate);
+
+    if (filter.endDate) params = params.set('endDate', filter.endDate);
+
     return this.http
-      .get<ResponseOrders>(
-        `${this.baseUrl}?page=${page}&limit=${limit}&search=${search}`
-      )
+      .get<ResponseOrders>(this.baseUrl, { params: params })
       .pipe(catchError(this.handleError));
   }
 

@@ -10,7 +10,7 @@ import {
   ResponseUsers,
   UserFilter,
 } from '../interfaces/user';
-import { environment } from '../../environements/environement';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {

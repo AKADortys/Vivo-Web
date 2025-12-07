@@ -6,7 +6,7 @@ import {
 import { catchError } from 'rxjs/internal/operators/catchError';
 import { Observable } from 'rxjs/internal/Observable';
 import { throwError } from 'rxjs/internal/observable/throwError';
-import { environment } from '../../environements/environement';
+import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

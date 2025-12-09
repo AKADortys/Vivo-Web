@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthUserService } from './services/auth-user';
-import { User } from './interfaces/user';
-import { LogoutButton } from './components/shared/authentification/logout-button/logout-button';
 import { AsyncPipe } from '@angular/common';
-import { ToggleTheme } from './components/shared/utils/toggle-theme/toggle-theme';
+import { UserDropDownMenu } from './components/shared/user/user-drop-down-menu/user-drop-down-menu';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +11,8 @@ import { ToggleTheme } from './components/shared/utils/toggle-theme/toggle-theme
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
-    LogoutButton,
+    UserDropDownMenu,
     AsyncPipe,
-    ToggleTheme,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

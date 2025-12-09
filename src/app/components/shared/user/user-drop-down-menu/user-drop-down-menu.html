@@ -1,0 +1,24 @@
+<div class="dropdown">
+  <button
+    class="btn btn-secondary dropdown-toggle"
+    type="button"
+    id="userDropdownMenuButton"
+    data-bs-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    data-bs-display="static"
+  >
+    <i class="bi bi-person-circle"></i>
+    Paramètres
+  </button>
+  <div
+    class="dropdown-menu dropdown-menu-end"
+    aria-labelledby="userDropdownMenuButton"
+  >
+    <p class="dropdown-item-text text-center text-warning text-bold">
+      {{ user.name }} {{ user.lastName }} ({{ user.role }})
+    </p>
+    <app-logout-button class="dropdown-item-text" />
+    <app-toggle-theme class="dropdown-item-text" />
+  </div>
+</div>

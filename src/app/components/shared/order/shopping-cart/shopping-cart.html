@@ -1,0 +1,31 @@
+@if (cart$ | async; as cart) {
+<section>
+  <h2>Panier</h2>
+
+  <p>Total articles : {{ cart.getTotalItems() }}</p>
+  <p>Total : {{ cart.totalPrice }}</p>
+
+  @if (cart.products.length === 0) {
+  <p>Panier vide</p>
+  } @else {
+  <ul>
+    @for (item of cart.productsDetails; track item._id) {
+    <li>
+      <strong>{{ item.label }}</strong
+      ><br />
+      Quantité :
+      <input
+        type="number"
+        [value]="item.quantity"
+        (change)="updateProductQuantity(item._id, $event.target.valueAsNumber)"
+      />
+      Prix unitaire : {{ item.price }}
+      <button type="button" (click)="removeProduct(item._id)">Supprimer</button>
+    </li>
+    }
+  </ul>
+  }
+
+  <button type="button" (click)="clear()">Vider le panier</button>
+</section>
+}

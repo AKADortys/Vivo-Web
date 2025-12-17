@@ -28,7 +28,7 @@
     <p class="text-secondary mb-4">
       {{ product().description }}
     </p>
-
+    @if(authUserService.isAdmin()){
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="text-primary mb-0 fw-bold">
         <i class="bi bi-currency-euro me-1"></i>{{ product().price }}
@@ -56,6 +56,29 @@
         {{ product().updatedAt | formatDate }}
       </span>
     </div>
+
+    }@else {
+    <div class="d-flex align-items-center justify-content-between mb-4">
+      <h5 class="text-primary mb-0 fw-bold">
+        <i class="bi bi-currency-euro me-1"></i>{{ product().price }}
+      </h5>
+      <div class="d-flex gap-2">
+        <input
+          type="number"
+          min="1"
+          [(ngModel)]="productQuantity"
+          class="form-control form-control-sm w-25 me-2"
+        />
+        <button
+          class="btn btn-sm btn-primary"
+          (click)="addToCart(productQuantity())"
+          [disabled]="!product().available"
+        >
+          <i class="bi bi-cart-plus me-1"></i>Ajouter au panier
+        </button>
+      </div>
+    </div>
+    }
   </div>
 </div>
 }

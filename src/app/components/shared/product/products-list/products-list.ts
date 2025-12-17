@@ -12,6 +12,7 @@ import { ProductEdit } from '../product-edit/product-edit';
 import { AddProduct } from '../add-product/add-product';
 import { QueryHandleProduct } from '../query-handle-product/query-handle-product';
 import { ProductTable } from '../product-table/product-table';
+import { AuthUserService } from '../../../../services/auth-user';
 
 @Component({
   selector: 'app-products-list',
@@ -37,9 +38,12 @@ export class ProductsList {
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   selectedProduct = signal<Product | null>(null);
-  paginatedFilter = signal<ProductFilter>({});
+  paginatedFilter = signal<ProductFilter>({ available: true });
   displayMode = signal<'card' | 'table'>('card');
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    readonly authUserService: AuthUserService
+  ) {}
 
   ngOnInit() {
     this.loadProduct();

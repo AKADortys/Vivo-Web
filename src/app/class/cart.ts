@@ -1,30 +1,20 @@
 import { Product } from '../interfaces/product';
 
 export class Cart {
-  products: Array<{
-    productId: string;
-    quantity: number;
-    price: number;
-  }>;
   productsDetails: any[];
   totalPrice: number;
   userId: string;
   deliveryAddress?: string;
 
-  constructor(
-    userId: string,
-    products: Cart['products'] = [],
-    productsDetails: [] = []
-  ) {
+  constructor(userId: string, productsDetails: [] = []) {
     this.userId = userId;
-    this.products = products;
     this.productsDetails = productsDetails;
     this.totalPrice = 0;
     this.calculateTotal();
   }
 
   calculateTotal(): void {
-    this.totalPrice = this.products.reduce(
+    this.totalPrice = this.productsDetails.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
@@ -35,16 +25,11 @@ export class Cart {
       throw new Error('La quantité doit être supérieure à 0.');
     }
 
-    const item = this.products.find((p) => p.productId === product._id);
+    const item = this.productsDetails.find((p) => p._id === product._id);
 
     if (item) {
-      item.quantity += quantity;
+      this.updateItemQuantity(product._id, item.quantity + quantity);
     } else {
-      this.products.push({
-        productId: product._id,
-        quantity,
-        price: product.price,
-      });
       this.productsDetails.push({ ...product, quantity });
     }
 
@@ -57,7 +42,7 @@ export class Cart {
       return;
     }
 
-    const item = this.products.find((p) => p.productId === productId);
+    const item = this.productsDetails.find((p) => p._id === productId);
     if (!item) {
       return;
     }
@@ -67,7 +52,6 @@ export class Cart {
   }
 
   removeItem(productId: string): void {
-    this.products = this.products.filter((p) => p.productId !== productId);
     this.productsDetails = this.productsDetails.filter(
       (p) => p._id !== productId
     );
@@ -75,13 +59,12 @@ export class Cart {
   }
 
   clearCart(): void {
-    this.products = [];
     this.productsDetails = [];
     this.totalPrice = 0;
   }
 
   getTotalItems(): number {
-    return this.products.reduce((sum, item) => sum + item.quantity, 0);
+    return this.productsDetails.reduce((sum, item) => sum + item.quantity, 0);
   }
 
   setDeliveryAddress(address: string): void {
@@ -89,18 +72,14 @@ export class Cart {
   }
 
   merge(cart: Cart): void {
-    cart.products.forEach((item) => {
-      const existing = this.products.find(
-        (p) => p.productId === item.productId
-      );
+    cart.productsDetails.forEach((item) => {
+      const existing = this.productsDetails.find((p) => p._id === item._id);
 
       if (existing) {
         existing.quantity += item.quantity;
       } else {
-        this.products.push({ ...item });
-        const detail = cart.productsDetails.find(
-          (p) => p._id === item.productId
-        );
+        this.productsDetails.push({ ...item });
+        const detail = cart.productsDetails.find((p) => p._id === item._id);
         if (detail) {
           this.productsDetails.push(detail);
         }

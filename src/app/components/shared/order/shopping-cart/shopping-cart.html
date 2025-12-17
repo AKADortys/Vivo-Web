@@ -5,14 +5,13 @@
   <p>Total articles : {{ cart.getTotalItems() }}</p>
   <p>Total : {{ cart.totalPrice }}</p>
 
-  @if (cart.products.length === 0) {
+  @if (cart.productsDetails.length === 0) {
   <p>Panier vide</p>
   } @else {
   <ul>
     @for (item of cart.productsDetails; track item._id) {
     <li>
-      <strong>{{ item.label }}</strong
-      ><br />
+      <strong>{{ item.label }}</strong>
       Quantité :
       <input
         type="number"

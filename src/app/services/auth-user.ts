@@ -37,6 +37,11 @@ export class AuthUserService {
     return !!this.userSubject.value;
   }
 
+  isAdmin(): boolean {
+    const user = this.userSubject.value;
+    return user?.role === 'admin';
+  }
+
   // Déconnexion
   logout(): void {
     this.setUser(null);

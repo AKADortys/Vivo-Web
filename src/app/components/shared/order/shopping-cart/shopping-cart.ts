@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CartService } from '../../../../services/cart';
 import { Observable } from 'rxjs';
 import { Cart } from '../../../../class/cart';
-import { Product } from '../../../../interfaces/product';
 import { AsyncPipe } from '@angular/common';
 import { AlertHandler } from '../../../../services/alert-handler';
 import { ConfirmOrderClientBtn } from '../confirm-order-client-btn/confirm-order-client-btn';

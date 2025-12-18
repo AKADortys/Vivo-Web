@@ -76,13 +76,9 @@ export class Cart {
       const existing = this.productsDetails.find((p) => p._id === item._id);
 
       if (existing) {
-        existing.quantity += item.quantity;
+        existing.quantity = item.quantity;
       } else {
         this.productsDetails.push({ ...item });
-        const detail = cart.productsDetails.find((p) => p._id === item._id);
-        if (detail) {
-          this.productsDetails.push(detail);
-        }
       }
     });
 

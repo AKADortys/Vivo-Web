@@ -94,10 +94,12 @@ export class OrderService {
   createOrderFromCart(): Observable<ResponseOrder> {
     const cart = this.cartService.currentCart;
     if (cart.getTotalItems() === 0) {
-      return throwError(() => new Error('Cart is empty'));
+      return throwError(() => new Error('le panier est vide'));
     }
     if (cart.userId === 'anonymous') {
-      return throwError(() => new Error('User is not logged in'));
+      return throwError(
+        () => new Error('Vous devez être connecté pour passer une commande')
+      );
     }
     const order: Partial<NewOrder> = {
       products: cart.productsDetails.map((item) => ({

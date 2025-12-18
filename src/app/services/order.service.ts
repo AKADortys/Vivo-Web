@@ -10,12 +10,16 @@ import {
   ResponseOrders,
   UpdateOrder,
 } from '../interfaces/order';
+import { CartService } from './cart';
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   private readonly baseUrl = `${environment.apiUrl}orders`;
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly cartService: CartService
+  ) {}
 
   private handleError(error: any) {
     console.error('HTTP Error:', error.message || error);
@@ -84,6 +88,30 @@ export class OrderService {
   deleteOrder(id: string): Observable<ResponseOrder> {
     return this.http
       .delete<ResponseOrder>(`${this.baseUrl}/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
+  createOrderFromCart(): Observable<ResponseOrder> {
+    const cart = this.cartService.currentCart;
+    if (cart.getTotalItems() === 0) {
+      return throwError(() => new Error('Cart is empty'));
+    }
+    if (cart.userId === 'anonymous') {
+      return throwError(() => new Error('User is not logged in'));
+    }
+    const order: Partial<NewOrder> = {
+      products: cart.productsDetails.map((item) => ({
+        productId: item._id,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+      deliveryAddress: cart.deliveryAddress
+        ? cart.deliveryAddress
+        : 'En Magasin',
+    };
+    this.cartService.clearCart();
+    return this.http
+      .post<ResponseOrder>(this.baseUrl, order)
       .pipe(catchError(this.handleError));
   }
 }

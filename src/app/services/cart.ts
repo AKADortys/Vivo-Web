@@ -98,4 +98,7 @@ export class CartService implements OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+  get currentCart(): Cart {
+    return this.cartSubject.value;
+  }
 }

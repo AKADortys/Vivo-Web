@@ -16,9 +16,11 @@
     aria-labelledby="userDropdownMenuButton"
   >
     <p class="dropdown-item-text text-center text-warning text-bold">
-      {{ user.name }} {{ user.lastName }} ({{ user.role }})
+      {{ user.name }} {{ user.lastName }}
     </p>
-    <app-logout-button class="dropdown-item-text" />
+    <hr />
+    <app-cart-badge class="dropdown-item-text text-center" />
+    <app-logout-button class="dropdown-item-text text-center" />
     <app-toggle-theme class="dropdown-item-text" />
   </div>
 </div>

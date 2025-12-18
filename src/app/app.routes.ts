@@ -15,4 +15,5 @@ export const routes: Routes = [
   { path: 'confirm-account/:token', component: ConfirmAccount },
   { path: 'dashboard', component: DashboardClient },
   { path: 'pass-recovery/:token', component: PassRecovery },
+  { path: 'cart', component: Products }, // Temporary until cart page is created
 ];

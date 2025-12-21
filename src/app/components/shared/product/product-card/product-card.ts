@@ -6,6 +6,7 @@ import { RemoveProduct } from '../remove-product/remove-product';
 import { AuthUserService } from '../../../../services/auth-user';
 import { CartService } from '../../../../services/cart';
 import { FormsModule } from '@angular/forms';
+import { AlertHandler } from '../../../../services/alert-handler';
 
 @Component({
   selector: 'app-product-card',
@@ -20,7 +21,8 @@ export class ProductCard {
   @Output() removeProduct = new EventEmitter<boolean>();
   constructor(
     readonly authUserService: AuthUserService,
-    readonly cartService: CartService
+    readonly cartService: CartService,
+    readonly alertService: AlertHandler
   ) {}
 
   public onEdit() {
@@ -29,6 +31,10 @@ export class ProductCard {
 
   public addToCart(quantity: number = 1) {
     this.cartService.addToCart(this.product(), quantity);
+    this.alertService.showSuccess(
+      `${this.product().label} x ${quantity} ajouté au panier`,
+      'Produit ajouté'
+    );
   }
 
   public onRemove() {

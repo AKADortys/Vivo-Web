@@ -13,6 +13,7 @@ import { CartBadge } from './components/shared/order/cart-badge/cart-badge';
     RouterLink,
     RouterLinkActive,
     UserDropDownMenu,
+    CartBadge,
     AsyncPipe,
   ],
   templateUrl: './app.html',

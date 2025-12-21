@@ -3,7 +3,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow-sm">
   <div class="container-fluid">
     <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/">
-      <i class="bi bi-house-door-fill me-2"></i>Au P'tit Vivo
+      <img src="file.svg" class="brand-icon" alt="" />Au P'tit Vivo
     </a>
 
     <button
@@ -29,6 +29,9 @@
           <a class="nav-link" routerLink="/products" routerLinkActive="active">
             <i class="bi bi-shop me-1"></i>Produits
           </a>
+        </li>
+        <li class="nav-item me-3">
+          <app-cart-badge class="" />
         </li>
         @if(user){ @if(user.role === "admin"){
         <li class="nav-item me-3">

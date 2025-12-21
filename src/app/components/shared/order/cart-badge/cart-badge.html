@@ -1,4 +1,4 @@
-<button routerLink="/cart" class="btn position-relative">
+<a routerLink="/cart" class="nav-link position-relative">
   <i class="bi bi-cart mx-1"></i>Mon Panier @if(cart$ | async; as cart){
   @if(cart.getTotalItems() > 0){
   <span
@@ -6,4 +6,4 @@
   >
     {{ cart.getTotalItems() }} </span
   >}}
-</button>
+</a>

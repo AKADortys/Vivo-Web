@@ -6,9 +6,10 @@ import { AsyncPipe } from '@angular/common';
 import { AlertHandler } from '../../../../services/alert-handler';
 import { ConfirmOrderClientBtn } from '../confirm-order-client-btn/confirm-order-client-btn';
 import { CurrencyPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-shopping-cart',
-  imports: [AsyncPipe, ConfirmOrderClientBtn, CurrencyPipe],
+  imports: [AsyncPipe, ConfirmOrderClientBtn, CurrencyPipe, FormsModule],
   templateUrl: './shopping-cart.html',
   styleUrl: './shopping-cart.scss',
 })

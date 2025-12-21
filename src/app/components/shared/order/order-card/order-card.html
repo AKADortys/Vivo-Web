@@ -38,7 +38,7 @@
     <p class="mb-2">
       <i class="bi bi-cash-coin mx-2"></i>
       <strong>Total :</strong>
-      <span class="ms-1">{{ order().totalPrice }} €</span>
+      <span class="ms-1">{{ order().totalPrice | currency : "EUR" }}</span>
     </p>
 
     <p class="mb-2">
@@ -82,7 +82,7 @@
             </span>
 
             <span class="text-nowrap ms-2">
-              {{ p.quantity }} x {{ p.price }} €
+              {{ p.quantity }} x {{ p.price | currency : "EUR" }}
             </span>
           </div>
         </li>

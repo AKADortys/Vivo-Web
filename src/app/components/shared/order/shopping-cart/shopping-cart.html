@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between mb-3">
       <span class="fw-semibold">Total</span>
       <span class="fw-bold fs-5">
-        {{ cart.totalPrice }}
+        {{ cart.totalPrice | currency : "EUR" }}
         <i class="bi bi-currency-euro"></i>
       </span>
     </div>
@@ -27,7 +27,7 @@
           <div>
             <strong>{{ item.label }}</strong>
             <div class="text-muted small">
-              {{ item.price }}
+              {{ item.price | currency : "EUR" }}
               <i class="bi bi-currency-euro"></i> / unité
             </div>
           </div>

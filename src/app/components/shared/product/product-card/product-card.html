@@ -31,7 +31,8 @@
     @if(authUserService.isAdmin()){
     <div class="d-flex align-items-center justify-content-between mb-4">
       <h5 class="text-primary mb-0 fw-bold">
-        <i class="bi bi-currency-euro me-1"></i>{{ product().price }}
+        <i class="bi bi-currency-euro me-1"></i
+        >{{ product().price | currency : "EUR" }}
       </h5>
       <div>
         <button class="btn btn-sm btn-outline-primary me-2" (click)="onEdit()">

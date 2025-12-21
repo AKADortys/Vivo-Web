@@ -5,9 +5,10 @@ import { Cart } from '../../../../class/cart';
 import { AsyncPipe } from '@angular/common';
 import { AlertHandler } from '../../../../services/alert-handler';
 import { ConfirmOrderClientBtn } from '../confirm-order-client-btn/confirm-order-client-btn';
+import { CurrencyPipe } from '@angular/common';
 @Component({
   selector: 'app-shopping-cart',
-  imports: [AsyncPipe, ConfirmOrderClientBtn],
+  imports: [AsyncPipe, ConfirmOrderClientBtn, CurrencyPipe],
   templateUrl: './shopping-cart.html',
   styleUrl: './shopping-cart.scss',
 })

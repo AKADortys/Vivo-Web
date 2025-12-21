@@ -5,10 +5,11 @@ import { RemoveProduct } from '../remove-product/remove-product';
 import { AuthUserService } from '../../../../services/auth-user';
 import { CartService } from '../../../../services/cart';
 import { FormsModule } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'tr[app-product-table]',
-  imports: [FormatDatePipe, RemoveProduct, FormsModule],
+  imports: [FormatDatePipe, RemoveProduct, FormsModule, CurrencyPipe],
   templateUrl: './product-table.html',
   styleUrl: './product-table.scss',
 })

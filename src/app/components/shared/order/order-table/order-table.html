@@ -15,7 +15,7 @@
   {{ order().status }}
 </td>
 
-<td>{{ order().totalPrice }} €</td>
+<td>{{ order().totalPrice | currency : "EUR" }}</td>
 
 <td>
   {{ order().createdAt | formatDate }}

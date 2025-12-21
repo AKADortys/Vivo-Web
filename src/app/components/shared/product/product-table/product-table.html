@@ -1,7 +1,7 @@
 <td>{{ product().label }}</td>
 <td>{{ product().description }}</td>
 <td>{{ product().category }}</td>
-<td>{{ product().price }} eu</td>
+<td>{{ product().price | currency : "EUR" }}</td>
 <td>{{ product().createdAt | formatDate }}</td>
 <td>{{ product().updatedAt | formatDate }}</td>
 <td>

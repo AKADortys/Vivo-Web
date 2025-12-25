@@ -28,11 +28,36 @@ export class ShoppingCart {
   }
 
   removeProduct(productId: string): void {
-    this.cartService.removeItem(productId);
+    this.alertService
+      .showConfirm(
+        'Confirmer la suppression du produit du panier ?',
+        'Confirmation'
+      )
+      .then((valid) => {
+        if (!valid) {
+          return;
+        }
+        this.cartService.removeItem(productId);
+        this.alertService.showSuccess(
+          'Produit supprimé du panier',
+          'Produit supprimé'
+        );
+      });
   }
 
   clear(): void {
-    this.cartService.clearCart();
+    this.alertService
+      .showConfirm(
+        'Confirmer la suppression de tous les produits du panier ?',
+        'Confirmation'
+      )
+      .then((valid) => {
+        if (!valid) {
+          return;
+        }
+        this.cartService.clearCart();
+        this.alertService.showSuccess('Le panier a été vidé', 'Panier vidé');
+      });
   }
 
   setAddress(address: string): void {

@@ -30,28 +30,7 @@ export class OrderService {
     limit = 10,
     filter: OrderFilters
   ): Observable<ResponseOrders> {
-    let params = new HttpParams();
-
-    params = params.set('page', page.toString());
-    params = params.set('limit', limit.toString());
-
-    if (filter.status) params = params.set('status', filter.status);
-
-    if (filter.address) params = params.set('address', filter.address);
-
-    if (filter.productId) params = params.set('productId', filter.productId);
-
-    if (filter.minQty) params = params.set('minQty', filter.minQty);
-
-    if (filter.minPrice !== undefined && filter.minPrice !== null)
-      params = params.set('minPrice', filter.minPrice);
-
-    if (filter.maxPrice !== undefined && filter.maxPrice !== null)
-      params = params.set('maxPrice', filter.maxPrice);
-
-    if (filter.startDate) params = params.set('startDate', filter.startDate);
-
-    if (filter.endDate) params = params.set('endDate', filter.endDate);
+    let params = this.queryBuilder(page, limit, filter);
 
     return this.http
       .get<ResponseOrders>(this.baseUrl, { params: params })
@@ -115,5 +94,42 @@ export class OrderService {
     return this.http
       .post<ResponseOrder>(this.baseUrl, order)
       .pipe(catchError(this.handleError));
+  }
+
+  getUserHistory(
+    page: number,
+    limit: number,
+    filter: OrderFilters
+  ): Observable<ResponseOrders> {
+    let params = this.queryBuilder(page, limit, filter);
+    return this.http
+      .get<ResponseOrders>(`${this.baseUrl}/history`, { params })
+      .pipe(catchError(this.handleError));
+  }
+
+  queryBuilder(page: number, limit: number, filter: OrderFilters): HttpParams {
+    let params = new HttpParams();
+
+    params = params.set('page', page);
+    params = params.set('limit', limit);
+
+    if (filter.status) params = params.set('status', filter.status);
+
+    if (filter.address) params = params.set('address', filter.address);
+
+    if (filter.productId) params = params.set('productId', filter.productId);
+
+    if (filter.minQty) params = params.set('minQty', filter.minQty);
+
+    if (filter.minPrice !== undefined && filter.minPrice !== null)
+      params = params.set('minPrice', filter.minPrice);
+
+    if (filter.maxPrice !== undefined && filter.maxPrice !== null)
+      params = params.set('maxPrice', filter.maxPrice);
+
+    if (filter.startDate) params = params.set('startDate', filter.startDate);
+
+    if (filter.endDate) params = params.set('endDate', filter.endDate);
+    return params;
   }
 }

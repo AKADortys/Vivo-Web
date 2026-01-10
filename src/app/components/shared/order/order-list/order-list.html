@@ -1,60 +1,83 @@
-<div class="mb-2 row justify-content-start gap-3 align-items-start">
-  <app-query-handle-order
-    [filters]="paginatedFilter()"
-    (filterChange)="onFilterChange($event)"
-    (filterReset)="onFilterReset()"
-  />
-  <!--Toggle display mode-->
-  <div class="btn-group mb-3">
-    <button
-      class="btn"
-      [class.btn-primary]="displayMode() === 'card'"
-      [class.btn-outline-primary]="displayMode() !== 'card'"
-      (click)="setDisplayMode('card')"
-    >
-      Cartes
-    </button>
+<div class="container-fluid py-4">
+  <!-- Card pour les filtres et contrôles -->
+  <div class="mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-center">
+        <!-- Filtres -->
+        <div class="col-12 col-lg-8">
+          <app-query-handle-order
+            [filters]="paginatedFilter()"
+            (filterChange)="onFilterChange($event)"
+            (filterReset)="onFilterReset()"
+          />
+        </div>
 
-    <button
-      class="btn"
-      [class.btn-primary]="displayMode() === 'table'"
-      [class.btn-outline-primary]="displayMode() !== 'table'"
-      (click)="setDisplayMode('table')"
-    >
-      Tableau
-    </button>
+        <!-- Toggle display mode -->
+        <div class="col-12 col-lg-4">
+          <label class="form-label text-muted small">Mode d'affichage</label>
+          <div class="btn-group w-100">
+            <button
+              class="btn"
+              [class.btn-primary]="displayMode() === 'card'"
+              [class.btn-outline-primary]="displayMode() !== 'card'"
+              (click)="setDisplayMode('card')"
+            >
+              <i class="bi bi-grid-3x2-gap me-1"></i> Cartes
+            </button>
+            <button
+              class="btn"
+              [class.btn-primary]="displayMode() === 'table'"
+              [class.btn-outline-primary]="displayMode() !== 'table'"
+              (click)="setDisplayMode('table')"
+            >
+              <i class="bi bi-table me-1"></i> Tableau
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Affichage du message de chargement -->
+  <!-- États de chargement et erreurs -->
   @if (isLoading()) {
-  <div class="text-center">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Chargement...</span>
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body text-center py-5">
+      <div class="spinner-border text-primary mb-3" role="status">
+        <span class="visually-hidden">Chargement...</span>
+      </div>
+      <p class="text-muted mb-0">Chargement des commandes...</p>
+    </div>
+  </div>
+  } @if (errorMessage()) {
+  <div class="card border-danger shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex align-items-center">
+        <i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-3"></i>
+        <div>
+          <h5 class="card-title text-danger mb-1">Erreur</h5>
+          <p class="card-text mb-0">{{ errorMessage() }}</p>
+        </div>
+      </div>
     </div>
   </div>
   }
 
-  <!-- Affichage des erreurs -->
-  @if (errorMessage()) {
-  <div class="alert alert-danger text-center mx-auto">
-    {{ errorMessage() }}
+  <!-- Pagination supérieure -->
+  <div class="mb-4">
+    <app-pagination
+      [totalItems]="totalItems()"
+      [itemsPerPage]="paginatedFilter().pageSize!"
+      [currentPage]="currentPage()"
+      (pageChange)="onPageChange($event)"
+      class="d-block"
+    />
   </div>
-  }
-</div>
 
-<!-- Composant de pagination -->
-<app-pagination
-  [totalItems]="totalItems()"
-  [itemsPerPage]="paginatedFilter().pageSize!"
-  [currentPage]="currentPage()"
-  (pageChange)="onPageChange($event)"
-  class="col-12"
-/>
-<div class="container-fluid rounded p-4">
+  <!-- Contenu principal -->
   @if (displayMode() === 'card') { @if (orders().length > 0) {
-  <div class="row justify-content-around">
+  <div class="row g-4">
     @for (o of orders(); track o._id) {
-    <div class="col-12 col-xxl-6 mb-2" [class.loading]="isLoading()">
+    <div class="col-12 col-xl-6" [class.opacity-50]="isLoading()">
       <app-order-card
         [order]="o"
         (editOrder)="loadOrders()"
@@ -64,51 +87,66 @@
     }
   </div>
   } @else {
-  <div class="row">
-    <div class="col-12">
-      <div class="alert alert-info text-center">Aucune commande</div>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body text-center py-5">
+      <i class="bi bi-inbox fs-1 text-muted mb-3 d-block"></i>
+      <h5 class="text-muted">Aucune commande trouvée</h5>
+      <p class="text-muted mb-0">
+        Il n'y a aucune commande correspondant à vos critères
+      </p>
     </div>
   </div>
-  } }@if (displayMode() === 'table') { @if (orders().length > 0) {
-  <div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Utilisateur</th>
-          <th>Adresse</th>
-          <th>Statut</th>
-          <th>Total</th>
-          <th>Créé</th>
-          <th>Modifié</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (o of orders(); track o._id) {
-        <tr
-          app-order-table
-          [order]="o"
-          (editOrder)="loadOrders()"
-          (removeOrder)="loadOrders()"
-        ></tr>
-        }
-      </tbody>
-    </table>
+  } } @if (displayMode() === 'table') { @if (orders().length > 0) {
+  <div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th class="px-4">ID</th>
+              <th>Utilisateur</th>
+              <th>Adresse</th>
+              <th>Statut</th>
+              <th>Total</th>
+              <th>Créé</th>
+              <th>Modifié</th>
+              <th class="px-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (o of orders(); track o._id) {
+            <tr
+              app-order-table
+              [order]="o"
+              (editOrder)="loadOrders()"
+              (removeOrder)="loadOrders()"
+            ></tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
   } @else {
-  <div class="row">
-    <div class="col-12">
-      <div class="alert alert-info text-center">Aucune commande</div>
+  <div class="card border-0 shadow-sm">
+    <div class="card-body text-center py-5">
+      <i class="bi bi-inbox fs-1 text-muted mb-3 d-block"></i>
+      <h5 class="text-muted">Aucune commande trouvée</h5>
+      <p class="text-muted mb-0">
+        Il n'y a aucune commande correspondant à vos critères
+      </p>
     </div>
   </div>
   } }
+
+  <!-- Pagination inférieure -->
+  <div class="mt-4">
+    <app-pagination
+      [totalItems]="totalItems()"
+      [itemsPerPage]="paginatedFilter().pageSize!"
+      [currentPage]="currentPage()"
+      (pageChange)="onPageChange($event)"
+      class="d-block"
+    />
+  </div>
 </div>
-<!-- Composant de pagination -->
-<app-pagination
-  [totalItems]="totalItems()"
-  [itemsPerPage]="paginatedFilter().pageSize!"
-  [currentPage]="currentPage()"
-  (pageChange)="onPageChange($event)"
-  class="col-12"
-/>

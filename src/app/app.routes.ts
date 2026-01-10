@@ -7,6 +7,7 @@ import { ConfirmAccount } from './components/pages/confirm-account/confirm-accou
 import { DashboardClient } from './components/pages/dashboard-client/dashboard-client';
 import { PassRecovery } from './components/pages/pass-recovery/pass-recovery';
 import { OrderForm } from './components/pages/order-form/order-form';
+import { Profile } from './components/pages/profile/profile';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'confirm-account/:token', component: ConfirmAccount },
   { path: 'dashboard', component: DashboardClient },
+  { path: 'profile', component: Profile },
   { path: 'pass-recovery/:token', component: PassRecovery },
   { path: 'cart', component: OrderForm }, // Temporary until cart page is created
 ];

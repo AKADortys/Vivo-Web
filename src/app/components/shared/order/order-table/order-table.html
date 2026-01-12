@@ -15,7 +15,7 @@
   {{ order().status }}
 </td>
 
-<td>{{ order().totalPrice | currency : "EUR" }}</td>
+<td>{{ order().totalPrice | currency: "EUR" }}</td>
 
 <td>
   {{ order().createdAt | formatDate }}
@@ -24,16 +24,17 @@
 <td>
   {{ order().updatedAt | formatDate }}
 </td>
-
-<td>
-  <app-validate-order-btn
-    (editOrder)="onRemove()"
-    [orderId]="order()._id"
-    [displayMode]="true"
-  />
-  <app-refuse-order-btn
-    (editOrder)="onRemove()"
-    [orderId]="order()._id"
-    [displayMode]="true"
-  />
-</td>
+@if (authUserService.isAdmin()) {
+  <td>
+    <app-validate-order-btn
+      (editOrder)="onRemove()"
+      [orderId]="order()._id"
+      [displayMode]="true"
+    />
+    <app-refuse-order-btn
+      (editOrder)="onRemove()"
+      [orderId]="order()._id"
+      [displayMode]="true"
+    />
+  </td>
+}

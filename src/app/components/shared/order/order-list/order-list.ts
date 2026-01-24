@@ -25,7 +25,7 @@ export class OrderList implements OnInit {
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   displayMode = signal<'card' | 'table'>('card');
-  paginatedFilter = signal<OrderFilters>({ status: 'Confirmée' });
+  paginatedFilter = signal<OrderFilters>({ status: 'Confirmée', pageSize: 5 });
 
   ngOnInit(): void {
     this.loadOrders();

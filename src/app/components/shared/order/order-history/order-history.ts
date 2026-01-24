@@ -9,6 +9,7 @@ import { Pagination } from '../../utils/pagination/pagination';
 import { OrderCard } from '../order-card/order-card';
 import { OrderTable } from '../order-table/order-table';
 import { QueryHandleOrder } from '../query-handle-order/query-handle-order';
+import { AuthUserService } from '../../../../services/auth-user';
 @Component({
   selector: 'app-order-history',
   imports: [OrderCard, OrderTable, QueryHandleOrder, Pagination],
@@ -16,7 +17,10 @@ import { QueryHandleOrder } from '../query-handle-order/query-handle-order';
   styleUrl: './order-history.scss',
 })
 export class OrderHistory implements OnInit {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    readonly authUser: AuthUserService,
+  ) {}
   orders = signal<Order[]>([]);
   isLoading = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
@@ -24,14 +28,16 @@ export class OrderHistory implements OnInit {
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   displayMode = signal<'card' | 'table'>('card');
-  paginatedFilter = signal<OrderFilters>({ status: 'Confirmée', pageSize: 5 });
+  paginatedFilter = signal<OrderFilters>({ pageSize: 10 });
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadOrders();
+  }
 
   loadOrders(
     page: number = this.currentPage(),
     limit: number = this.paginatedFilter().pageSize!,
-    filter: OrderFilters = this.paginatedFilter()
+    filter: OrderFilters = this.paginatedFilter(),
   ) {
     this.resetProps();
     this.orderService.getUserHistory(page, limit, filter).subscribe({
@@ -41,7 +47,7 @@ export class OrderHistory implements OnInit {
         this.paginatedFilter().pageSize = limit;
         this.totalItems.set(response.data?.total || this.orders().length);
         this.totalPages.set(
-          Math.ceil(this.totalItems() / this.paginatedFilter().pageSize!)
+          Math.ceil(this.totalItems() / this.paginatedFilter().pageSize!),
         );
         this.isLoading.set(false);
       },
@@ -66,7 +72,7 @@ export class OrderHistory implements OnInit {
     this.loadOrders();
   }
   onFilterReset() {
-    this.paginatedFilter.set({});
+    this.paginatedFilter.set({ pageSize: 10 });
     this.loadOrders();
   }
   resetProps() {

@@ -18,7 +18,7 @@ export class OrderService {
   private readonly baseUrl = `${environment.apiUrl}orders`;
   constructor(
     private readonly http: HttpClient,
-    private readonly cartService: CartService
+    private readonly cartService: CartService,
   ) {}
 
   private handleError(error: any) {
@@ -28,7 +28,7 @@ export class OrderService {
   getOrders(
     page = 1,
     limit = 10,
-    filter: OrderFilters
+    filter: OrderFilters,
   ): Observable<ResponseOrders> {
     let params = this.queryBuilder(page, limit, filter);
 
@@ -57,7 +57,7 @@ export class OrderService {
 
   updateOrder(
     id: string,
-    order: Partial<UpdateOrder>
+    order: Partial<UpdateOrder>,
   ): Observable<ResponseOrder> {
     return this.http
       .put<ResponseOrder>(`${this.baseUrl}/${id}`, order)
@@ -77,7 +77,7 @@ export class OrderService {
     }
     if (cart.userId === 'anonymous') {
       return throwError(
-        () => new Error('Vous devez être connecté pour passer une commande')
+        () => new Error('Vous devez être connecté pour passer une commande'),
       );
     }
     const order: Partial<NewOrder> = {
@@ -99,7 +99,7 @@ export class OrderService {
   getUserHistory(
     page: number,
     limit: number,
-    filter: OrderFilters
+    filter: OrderFilters,
   ): Observable<ResponseOrders> {
     let params = this.queryBuilder(page, limit, filter);
     return this.http

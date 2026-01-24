@@ -1,134 +1,198 @@
-<div class="mb-2 row justify-content-start gap-3 align-items-start">
-  @if(authUserService.isAdmin()) {
-  <button
-    class="col-10 mx-auto btn btn-outline-primary btn-lg"
-    (click)="onAddProduct()"
-  >
-    <i class="bi bi-plus-circle-fill"></i> Ajouter un produit
-  </button>
-  }
-  <app-query-handle-product
-    [filters]="paginatedFilter()"
-    (filterChange)="onFilterChange($event)"
-    (filterReset)="onFilterReset()"
-  />
-  <!--Toggle display mode-->
-  <div class="btn-group mb-3">
-    <button
-      class="btn"
-      [class.btn-primary]="displayMode() === 'card'"
-      [class.btn-outline-primary]="displayMode() !== 'card'"
-      (click)="setDisplayMode('card')"
-    >
-      Cartes
-    </button>
-
-    <button
-      class="btn"
-      [class.btn-primary]="displayMode() === 'table'"
-      [class.btn-outline-primary]="displayMode() !== 'table'"
-      (click)="setDisplayMode('table')"
-    >
-      Tableau
-    </button>
-  </div>
-  <!-- Affichage du message de chargement -->
-  @if (isLoading()) {
-  <div class="text-center">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Chargement...</span>
-    </div>
-  </div>
-  }
-
-  <!-- Affichage des erreurs -->
-  @if (errorMessage()) {
-  <div class="alert alert-danger text-center mx-auto">
-    {{ errorMessage() }}
-  </div>
-  }
-</div>
-<!-- Composant de pagination -->
-<app-pagination
-  [totalItems]="totalItems()"
-  [itemsPerPage]="paginatedFilter().pageSize!"
-  [currentPage]="currentPage()"
-  (pageChange)="onPageChange($event)"
-  class="col-12"
-/>
-<div class="container-fluid rounded p-4">
-  <!-- Vue Card -->
-  @if (displayMode() === 'card') { @if (products().length > 0) {
-  <div class="row justify-content-around">
-    @for (product of products(); track product._id) {
-    <div class="col-12 col-xxl-6 mb-2" [class.loading]="isLoading()">
-      <app-product-card
-        [product]="product"
-        (editProduct)="onEditProduct($event)"
-        (removeProduct)="onRemoveProduct()"
-      />
-    </div>
-    }
-  </div>
-  } @else {
-  <div class="row">
-    <div class="col-12">
-      <div class="alert alert-info text-center">Aucun produit disponible</div>
-    </div>
-  </div>
-  } }
-
-  <!-- Vue Table -->
-  @if (displayMode() === 'table') { @if (products().length > 0) {
-  <div class="table-responsive">
-    <table class="table table-striped align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Label</th>
-          <th>Description</th>
-          <th>Catégorie</th>
-          <th>Prix</th>
-          <th>Créé le</th>
-          <th>MaJ</th>
-          <th>Disponible</th>
-          <th class="text-end">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (product of products(); track product._id) {
-        <tr
-          app-product-table
-          [product]="product"
-          (editProduct)="onEditProduct($event)"
-          (removeProduct)="onRemoveProduct()"
-        ></tr>
+<div class="container-fluid py-4">
+  <!-- En-tête avec card -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1 class="display-5 mb-0">Catalogue des produits</h1>
+        </div>
+        @if (authUserService.isAdmin()) {
+          <div class="col-auto">
+            <button class="btn btn-primary btn-lg" (click)="onAddProduct()">
+              <i class="bi bi-plus-circle-fill me-2"></i> Ajouter un produit
+            </button>
+          </div>
         }
-      </tbody>
-    </table>
-  </div>
-  } @else {
-  <div class="row">
-    <div class="col-12">
-      <div class="alert alert-info text-center">Aucun produit disponible</div>
+      </div>
     </div>
   </div>
-  } }
+
+  <!-- Card pour les filtres et contrôles -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-center">
+        <!-- Filtres -->
+        <div class="col-12 col-lg-8">
+          <app-query-handle-product
+            [filters]="paginatedFilter()"
+            (filterChange)="onFilterChange($event)"
+            (filterReset)="onFilterReset()"
+          />
+        </div>
+
+        <!-- Toggle display mode -->
+        <div class="col-12 col-lg-4">
+          <label class="form-label text-muted small">Mode d'affichage</label>
+          <div class="btn-group w-100">
+            <button
+              class="btn"
+              [class.btn-primary]="displayMode() === 'card'"
+              [class.btn-outline-primary]="displayMode() !== 'card'"
+              (click)="setDisplayMode('card')"
+            >
+              <i class="bi bi-grid-3x2-gap me-1"></i> Cartes
+            </button>
+            <button
+              class="btn"
+              [class.btn-primary]="displayMode() === 'table'"
+              [class.btn-outline-primary]="displayMode() !== 'table'"
+              (click)="setDisplayMode('table')"
+            >
+              <i class="bi bi-table me-1"></i> Tableau
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- États de chargement et erreurs -->
+  @if (isLoading()) {
+    <div class="card border-0 shadow-sm mb-4">
+      <div class="card-body text-center py-5">
+        <div class="spinner-border text-primary mb-3" role="status">
+          <span class="visually-hidden">Chargement...</span>
+        </div>
+        <p class="text-muted mb-0">Chargement des produits...</p>
+      </div>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="card border-danger shadow-sm mb-4">
+      <div class="card-body">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-3"></i>
+          <div>
+            <h5 class="card-title text-danger mb-1">Erreur</h5>
+            <p class="card-text mb-0">{{ errorMessage() }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Pagination supérieure -->
+  <div class="mb-4">
+    <app-pagination
+      [totalItems]="totalItems()"
+      [itemsPerPage]="paginatedFilter().pageSize!"
+      [currentPage]="currentPage()"
+      (pageChange)="onPageChange($event)"
+      class="d-block"
+    />
+  </div>
+
+  <!-- Contenu principal -->
+  @if (displayMode() === "card") {
+    @if (products().length > 0) {
+      <div class="row g-4">
+        @for (product of products(); track product._id) {
+          <div class="col-12 col-xl-6" [class.opacity-50]="isLoading()">
+            <app-product-card
+              [product]="product"
+              (editProduct)="onEditProduct($event)"
+              (removeProduct)="onRemoveProduct()"
+            />
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-box-seam fs-1 text-muted mb-3 d-block"></i>
+          <h5 class="text-muted">Aucun produit disponible</h5>
+          <p class="text-muted mb-0">
+            Il n'y a aucun produit correspondant à vos critères
+          </p>
+          @if (authUserService.isAdmin()) {
+            <button class="btn btn-primary mt-3" (click)="onAddProduct()">
+              <i class="bi bi-plus-circle me-2"></i> Ajouter le premier produit
+            </button>
+          }
+        </div>
+      </div>
+    }
+  }
+
+  @if (displayMode() === "table") {
+    @if (products().length > 0) {
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="px-4">Label</th>
+                  <th>Description</th>
+                  <th>Catégorie</th>
+                  <th>Prix</th>
+                  <th>Créé le</th>
+                  <th>MaJ</th>
+                  <th>Disponible</th>
+                  <th class="text-end px-4">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (product of products(); track product._id) {
+                  <tr
+                    app-product-table
+                    [product]="product"
+                    (editProduct)="onEditProduct($event)"
+                    (removeProduct)="onRemoveProduct()"
+                  ></tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center py-5">
+          <i class="bi bi-box-seam fs-1 text-muted mb-3 d-block"></i>
+          <h5 class="text-muted">Aucun produit disponible</h5>
+          <p class="text-muted mb-0">
+            Il n'y a aucun produit correspondant à vos critères
+          </p>
+          @if (authUserService.isAdmin()) {
+            <button class="btn btn-primary mt-3" (click)="onAddProduct()">
+              <i class="bi bi-plus-circle me-2"></i> Ajouter le premier produit
+            </button>
+          }
+        </div>
+      </div>
+    }
+  }
+
+  <!-- Pagination inférieure -->
+  <div class="mt-4">
+    <app-pagination
+      [totalItems]="totalItems()"
+      [itemsPerPage]="paginatedFilter().pageSize!"
+      [currentPage]="currentPage()"
+      (pageChange)="onPageChange($event)"
+      class="d-block"
+    />
+  </div>
 </div>
 
-<!-- Composant de pagination -->
-<app-pagination
-  [totalItems]="totalItems()"
-  [itemsPerPage]="paginatedFilter().pageSize!"
-  [currentPage]="currentPage()"
-  (pageChange)="onPageChange($event)"
-  class="col-12"
-/>
-
+<!-- Modal Ajout -->
 <app-modal #addModal title="Ajouter un produit">
   <app-add-product (submited)="onAddedProduct()" />
 </app-modal>
 
 <!-- Modal Edit -->
-<app-modal #editModal title="Eddition produit">
+<app-modal #editModal title="Édition produit">
   <app-product-edit [product]="selectedProduct()" (save)="onEditedProduct()" />
 </app-modal>

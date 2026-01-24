@@ -1,82 +1,176 @@
 @if (cart$ | async; as cart) {
-<section class="card col-12 mx-auto shadow-sm">
-  <div class="card-header d-flex align-items-center justify-content-between">
-    <h2 class="h4 mb-0"><i class="bi bi-cart-fill me-2"></i>Panier</h2>
-    <span class="badge bg-primary"> {{ cart.getTotalItems() }} articles </span>
-  </div>
-
-  <div class="card-body">
-    <div class="d-flex justify-content-between mb-3">
-      <span class="fw-semibold">Total</span>
-      <span class="fw-bold fs-5">
-        {{ cart.totalPrice | currency : "EUR" }}
-      </span>
-    </div>
-
-    @if (cart.productsDetails.length === 0) {
-    <div class="alert alert-info d-flex align-items-center">
-      <i class="bi bi-info-circle me-2"></i>
-      Panier vide
-    </div>
-    } @else {
-    <ul class="list-group list-group-flush">
-      @for (item of cart.productsDetails; track item._id) {
-      <li class="list-group-item">
-        <div class="d-flex justify-content-between align-items-center">
-          <div>
-            <strong>{{ item.label }}</strong>
-            <div class="text-muted small">
-              {{ item.price | currency : "EUR" }}
-              / unité
+  <div class="container-fluid py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-10 col-xl-8">
+        <!-- Card principale du panier -->
+        <div class="card border-1 shadow-sm">
+          <!-- En-tête -->
+          <div class="card-header border-bottom py-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center">
+                <i class="bi bi-cart-fill text-primary fs-4 me-3"></i>
+                <h2 class="h4 mb-0">Mon Panier</h2>
+              </div>
+              <span class="badge bg-primary rounded-pill px-3 py-2">
+                {{ cart.getTotalItems() }} article{{
+                  cart.getTotalItems() > 1 ? "s" : ""
+                }}
+              </span>
             </div>
           </div>
 
-          <div class="d-flex align-items-center gap-2">
-            <input
-              type="number"
-              min="1"
-              class="form-control form-control-sm"
-              style="width: 80px"
-              [value]="item.quantity"
-              (change)="
-                updateProductQuantity(item._id, $event.target.valueAsNumber)
-              "
-            />
+          <!-- Corps -->
+          <div class="card-body p-4">
+            <!-- Résumé total -->
+            <div class="card shadow border-0 mb-4">
+              <div class="card-body py-3">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="text-muted">Total à payer</span>
+                  <span class="fw-bold fs-3 text-primary">
+                    {{ cart.totalPrice | currency: "EUR" }}
+                  </span>
+                </div>
+              </div>
+            </div>
 
-            <button
-              type="button"
-              class="btn btn-outline-danger btn-sm"
-              (click)="removeProduct(item._id)"
+            <!-- État vide -->
+            @if (cart.productsDetails.length === 0) {
+              <div class="card border-0 shadow">
+                <div class="card-body text-center py-5">
+                  <i class="bi bi-cart-x fs-1 text-muted mb-3 d-block"></i>
+                  <h5 class="text-muted">Votre panier est vide</h5>
+                  <p class="text-muted mb-0">
+                    Ajoutez des produits pour commencer vos achats
+                  </p>
+                </div>
+              </div>
+            }
+
+            <!-- Liste des produits -->
+            @else {
+              <div class="mb-4">
+                <h6 class="text-muted mb-3">
+                  Articles ({{ cart.productsDetails.length }})
+                </h6>
+                <div class="list-group list-group-flush">
+                  @for (item of cart.productsDetails; track item._id) {
+                    <div class="list-group-item px-0 py-3">
+                      <div class="row align-items-center g-3">
+                        <!-- Infos produit -->
+                        <div class="col-12 col-md-6">
+                          <div>
+                            <h6 class="mb-1">{{ item.label }}</h6>
+                            <div
+                              class="d-flex align-items-center gap-2 text-muted small"
+                            >
+                              <span>{{ item.price | currency: "EUR" }}</span>
+                              <span class="text-muted">×</span>
+                              <span>{{ item.quantity }}</span>
+                              <span class="text-muted">=</span>
+                              <span class="fw-semibold text-dark">
+                                {{
+                                  item.price * item.quantity | currency: "EUR"
+                                }}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Contrôles -->
+                        <div class="col-12 col-md-6">
+                          <div
+                            class="d-flex align-items-center justify-content-md-end gap-2"
+                          >
+                            <label class="text-muted small me-2"
+                              >Quantité :</label
+                            >
+                            <input
+                              type="number"
+                              min="1"
+                              class="form-control form-control-sm"
+                              style="width: 80px"
+                              [value]="item.quantity"
+                              (change)="
+                                updateProductQuantity(
+                                  item._id,
+                                  $event.target.valueAsNumber
+                                )
+                              "
+                            />
+                            <button
+                              type="button"
+                              class="btn btn-outline-danger btn-sm"
+                              (click)="removeProduct(item._id)"
+                              title="Supprimer"
+                            >
+                              <i class="bi bi-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Adresse de livraison -->
+            <div class="card border-0 shadow">
+              <div class="card-body">
+                <label class="form-label fw-semibold mb-2">
+                  <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+                  Adresse de livraison
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Saisissez votre adresse (optionnel)"
+                  [(ngModel)]="cart.deliveryAddress"
+                />
+                <small class="text-muted d-block mt-2">
+                  <i class="bi bi-info-circle me-1"></i>
+                  Si aucune adresse n'est précisée, votre commande sera à
+                  récupérer en magasin.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer avec actions -->
+          <div class="card-footer border-top py-3">
+            <div
+              class="d-flex flex-column flex-sm-row gap-2 justify-content-end"
             >
-              <i class="bi bi-trash"></i>
-            </button>
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                [disabled]="cart.getTotalItems() < 1"
+                (click)="clear()"
+              >
+                <i class="bi bi-x-circle me-2"></i>
+                Vider le panier
+              </button>
+              <app-confirm-order-client-btn />
+            </div>
           </div>
         </div>
-      </li>
-      }
-    </ul>
-    }
-    <div class="input-group mb-3">
-      <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
-      <input
-        type="text"
-        class="form-control form-control-sm"
-        placeholder="Addresse de livraison ( optionnel )"
-        [(ngModel)]="cart.deliveryAddress"
-      />
+
+        <!-- Informations supplémentaires -->
+        @if (cart.productsDetails.length > 0) {
+          <div class="card border-0 shadow-sm mt-3">
+            <div class="card-body py-3">
+              <div class="d-flex align-items-center text-muted small">
+                <i class="bi bi-shield-check text-success me-2"></i>
+                <span
+                  >Un délai de 10-15 minutes pour la validation de votre
+                  commande est possible, Pour toute question,
+                  contactez-nous</span
+                >
+              </div>
+            </div>
+          </div>
+        }
+      </div>
     </div>
   </div>
-  <div class="card-footer d-flex gap-1 justify-content-end">
-    <app-confirm-order-client-btn />
-    <button
-      type="button"
-      class="btn btn-danger btn-sm"
-      [disabled]="cart.getTotalItems() < 1"
-      (click)="clear()"
-    >
-      <i class="bi bi-x-circle me-1"></i>
-      Vider le panier
-    </button>
-  </div>
-</section>
 }

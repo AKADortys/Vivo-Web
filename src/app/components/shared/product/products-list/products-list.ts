@@ -38,11 +38,11 @@ export class ProductsList {
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   selectedProduct = signal<Product | null>(null);
-  paginatedFilter = signal<ProductFilter>({ available: true });
+  paginatedFilter = signal<ProductFilter>({ available: true, pageSize: 50 });
   displayMode = signal<'card' | 'table'>('card');
   constructor(
     private productService: ProductService,
-    readonly authUserService: AuthUserService
+    readonly authUserService: AuthUserService,
   ) {}
 
   ngOnInit() {
@@ -55,7 +55,7 @@ export class ProductsList {
   loadProduct(
     page: number = this.currentPage(),
     limit: number = this.paginatedFilter().pageSize!,
-    filter: ProductFilter = this.paginatedFilter()
+    filter: ProductFilter = this.paginatedFilter(),
   ) {
     this.resetProps();
     this.productService.getProducts(page, limit, filter).subscribe({
@@ -65,7 +65,7 @@ export class ProductsList {
         this.paginatedFilter().pageSize = limit;
         this.totalItems.set(response.data?.total || this.products().length);
         this.totalPages.set(
-          Math.ceil(this.totalItems() / this.paginatedFilter().pageSize!)
+          Math.ceil(this.totalItems() / this.paginatedFilter().pageSize!),
         );
         this.isLoading.set(false);
       },

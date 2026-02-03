@@ -34,7 +34,7 @@ export class UsersList implements OnInit {
   currentPage = signal<number>(1);
   totalPages = signal<number>(0);
   selectedUser = signal<User | null>(null);
-  paginatedFilter = signal<UserFilter>({});
+  paginatedFilter = signal<UserFilter>({ pageSize: 30 });
   displayMode = signal<'card' | 'table'>('card');
 
   constructor(private userService: UserService) {}
@@ -49,7 +49,7 @@ export class UsersList implements OnInit {
   loadUsers(
     page: number = this.currentPage(),
     limit: number = this.paginatedFilter().pageSize!,
-    filter: UserFilter = this.paginatedFilter()
+    filter: UserFilter = this.paginatedFilter(),
   ) {
     this.resetProps();
     this.userService.getUsers(page, limit, filter).subscribe({
@@ -59,7 +59,7 @@ export class UsersList implements OnInit {
         this.paginatedFilter().pageSize = limit;
         this.totalItems.set(response.data?.total || this.users().length);
         this.totalPages.set(
-          Math.ceil(this.totalItems() / this.paginatedFilter().pageSize!)
+          Math.ceil(this.totalItems() / this.paginatedFilter().pageSize!),
         );
         this.isLoading.set(false);
       },

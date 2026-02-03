@@ -18,7 +18,7 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   Login(
-    credentials: AuthentificationRequest
+    credentials: AuthentificationRequest,
   ): Observable<AuthentificationResponse> {
     return this.http
       .post<AuthentificationResponse>(`${this.baseUrl}/login`, credentials)
@@ -39,7 +39,7 @@ export class AuthService {
 
   PasswordChange(token: string | null, newPassword: string): Observable<void> {
     return this.http
-      .patch<void>(`${this.baseUrl}/password-recovery`, {
+      .post<void>(`${this.baseUrl}/password-recovery`, {
         token,
         newPassword,
       })
@@ -48,7 +48,7 @@ export class AuthService {
 
   confirmEmail(token: string): Observable<void> {
     return this.http
-      .patch<void>(`${this.baseUrl}/confirm-account`, { token })
+      .post<void>(`${this.baseUrl}/confirm-account`, { token })
       .pipe(catchError(this.handleError));
   } //
 

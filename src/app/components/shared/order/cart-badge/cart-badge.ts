@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { CartService } from '../../../../services/cart';
 import { Cart } from '../../../../class/cart';
@@ -16,5 +16,15 @@ export class CartBadge {
 
   constructor(private cartService: CartService) {
     this.cart$ = this.cartService.cart$;
+  }
+
+  @Input() navigate = true;
+  @Output() badgeClick = new EventEmitter<void>();
+
+  onClick(event: Event) {
+    if (!this.navigate) {
+      event.preventDefault();
+      this.badgeClick.emit();
+    }
   }
 }

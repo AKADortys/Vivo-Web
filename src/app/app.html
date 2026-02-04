@@ -6,15 +6,8 @@
       <img src="file.svg" class="brand-icon" alt="" />Au P'tit Vivo
     </a>
 
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -31,44 +24,36 @@
           </a>
         </li>
         <li class="nav-item me-3">
-          <app-cart-badge class="" />
+          <app-cart-badge class="" [navigate]="false" (badgeClick)="openCart()" />
         </li>
         @if (user) {
-          @if (user.role === "admin") {
-            <li class="nav-item me-3">
-              <a
-                class="nav-link"
-                routerLink="/dashboard"
-                routerLinkActive="active"
-              >
-                <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
-              </a>
-            </li>
-          } @else if (user.role === "client") {
-            <li class="nav-item">
-              <a
-                class="nav-link text-center"
-                routerLink="/profile"
-                routerLinkActive="active"
-              >
-                <i class="bi bi-speedometer2 me-2"></i>Mon compte
-              </a>
-            </li>
-          }
-          <li class="nav-item">
-            <app-user-drop-down-menu [user]="user"></app-user-drop-down-menu>
-          </li>
+        @if (user.role === "admin") {
+        <li class="nav-item me-3">
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
+          </a>
+        </li>
+        } @else if (user.role === "client") {
+        <li class="nav-item">
+          <a class="nav-link text-center" routerLink="/profile" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-2"></i>Mon compte
+          </a>
+        </li>
+        }
+        <li class="nav-item">
+          <app-user-drop-down-menu [user]="user"></app-user-drop-down-menu>
+        </li>
         } @else {
-          <li class="nav-item me-3">
-            <a class="nav-link" routerLink="/login" routerLinkActive="active">
-              <i class="bi bi-box-arrow-in-right me-1"></i>Connexion
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-outline-light px-3 py-1" routerLink="/register">
-              <i class="bi bi-person-plus me-1"></i>Inscription
-            </a>
-          </li>
+        <li class="nav-item me-3">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">
+            <i class="bi bi-box-arrow-in-right me-1"></i>Connexion
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-light px-3 py-1" routerLink="/register">
+            <i class="bi bi-person-plus me-1"></i>Inscription
+          </a>
+        </li>
         }
       </ul>
     </div>
@@ -84,3 +69,7 @@
     </main>
   </div>
 </div>
+
+<app-modal id="cartModal" title="Mon Panier">
+  <app-shopping-cart></app-shopping-cart>
+</app-modal>

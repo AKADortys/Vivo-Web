@@ -1,9 +1,7 @@
-<a routerLink="/cart" class="nav-link position-relative">
+<a [routerLink]="navigate ? '/cart' : []" (click)="onClick($event)" class="nav-link position-relative"
+  style="cursor: pointer">
   <i class="bi bi-cart mx-1"></i>Mon Panier @if(cart$ | async; as cart){
   @if(cart.getTotalItems() > 0){
-  <span
-    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-  >
-    {{ cart.getTotalItems() }} </span
-  >}}
+  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+    {{ cart.getTotalItems() }} </span>}}
 </a>

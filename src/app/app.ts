@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthUserService } from './services/auth-user';
 import { AsyncPipe } from '@angular/common';
 import { UserDropDownMenu } from './components/shared/user/user-drop-down-menu/user-drop-down-menu';
 import { CartBadge } from './components/shared/order/cart-badge/cart-badge';
+import { Modal } from './components/shared/utils/modal/modal';
+import { ShoppingCart } from './components/shared/order/shopping-cart/shopping-cart';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +17,8 @@ import { CartBadge } from './components/shared/order/cart-badge/cart-badge';
     UserDropDownMenu,
     CartBadge,
     AsyncPipe,
+    Modal,
+    ShoppingCart,
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
@@ -25,5 +29,11 @@ export class App {
   constructor(private authService: AuthUserService) {
     authService = new AuthUserService();
     this.user$ = this.authService.user$;
+  }
+
+  @ViewChild(Modal) cartModal!: Modal;
+
+  openCart() {
+    this.cartModal.open();
   }
 }

@@ -7,6 +7,7 @@ export interface Product {
   available: boolean;
   createdAt: string;
   updatedAt: string;
+  stock: number;
   __v: number;
 }
 
@@ -16,6 +17,7 @@ export interface NewProduct {
   price: number;
   category: string;
   available?: boolean;
+  stock?: number;
 }
 
 export interface UpdateProduct {
@@ -24,6 +26,7 @@ export interface UpdateProduct {
   price?: number;
   category?: string;
   available?: boolean;
+  stock?: number;
 }
 
 export interface PaginatedProducts {

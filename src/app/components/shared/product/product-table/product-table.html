@@ -13,6 +13,9 @@
     {{ product().available ? "Disponible" : "Indisponible" }}
   </span>
 </td>
+<td>
+  {{ product().stock }}
+</td>
 @if (authUserService.isAdmin()) {
   <td class="text-end">
     <button class="btn btn-sm btn-outline-primary mx-1" (click)="onEdit()">

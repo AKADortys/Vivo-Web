@@ -25,7 +25,7 @@ export class AddProduct {
   constructor(
     private fb: FormBuilder,
     private httpService: ProductService,
-    private alertHandler: AlertHandler
+    private alertHandler: AlertHandler,
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +35,7 @@ export class AddProduct {
       price: [null, [Validators.required, Validators.min(0)]],
       category: [''],
       available: [false],
+      stock: [0, [Validators.min(0)]],
     });
   }
 
@@ -60,7 +61,7 @@ export class AddProduct {
       error: (error) => {
         this.alertHandler.showError(
           'Erreur lors de la création',
-          error.message || error.error.message
+          error.message || error.error.message,
         );
         this.isLoading.set(false);
       },

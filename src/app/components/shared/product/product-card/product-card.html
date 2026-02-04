@@ -6,15 +6,20 @@
       <h5 class="mb-0 fw-semibold">
         <i class="bi bi-box-seam me-2 text-primary"></i>{{ product().label }}
       </h5>
-      <span
-        class="badge px-3 py-2 rounded-pill {{
-          product().available
-            ? 'bg-success-subtle text-success'
-            : 'bg-danger-subtle text-danger'
-        }}"
-      >
-        {{ product().available ? "Disponible" : "Indisponible" }}
-      </span>
+      <div>
+        <span class="badge bg-secondary-subtle text-secondary me-2">
+          <i class="bi bi-stack me-1"></i>Stock: {{ product().stock }}
+        </span>
+        <span
+          class="badge px-3 py-2 rounded-pill {{
+            product().available
+              ? 'bg-success-subtle text-success'
+              : 'bg-danger-subtle text-danger'
+          }}"
+        >
+          {{ product().available ? "Disponible" : "Indisponible" }}
+        </span>
+      </div>
     </div>
 
     <div class="card-body px-4 pb-4 pt-3">

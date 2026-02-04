@@ -21,12 +21,15 @@
       placeholder="Nom du produit"
     />
 
-    @if (isInvalid('label')) {
-    <div class="invalid-feedback">
-      @if (f['label'].errors?.['required']) { Le libellé est requis. } @if
-      (f['label'].errors?.['minlength']) { Le libellé doit contenir au moins 2
-      caractères. }
-    </div>
+    @if (isInvalid("label")) {
+      <div class="invalid-feedback">
+        @if (f["label"].errors?.["required"]) {
+          Le libellé est requis.
+        }
+        @if (f["label"].errors?.["minlength"]) {
+          Le libellé doit contenir au moins 2 caractères.
+        }
+      </div>
     }
   </div>
 
@@ -43,12 +46,15 @@
       placeholder="Décrivez le produit"
     ></textarea>
 
-    @if (isInvalid('description')) {
-    <div class="invalid-feedback">
-      @if (f['description'].errors?.['required']) { La description est requise.
-      } @if (f['description'].errors?.['minlength']) { La description doit
-      contenir au moins 10 caractères. }
-    </div>
+    @if (isInvalid("description")) {
+      <div class="invalid-feedback">
+        @if (f["description"].errors?.["required"]) {
+          La description est requise.
+        }
+        @if (f["description"].errors?.["minlength"]) {
+          La description doit contenir au moins 10 caractères.
+        }
+      </div>
     }
   </div>
 
@@ -67,11 +73,15 @@
       min="0"
     />
 
-    @if (isInvalid('price')) {
-    <div class="invalid-feedback">
-      @if (f['price'].errors?.['required']) { Le prix est requis. } @if
-      (f['price'].errors?.['min']) { Le prix doit être supérieur ou égal à 0. }
-    </div>
+    @if (isInvalid("price")) {
+      <div class="invalid-feedback">
+        @if (f["price"].errors?.["required"]) {
+          Le prix est requis.
+        }
+        @if (f["price"].errors?.["min"]) {
+          Le prix doit être supérieur ou égal à 0.
+        }
+      </div>
     }
   </div>
 
@@ -80,8 +90,8 @@
     <label class="form-label fw-semibold">Catégorie</label>
     <select class="form-select" formControlName="category">
       <option value="">Sélectionnez une catégorie</option>
-      @for(item of categoryOption(); track item){
-      <option value="{{ item }}">{{ item }}</option>
+      @for (item of categoryOption(); track item) {
+        <option value="{{ item }}">{{ item }}</option>
       }
     </select>
   </div>
@@ -97,6 +107,28 @@
     <label class="form-check-label fw-semibold" for="availableSwitch">
       <i class="bi bi-check-circle me-1 text-primary"></i>Disponible
     </label>
+  </div>
+  <!-- Stock -->
+  <div class="mb-4">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-boxes me-1 text-primary"></i>Stock
+    </label>
+    <input
+      type="number"
+      class="form-control"
+      [class.is-invalid]="isInvalid('stock')"
+      formControlName="stock"
+      placeholder="0"
+      min="0"
+    />
+
+    @if (isInvalid("stock")) {
+      <div class="invalid-feedback">
+        @if (f["stock"].errors?.["min"]) {
+          Le stock doit être supérieur ou égal à 0.
+        }
+      </div>
+    }
   </div>
 
   <!-- Bouton -->

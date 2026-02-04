@@ -47,7 +47,7 @@ export class ProductEdit implements OnInit {
 
   constructor(
     private httpService: ProductService,
-    private alertHandler: AlertHandler
+    private alertHandler: AlertHandler,
   ) {}
 
   ngOnInit(): void {
@@ -68,8 +68,9 @@ export class ProductEdit implements OnInit {
         Validators.minLength(20),
       ]),
       price: new FormControl(null, [Validators.required, Validators.min(0.01)]),
-      category: new FormControl([Validators.required]),
+      category: new FormControl('', [Validators.required]),
       available: new FormControl(false, [Validators.required]),
+      stock: new FormControl(0, [Validators.min(0)]),
     });
   }
 
@@ -80,6 +81,7 @@ export class ProductEdit implements OnInit {
       price: product.price,
       category: product.category,
       available: product.available,
+      stock: product.stock,
     });
   }
 
@@ -123,7 +125,7 @@ export class ProductEdit implements OnInit {
           error: (error) => {
             this.alertHandler.showError(
               error.message || error.error.message,
-              'Erreur'
+              'Erreur',
             );
             this.isLoading.set(false);
           },

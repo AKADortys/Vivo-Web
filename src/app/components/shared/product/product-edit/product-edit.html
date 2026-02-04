@@ -23,12 +23,12 @@
       placeholder="Entrez le label du produit"
     />
 
-    @if (productForm.get('label')?.errors?.['required']) {
-    <div class="invalid-feedback">Le label est requis.</div>
-    } @else if (productForm.get('label')?.errors?.['minlength']) {
-    <div class="invalid-feedback">
-      Le label doit contenir au moins 5 caractères.
-    </div>
+    @if (productForm.get("label")?.errors?.["required"]) {
+      <div class="invalid-feedback">Le label est requis.</div>
+    } @else if (productForm.get("label")?.errors?.["minlength"]) {
+      <div class="invalid-feedback">
+        Le label doit contenir au moins 5 caractères.
+      </div>
     }
   </div>
 
@@ -48,12 +48,12 @@
       placeholder="Entrez une description"
     ></textarea>
 
-    @if (productForm.get('description')?.errors?.['required']) {
-    <div class="invalid-feedback">La description est requise.</div>
-    } @else if (productForm.get('description')?.errors?.['minlength']) {
-    <div class="invalid-feedback">
-      La description doit contenir au moins 20 caractères.
-    </div>
+    @if (productForm.get("description")?.errors?.["required"]) {
+      <div class="invalid-feedback">La description est requise.</div>
+    } @else if (productForm.get("description")?.errors?.["minlength"]) {
+      <div class="invalid-feedback">
+        La description doit contenir au moins 20 caractères.
+      </div>
     }
   </div>
 
@@ -73,10 +73,10 @@
       placeholder="Ex: 19.99"
     />
 
-    @if (productForm.get('price')?.errors?.['required']) {
-    <div class="invalid-feedback">Le prix est requis.</div>
-    } @else if (productForm.get('price')?.errors?.['min']) {
-    <div class="invalid-feedback">Le prix doit être supérieur à 0.</div>
+    @if (productForm.get("price")?.errors?.["required"]) {
+      <div class="invalid-feedback">Le prix est requis.</div>
+    } @else if (productForm.get("price")?.errors?.["min"]) {
+      <div class="invalid-feedback">Le prix doit être supérieur à 0.</div>
     }
   </div>
 
@@ -86,12 +86,12 @@
       <i class="bi bi-list-ul me-1 text-primary"></i>Catégorie
     </label>
     <select formControlName="category" class="form-select">
-      @for(option of categoryOption();track option){
-      <option value="{{ option }}">{{ option }}</option>
+      @for (option of categoryOption(); track option) {
+        <option value="{{ option }}">{{ option }}</option>
       }
     </select>
-    @if (productForm.get('category')?.errors?.['required']) {
-    <div class="invalid-feedback">La catégorie est requise.</div>
+    @if (productForm.get("category")?.errors?.["required"]) {
+      <div class="invalid-feedback">La catégorie est requise.</div>
     }
   </div>
 
@@ -108,6 +108,26 @@
       >Disponibilité</label
     >
   </div>
+  <!-- Stock -->
+  <div class="mb-4">
+    <label class="form-label fw-semibold">
+      <i class="bi bi-boxes me-1 text-primary"></i>Stock
+    </label>
+    <input
+      type="number"
+      class="form-control"
+      formControlName="stock"
+      [class.is-invalid]="
+        productForm.get('stock')?.invalid && productForm.get('stock')?.touched
+      "
+      placeholder="Entrez la quantité en stock"
+      min="0"
+    />
+
+    @if (productForm.get("stock")?.errors?.["min"]) {
+      <div class="invalid-feedback">Le stock ne peut pas être négatif.</div>
+    }
+  </div>
 
   <!-- Bouton -->
   <button
@@ -116,12 +136,15 @@
     [disabled]="productForm.invalid || isLoading()"
   >
     <i class="bi bi-save me-2"></i>
-    @if (!isLoading()) { Enregistrer } @else {
-    <span
-      class="spinner-border spinner-border-sm me-2"
-      role="status"
-      aria-hidden="true"
-    ></span>
-    En cours... }
+    @if (!isLoading()) {
+      Enregistrer
+    } @else {
+      <span
+        class="spinner-border spinner-border-sm me-2"
+        role="status"
+        aria-hidden="true"
+      ></span>
+      En cours...
+    }
   </button>
 </form>

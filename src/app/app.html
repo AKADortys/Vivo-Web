@@ -33,38 +33,42 @@
         <li class="nav-item me-3">
           <app-cart-badge class="" />
         </li>
-        @if(user){ @if(user.role === "admin"){
-        <li class="nav-item me-3">
-          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
-            <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
-          </a>
-        </li>
-        }@else if (user.role ==="client") {
-        <li class="nav-item">
-          <a
-            class="nav-link text-center"
-            routerLink="/profile"
-            routerLinkActive="active"
-          >
-            <i class="bi bi-speedometer2 me-2"></i>Mon compte
-          </a>
-        </li>
-        }
-        <li class="nav-item">
-          <app-user-drop-down-menu [user]="user"></app-user-drop-down-menu>
-        </li>
-        }@else{
-
-        <li class="nav-item me-3">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active">
-            <i class="bi bi-box-arrow-in-right me-1"></i>Connexion
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-outline-light px-3 py-1" routerLink="/register">
-            <i class="bi bi-person-plus me-1"></i>Inscription
-          </a>
-        </li>
+        @if (user) {
+          @if (user.role === "admin") {
+            <li class="nav-item me-3">
+              <a
+                class="nav-link"
+                routerLink="/dashboard"
+                routerLinkActive="active"
+              >
+                <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
+              </a>
+            </li>
+          } @else if (user.role === "client") {
+            <li class="nav-item">
+              <a
+                class="nav-link text-center"
+                routerLink="/profile"
+                routerLinkActive="active"
+              >
+                <i class="bi bi-speedometer2 me-2"></i>Mon compte
+              </a>
+            </li>
+          }
+          <li class="nav-item">
+            <app-user-drop-down-menu [user]="user"></app-user-drop-down-menu>
+          </li>
+        } @else {
+          <li class="nav-item me-3">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">
+              <i class="bi bi-box-arrow-in-right me-1"></i>Connexion
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light px-3 py-1" routerLink="/register">
+              <i class="bi bi-person-plus me-1"></i>Inscription
+            </a>
+          </li>
         }
       </ul>
     </div>
@@ -74,81 +78,8 @@
 <!-- LAYOUT PRINCIPAL -->
 <div class="container-fluid" style="padding-top: 70px">
   <div class="row">
-    <!-- SIDEBAR -->
-    <nav
-      id="sidebarMenu"
-      class="col-md-3 col-lg-2 d-md-block bg-secondary sidebar collapse border-end vh-100 position-fixed top-0 start-0 mt-5 pt-3"
-      style="
-        background-image: url('pexels-chanwalrus-958545.jpg');
-        background-size: cover;
-      "
-    >
-      <ul class="nav flex-column">
-        <li class="nav-item mb-1">
-          <a
-            class="nav-link text-light d-flex align-items-center px-3 py-2"
-            routerLink="/"
-            routerLinkActive="active"
-          >
-            <i class="bi bi-house-door-fill me-2"></i>Accueil
-          </a>
-        </li>
-        <li class="nav-item mb-1">
-          <a
-            class="nav-link text-light d-flex align-items-center px-3 py-2"
-            routerLink="/products"
-            routerLinkActive="active"
-          >
-            <i class="bi bi-shop me-2"></i>Produits
-          </a>
-        </li>
-        @if(!user){
-        <li class="nav-item mb-1">
-          <a
-            class="nav-link text-light d-flex align-items-center px-3 py-2"
-            routerLink="/register"
-            routerLinkActive="active"
-          >
-            <i class="bi bi-person-plus me-2"></i>Inscription
-          </a>
-        </li>
-        <li class="nav-item mb-1">
-          <a
-            class="nav-link text-light d-flex align-items-center px-3 py-2"
-            routerLink="/login"
-            routerLinkActive="active"
-          >
-            <i class="bi bi-box-arrow-in-right me-2"></i>Connexion
-          </a>
-        </li>
-        }@else { @if(user.role ==="admin"){
-        <li class="nav-item mb-1">
-          <a
-            class="nav-link text-light d-flex align-items-center px-3 py-2"
-            routerLink="/dashboard"
-            routerLinkActive="active"
-          >
-            <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
-          </a>
-        </li>
-        }@else if (user.role ==="client") {
-        <li class="nav-item">
-          <a
-            class="nav-link text-light d-flex align-items-center px-3 py-2"
-            routerLink="/profile"
-            routerLinkActive="active"
-          >
-            <i class="bi bi-speedometer2 me-2"></i>Mon compte
-          </a>
-        </li>
-        } }
-      </ul>
-    </nav>
-
     <!-- CONTENU -->
-    <main
-      class="col-md-9 ms-sm-auto col-lg-10 offset-lg-2 px-md-4 py-4 min-vh-100"
-    >
+    <main class="col-md-9 col-lg-10 mx-auto py-4 min-vh-100">
       <router-outlet></router-outlet>
     </main>
   </div>

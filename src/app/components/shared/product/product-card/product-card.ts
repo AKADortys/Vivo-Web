@@ -16,6 +16,7 @@ import { AlertHandler } from '../../../../services/alert-handler';
 })
 export class ProductCard {
   product = input.required<Product>();
+  forceClientView = input<boolean>(false);
   productQuantity = signal<number>(1);
   @Output() editProduct = new EventEmitter<Product>();
   @Output() removeProduct = new EventEmitter<boolean>();
@@ -23,7 +24,7 @@ export class ProductCard {
     readonly authUserService: AuthUserService,
     readonly cartService: CartService,
     readonly alertService: AlertHandler
-  ) {}
+  ) { }
 
   public onEdit() {
     this.editProduct.emit(this.product());

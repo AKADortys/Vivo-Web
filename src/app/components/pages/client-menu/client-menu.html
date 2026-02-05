@@ -1,0 +1,66 @@
+<div class=" py-5">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold mb-3">Notre Carte</h1>
+        <p class="lead text-muted">Découvrez nos produits frais et préparés avec soin</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        <!-- Filters Sidebar (Desktop) -->
+        <div class="col-lg-10">
+            <div class="sticky-top" style="top: 2rem; z-index: 100;">
+                <app-query-handle-product [filters]="paginatedFilter()" (filterChange)="onFilterChange($event)"
+                    (filterReset)="onFilterReset()" />
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="col-lg-12">
+            <!-- Loading State -->
+            @if (isLoading()) {
+            <div class="text-center py-5">
+                <div class="spinner-border text-primary mb-3" role="status">
+                    <span class="visually-hidden">Chargement...</span>
+                </div>
+                <p class="text-muted">Préparation du menu...</p>
+            </div>
+            }
+
+            <!-- Error State -->
+            @if (errorMessage()) {
+            <div class="alert alert-danger shadow-sm border-0 d-flex align-items-center" role="alert">
+                <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
+                <div>
+                    {{ errorMessage() }}
+                </div>
+            </div>
+            }
+
+            <!-- Products Grid -->
+            @if (!isLoading() && !errorMessage()) {
+            @if (products().length > 0) {
+            <div class="row g-4">
+                @for (product of products(); track product._id) {
+                <div class="col-md-6 col-xl-4">
+                    <app-product-card [product]="product" [forceClientView]="true" />
+                </div>
+                }
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-5 d-flex justify-content-center">
+                <app-pagination [totalItems]="totalItems()" [itemsPerPage]="paginatedFilter().pageSize!"
+                    [currentPage]="currentPage()" (pageChange)="onPageChange($event)" />
+            </div>
+            } @else {
+            <!-- Empty State -->
+            <div class="text-center py-5 bg-light rounded-4">
+                <i class="bi bi-search fs-1 text-muted mb-3 d-block"></i>
+                <h5 class="text-muted">Aucun produit trouvé</h5>
+                <p class="text-muted mb-0">Essayez de modifier vos filtres de recherche.</p>
+            </div>
+            }
+            }
+        </div>
+    </div>
+</div>

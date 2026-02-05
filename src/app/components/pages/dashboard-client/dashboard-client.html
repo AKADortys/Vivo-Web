@@ -1,81 +1,82 @@
-<h2 class="display-1">Panneau de contrôle</h2>
-<div class="row col-12 mx-auto">
-  <div class="accordion" id="mainAccordion">
-    <!-- USERS -->
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingUsers">
-        <button
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseUsers"
-          aria-expanded="true"
-          aria-controls="collapseUsers"
-        >
-          <i class="bi bi-people mx-2"></i> Utilisateurs
-        </button>
-      </h2>
-      <div
-        id="collapseUsers"
-        class="accordion-collapse collapse show"
-        aria-labelledby="headingUsers"
-        data-bs-parent="#mainAccordion"
-      >
-        <div class="accordion-body">
+<div class="row g-0 min-vh-100">
+  <!-- SIDEBAR -->
+  <div class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+    <div class="position-sticky pt-3 sidebar-sticky">
+      <div class="px-3 mb-4">
+        <h5 class="text-white text-uppercase fs-6 letter-spacing-2">
+          Dashboard
+        </h5>
+        <div class="text-white-50 small">Administration</div>
+      </div>
+
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'users'"
+            (click)="setView('users')" role="button">
+            <i class="bi bi-people me-3 fs-5"></i>
+            <span>Utilisateurs</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'products'"
+            (click)="setView('products')" role="button">
+            <i class="bi bi-box-seam me-3 fs-5"></i>
+            <span>Produits</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'orders'"
+            (click)="setView('orders')" role="button">
+            <i class="bi bi-receipt me-3 fs-5"></i>
+            <span>Commandes</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="mt-auto px-3 py-4 border-top border-secondary">
+        <div class="d-flex align-items-center text-white-50 small">
+          <i class="bi bi-info-circle me-2"></i>
+          <span>Version 1.0.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+    <!-- Header mobile only -->
+    <div
+      class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom d-md-none">
+      <h1 class="h2">Dashboard</h1>
+    </div>
+
+    @switch (currentView) { @case ('users') {
+    <div class="animate-fade-in">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
           <app-users-list></app-users-list>
         </div>
       </div>
     </div>
-
-    <!-- PRODUCTS -->
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingProducts">
-        <button
-          class="accordion-button collapsed"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseProducts"
-          aria-expanded="false"
-          aria-controls="collapseProducts"
-        >
-          <i class="bi bi-boxes mx-2"></i> Produits
-        </button>
-      </h2>
-      <div
-        id="collapseProducts"
-        class="accordion-collapse collapse"
-        aria-labelledby="headingProducts"
-        data-bs-parent="#mainAccordion"
-      >
-        <div class="accordion-body">
+    } @case ('products') {
+    <div class="animate-fade-in">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
           <app-products-list></app-products-list>
         </div>
       </div>
     </div>
-    <!-- ORDERS -->
-    <div class="accordion-item">
-      <h2 class="accordion-header" id="headingOrders">
-        <button
-          class="accordion-button"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapseOrders"
-          aria-expanded="false"
-          aria-controls="collapseOrders"
-        >
-          <i class="bi bi-receipt mx-2"></i> Commandes
-        </button>
-      </h2>
-      <div
-        id="collapseOrders"
-        class="accordion-collapse collapse"
-        aria-labelledby="headingOrders"
-        data-bs-parent="#mainAccordion"
-      >
-        <div class="accordion-body">
+    } @case ('orders') {
+    <div class="animate-fade-in">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0 text-gray-800">Suivi des Commandes</h2>
+      </div>
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-0">
           <app-order-list />
         </div>
       </div>
     </div>
+    } }
   </div>
 </div>

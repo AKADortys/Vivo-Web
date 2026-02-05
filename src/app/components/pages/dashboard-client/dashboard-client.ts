@@ -9,4 +9,10 @@ import { OrderList } from '../../shared/order/order-list/order-list';
   templateUrl: './dashboard-client.html',
   styleUrl: './dashboard-client.scss',
 })
-export class DashboardClient {}
+export class DashboardClient {
+  currentView: string = 'users';
+
+  setView(view: string) {
+    this.currentView = view;
+  }
+}

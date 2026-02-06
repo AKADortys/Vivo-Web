@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { AuthUserService } from './services/auth-user';
 import { AsyncPipe } from '@angular/common';
 import { UserDropDownMenu } from './components/shared/user/user-drop-down-menu/user-drop-down-menu';
@@ -26,9 +26,15 @@ import { ShoppingCart } from './components/shared/order/shopping-cart/shopping-c
 export class App {
   protected title = 'Vivo-Web';
   public user$;
-  constructor(private authService: AuthUserService) {
+  constructor(private authService: AuthUserService, private router: Router) {
     authService = new AuthUserService();
     this.user$ = this.authService.user$;
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        window.scrollTo(0, 0);
+      }
+    });
   }
 
   @ViewChild(Modal) cartModal!: Modal;

@@ -72,3 +72,20 @@ export interface OrderFilters {
   pageSize?: number;
   address?: string;
 }
+
+export interface OrderStatusStat {
+  _id: string;
+  count: number;
+}
+
+export interface OrderStatsData {
+  ordersByStatus: OrderStatusStat[];
+  totalOrders: number;
+  totalRevenue: number;
+  averageBasket: number;
+}
+
+export interface OrderStatsResponse {
+  message: string;
+  data: OrderStatsData;
+}

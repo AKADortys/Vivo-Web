@@ -8,6 +8,7 @@ import {
   OrderFilters,
   ResponseOrder,
   ResponseOrders,
+  OrderStatsResponse,
   UpdateOrder,
 } from '../interfaces/order';
 import { CartService } from './cart';
@@ -19,7 +20,7 @@ export class OrderService {
   constructor(
     private readonly http: HttpClient,
     private readonly cartService: CartService,
-  ) {}
+  ) { }
 
   private handleError(error: any) {
     console.error('HTTP Error:', error.message || error);
@@ -107,18 +108,21 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
-  getOrderStats(): Observable<any> {
+  getOrderStats(): Observable<OrderStatsResponse> {
     return this.http
-      .get<any>(`${this.baseUrl}/stats/general`)
+      .get<OrderStatsResponse>(`${this.baseUrl}/stats/general`)
       .pipe(catchError(this.handleError));
   }
 
-  getOrderStatsByDate(startDate: string, endDate: string): Observable<any> {
+  getOrderStatsByDate(
+    startDate: string,
+    endDate: string,
+  ): Observable<OrderStatsResponse> {
     let params = new HttpParams();
     params = params.set('startDate', startDate);
     params = params.set('endDate', endDate);
     return this.http
-      .get<any>(`${this.baseUrl}/stats/date`, { params })
+      .get<OrderStatsResponse>(`${this.baseUrl}/stats/by-date`, { params })
       .pipe(catchError(this.handleError));
   }
 

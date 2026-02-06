@@ -107,6 +107,21 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
+  getOrderStats(): Observable<any> {
+    return this.http
+      .get<any>(`${this.baseUrl}/stats/general`)
+      .pipe(catchError(this.handleError));
+  }
+
+  getOrderStatsByDate(startDate: string, endDate: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.set('startDate', startDate);
+    params = params.set('endDate', endDate);
+    return this.http
+      .get<any>(`${this.baseUrl}/stats/date`, { params })
+      .pipe(catchError(this.handleError));
+  }
+
   queryBuilder(page: number, limit: number, filter: OrderFilters): HttpParams {
     let params = new HttpParams();
 

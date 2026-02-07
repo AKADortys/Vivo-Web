@@ -12,6 +12,7 @@ export class QueryHandleProduct {
   @Input() filters!: ProductFilter;
 
   pageSizeOptions = [5, 10, 25, 50, 100];
+  categories = ["Plat principal", "Dessert", "Boisson", "Divers"]
 
   @Output() filterChange = new EventEmitter<ProductFilter>();
   @Output() filterReset = new EventEmitter<void>();

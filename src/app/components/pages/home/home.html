@@ -11,14 +11,14 @@
                     </span>
                     <h1 class="display-3 fw-bold mb-4">
                         Votre Service traiteur <br>
-                        <span class="text-primary">à domicile</span>
+                        <span class="text-primary">à emporter</span>
                     </h1>
                     <p class="lead mb-4 text-white-50">
                         Découvrez une cuisine authentique et savoureuse, préparée avec passion.
                         Commandez vos plats préférés en quelques clics.
                     </p>
                     <div class="d-flex gap-3">
-                        <a routerLink="/products" class="btn btn-primary btn-lg px-4 rounded-pill">
+                        <a routerLink="/menu" class="btn btn-primary btn-lg px-4 rounded-pill">
                             Voir le Menu
                         </a>
                         <a routerLink="/about" class="btn btn-outline-light btn-lg px-4 rounded-pill">
@@ -29,25 +29,8 @@
                 <div class="col-lg-6 text-center">
                     <!-- Placeholder image resembling the chef in the reference -->
                     <div class="hero-image-container position-relative">
-                        <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
-                            alt="Chef" class="img-fluid rounded-circle shadow-lg hero-img position-relative z-2">
-
-                        <!-- Decorative elements -->
-                        <div class="position-absolute top-0 end-0 translate-middle-y mt-5 me-5 z-1 d-none d-lg-block">
-                            <i class="bi bi-heptagon text-warning fs-1 opacity-50"></i>
-                        </div>
-                        <div
-                            class="position-absolute bottom-0 start-0 mb-5 ms-3 z-3 floating-card bg-white text-dark p-3 rounded shadow-lg d-none d-sm-block">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="rounded-circle bg-success bg-opacity-10 p-2 text-success">
-                                    <i class="bi bi-star-fill"></i>
-                                </div>
-                                <div>
-                                    <p class="mb-0 fw-bold">4.9/5</p>
-                                    <small class="text-muted">Avis clients</small>
-                                </div>
-                            </div>
-                        </div>
+                        <img src="photosimon.png" alt="Chef"
+                            class="img-fluid rounded-circle shadow-lg hero-img position-relative z-2">
                     </div>
                 </div>
             </div>
@@ -55,7 +38,7 @@
     </header>
 
     <!-- CATEGORIES SECTION -->
-    <section class="py-5 bg-white">
+    <section class="py-5">
         <div class="container py-5">
             <div class="text-center mb-5">
                 <span class="text-primary fw-bold text-uppercase letter-spacing-2 small">Nos Spécialités</span>
@@ -111,7 +94,7 @@
     </section>
 
     <!-- SOCIAL MEDIA SECTION -->
-    <section class="py-5 bg-light-section position-relative overflow-hidden">
+    <section class="py-5 position-relative overflow-hidden">
         <div class="container py-5 text-center">
             <div class="mb-5">
                 <span class="text-primary fw-bold text-uppercase letter-spacing-2 small">Communauté</span>
@@ -126,7 +109,7 @@
             <div class="row justify-content-center g-4">
                 <!-- Facebook -->
                 <div class="col-md-5 col-lg-4">
-                    <a href="https://facebook.com" target="_blank"
+                    <a href="https://www.facebook.com/100063936575056/mentions/" target="_blank"
                         class="card h-100 border-0 shadow-sm text-decoration-none hover-lift transition-all">
                         <div class="card-body p-5 d-flex flex-column align-items-center">
                             <div class="icon-circle bg-primary bg-opacity-10 text-primary mb-4 rounded-circle d-flex align-items-center justify-content-center"
@@ -141,7 +124,7 @@
 
                 <!-- Instagram -->
                 <div class="col-md-5 col-lg-4">
-                    <a href="https://instagram.com" target="_blank"
+                    <a href="https://www.instagram.com/au_ptit_vivo/" target="_blank"
                         class="card h-100 border-0 shadow-sm text-decoration-none hover-lift transition-all">
                         <div class="card-body p-5 d-flex flex-column align-items-center">
                             <div class="icon-circle bg-danger bg-opacity-10 text-danger mb-4 rounded-circle d-flex align-items-center justify-content-center"
@@ -158,14 +141,14 @@
     </section>
 
     <!-- LATEST PRODUCTS SECTION -->
-    <section class="py-5 bg-white">
+    <section class="py-5">
         <div class="container py-5">
             <div class="d-flex justify-content-between align-items-end mb-5">
                 <div>
                     <span class="text-primary fw-bold text-uppercase letter-spacing-2 small">Nouveautés</span>
                     <h2 class="display-5 fw-bold mt-2 mb-0">Les Derniers Ajouts</h2>
                 </div>
-                <a routerLink="/products" class="btn btn-outline-primary rounded-pill d-none d-md-inline-block">
+                <a routerLink="/menu" class="btn btn-outline-primary rounded-pill d-none d-md-inline-block">
                     Voir Tout <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>
@@ -187,67 +170,30 @@
             </div>
 
             <div class="text-center mt-5 d-md-none">
-                <a routerLink="/products" class="btn btn-outline-primary rounded-pill px-4">
+                <a routerLink="/menu" class="btn btn-outline-primary rounded-pill px-4">
                     Voir Tout <i class="bi bi-arrow-right ms-2"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- TESTIMONIALS SECTION -->
-    <section class="py-5 bg-light-section position-relative">
-        <div class="container py-5 text-center">
-            <span class="text-primary fw-bold text-uppercase letter-spacing-2 small">Témoignages</span>
-            <h2 class="display-5 fw-bold mt-2 mb-5">Ils adorent notre cuisine</h2>
-
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card border-0 shadow-lg p-4 p-md-5 position-relative">
-                        <i class="bi bi-quote fs-1 text-primary position-absolute top-0 start-0 m-3 opacity-25"></i>
-                        <p class="lead fst-italic mb-4">"Une expérience culinaire incroyable ! Les plats sont d'une
-                            finesse
-                            rare et le service est impeccable. Je recommande vivement le Canard à l'orange, un délice
-                            absolu."</p>
-                        <div class="d-flex align-items-center justify-content-center gap-3">
-                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80"
-                                alt="Client" class="rounded-circle"
-                                style="width: 50px; height: 50px; object-fit: cover;">
-                            <div class="text-start">
-                                <h6 class="fw-bold mb-0">Sophie Martin</h6>
-                                <small class="text-muted text-warning">
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                    <i class="bi bi-star-fill"></i>
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- FOOTER -->
-    <footer class="bg-dark text-white pt-5 pb-3">
+    <footer class="bg-dark pt-5 pb-3">
         <div class="container pt-4">
             <div class="row g-4 mb-5">
                 <div class="col-lg-4">
                     <h4 class="fw-bold mb-4">Au P'tit Vivo</h4>
-                    <p class="text-white-50">Votre destination gourmande pour des plats authentiques et savoureux.
+                    <p class="text-white-50">Votre service traiteur pour des plats authentiques et savoureux.
                         Commandez
-                        en ligne et savourez l'excellence.</p>
+                        en ligne et savourez nos plats !</p>
                     <div class="d-flex gap-3 mt-4">
-                        <a href="#"
+                        <a href="https://www.facebook.com/100063936575056/mentions/"
                             class="btn btn-outline-light rounded-circle p-2 d-flex align-items-center justify-content-center"
                             style="width: 40px; height: 40px;"><i class="bi bi-facebook"></i></a>
-                        <a href="#"
+                        <a href="https://www.instagram.com/au_ptit_vivo/"
                             class="btn btn-outline-light rounded-circle p-2 d-flex align-items-center justify-content-center"
                             style="width: 40px; height: 40px;"><i class="bi bi-instagram"></i></a>
-                        <a href="#"
-                            class="btn btn-outline-light rounded-circle p-2 d-flex align-items-center justify-content-center"
-                            style="width: 40px; height: 40px;"><i class="bi bi-twitter-x"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-2 col-6">
@@ -255,25 +201,12 @@
                     <ul class="list-unstyled text-white-50">
                         <li class="mb-2"><a routerLink="/"
                                 class="text-decoration-none text-white-50 hover-white">Accueil</a></li>
-                        <li class="mb-2"><a routerLink="/products"
+                        <li class="mb-2"><a routerLink="/menu"
                                 class="text-decoration-none text-white-50 hover-white">Menu</a></li>
                         <li class="mb-2"><a routerLink="/about" class="text-decoration-none text-white-50 hover-white">À
                                 Propos</a></li>
                         <li class="mb-2"><a routerLink="/contact"
                                 class="text-decoration-none text-white-50 hover-white">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-2 col-6">
-                    <h5 class="fw-bold mb-4">Catégories</h5>
-                    <ul class="list-unstyled text-white-50">
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 hover-white">Entrées</a>
-                        </li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 hover-white">Plats</a>
-                        </li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 hover-white">Desserts</a>
-                        </li>
-                        <li class="mb-2"><a href="#" class="text-decoration-none text-white-50 hover-white">Boissons</a>
-                        </li>
                     </ul>
                 </div>
                 <div class="col-lg-4">

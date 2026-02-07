@@ -3,12 +3,12 @@ import { RouterLink } from '@angular/router';
 import { ProductService } from '../../../services/product';
 import { Observable, map } from 'rxjs';
 import { Product } from '../../../interfaces/product';
-import { AsyncPipe, CurrencyPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { ProductCard } from '../../shared/product/product-card/product-card';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, AsyncPipe, CurrencyPipe, ProductCard],
+  imports: [RouterLink, AsyncPipe, ProductCard],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

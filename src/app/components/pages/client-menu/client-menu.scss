@@ -4,3 +4,26 @@
     display: block;
     min-height: 100vh;
 }
+
+.list-group-item {
+    transition: all 0.2s ease;
+    border: none;
+    border-left: 4px solid transparent;
+
+    &:hover {
+        background-color: var(--bs-gray-100);
+        padding-left: 1.25rem;
+    }
+
+    &.active {
+        background-color: var(--bs-primary-bg-subtle);
+        color: var(--bs-primary);
+        border-left-color: var(--bs-primary);
+        font-weight: 600;
+
+        i {
+            color: var(--bs-primary);
+            opacity: 1 !important;
+        }
+    }
+}

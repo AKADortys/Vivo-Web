@@ -57,6 +57,30 @@
       <h1 class="h2">Dashboard</h1>
     </div>
 
+    <!-- Navigation mobile (tabs) -->
+    <ul class="nav nav-tabs mb-4 d-md-none">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="currentView === 'users'" (click)="setView('users')" role="button">
+          <i class="bi bi-people me-2"></i>Utilisateurs
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="currentView === 'products'" (click)="setView('products')" role="button">
+          <i class="bi bi-box-seam me-2"></i>Produits
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="currentView === 'orders'" (click)="setView('orders')" role="button">
+          <i class="bi bi-receipt me-2"></i>Commandes
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="currentView === 'stats'" (click)="setView('stats')" role="button">
+          <i class="bi bi-graph-up me-2"></i>Stats
+        </a>
+      </li>
+    </ul>
+
     @switch (currentView) { @case ('users') {
     <div class="fade-in">
       <div class="card border-0 shadow-sm">

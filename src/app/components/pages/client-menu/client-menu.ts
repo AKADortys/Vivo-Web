@@ -23,12 +23,19 @@ export class ClientMenu {
     errorMessage = signal<string | null>(null);
     totalItems = signal<number>(0);
     currentPage = signal<number>(1);
-    paginatedFilter = signal<ProductFilter>({ available: true, pageSize: 12 }); // Default page size adjusted for grid
+    paginatedFilter = signal<ProductFilter>({ available: true, pageSize: 12, category: 'Plat principal' }); // Default page size adjusted for grid
+    categories = ['Plat principal', 'Dessert', 'Boisson', 'Divers'];
 
     constructor(
         private productService: ProductService,
         public authUserService: AuthUserService
     ) { }
+
+    selectCategory(category: string | undefined) {
+        this.paginatedFilter.update(filter => ({ ...filter, category }));
+        this.currentPage.set(1);
+        this.loadProducts(1);
+    }
 
     ngOnInit() {
         this.loadProducts();

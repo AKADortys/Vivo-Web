@@ -6,16 +6,39 @@
     </div>
 
     <div class="row g-4 justify-content-center">
-        <!-- Filters Sidebar (Desktop) -->
-        <div class="col-lg-10">
+        <!-- Sidebar Categories (Desktop) -->
+        <div class="col-lg-3">
             <div class="sticky-top" style="top: 2rem; z-index: 100;">
+                <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-4">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h5 class="mb-0 fw-bold"><i class="bi bi-grid mb-1 me-2"></i>Catégories</h5>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <button type="button"
+                            class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center"
+                            [class.active]="!paginatedFilter().category" (click)="selectCategory(undefined)">
+                            <span>Toutes</span>
+                            <i class="bi bi-chevron-right small opacity-50"></i>
+                        </button>
+                        @for (cat of categories; track cat) {
+                        <button type="button"
+                            class="list-group-item list-group-item-action py-3 d-flex justify-content-between align-items-center"
+                            [class.active]="paginatedFilter().category === cat" (click)="selectCategory(cat)">
+                            <span>{{ cat }}</span>
+                            <i class="bi bi-chevron-right small opacity-50"></i>
+                        </button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Filters Component -->
                 <app-query-handle-product [filters]="paginatedFilter()" (filterChange)="onFilterChange($event)"
                     (filterReset)="onFilterReset()" />
             </div>
         </div>
 
         <!-- Product Grid -->
-        <div class="col-lg-12">
+        <div class="col-lg-9">
             <!-- Loading State -->
             @if (isLoading()) {
             <div class="text-center py-5">
@@ -41,7 +64,7 @@
             @if (products().length > 0) {
             <div class="row g-4">
                 @for (product of products(); track product._id) {
-                <div class="col-md-6 col-xl-4">
+                <div class="col-md-10 col-xl-6">
                     <app-product-card [product]="product" [forceClientView]="true" />
                 </div>
                 }

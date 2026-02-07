@@ -9,6 +9,7 @@ import {
   ResponseUser,
   ResponseUsers,
   UserFilter,
+  ResponseUserStats,
 } from '../interfaces/user';
 import { environment } from '../../environments/environment';
 
@@ -16,7 +17,13 @@ import { environment } from '../../environments/environment';
 export class UserService {
   private readonly baseUrl = `${environment.apiUrl}users`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
+
+  getGeneralStats(): Observable<ResponseUserStats> {
+    return this.http
+      .get<ResponseUserStats>(`${this.baseUrl}/stats/general`)
+      .pipe(catchError(this.handleError));
+  }
 
   getUsers(
     page = 1,

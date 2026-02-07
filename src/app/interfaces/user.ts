@@ -53,3 +53,36 @@ export interface UserFilter {
   endDate?: string | null;
   pageSize?: number;
 }
+
+export interface UserStats {
+  usersByOrderCount: UserOrderCount[];
+  usersByMoneySpent: UserMoneySpent[];
+  newUsers: number;
+  activeUserRate: ActiveUserRate;
+}
+
+export interface UserOrderCount {
+  _id: string;
+  name: string;
+  lastName: string;
+  ordersCount: number;
+}
+
+export interface UserMoneySpent {
+  _id: string;
+  name: string;
+  lastName: string;
+  totalSpent: number;
+}
+
+export interface ActiveUserRate {
+  totalUsers: number;
+  activeUsers: number;
+  activeRate: number;
+}
+
+export interface ResponseUserStats {
+  message: string;
+  data: UserStats;
+}
+

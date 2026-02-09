@@ -61,6 +61,12 @@ export class UserService {
       .pipe(catchError(this.handleError));
   } //
 
+  getMe(): Observable<ResponseUser> {
+    return this.http
+      .get<ResponseUser>(`${this.baseUrl}/me`)
+      .pipe(catchError(this.handleError));
+  } //
+
   createUser(user: Partial<NewUser>): Observable<ResponseUser> {
     return this.http
       .post<ResponseUser>(this.baseUrl, user)

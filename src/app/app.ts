@@ -27,7 +27,7 @@ export class App {
   protected title = 'Vivo-Web';
   public user$;
   constructor(private authService: AuthUserService, private router: Router) {
-    authService = new AuthUserService();
+
     this.user$ = this.authService.user$;
 
     this.router.events.subscribe((event) => {

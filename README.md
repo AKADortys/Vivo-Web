@@ -16,7 +16,14 @@ Ce projet est une application web développée avec [Angular](https://github.com
     *   Protection des routes via des **Guards** (Vérification de token, Rôle Admin).
     *   **Intercepteurs HTTP** pour la gestion automatique des tokens d'authentification (JWT).
 
-## 🛠 Technologies et Librairies
+## � Backend & API
+
+Cette application **frontend** est conçue pour fonctionner de concert avec une API REST **Express**.
+Le code source du backend est disponible ici : 👉 [TFM-SGBD (Express API)](https://github.com/AKADortys/TFM-SGBD).
+
+⚠️ **Important** : Assurez-vous que l'API est lancée localement (par défaut sur le port 3000) pour que l'application puisse récupérer les données (produits, commandes, utilisateurs...).
+
+## �🛠 Technologies et Librairies
 
 Ce projet s'appuie sur un stack technique moderne :
 

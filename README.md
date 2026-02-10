@@ -1,68 +1,91 @@
-# VivoWeb
+# Vivo Web
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
+Ce projet est une application web développée avec [Angular](https://github.com/angular/angular-cli). Il s'agit d'un travail de fin d'études (TFE) visant à fournir une interface de gestion de commandes et un tableau de bord pour les clients et administrateurs.
 
-## Development server
+## 🚀 Fonctionnalités Principales
 
-To start a local development server, run:
+*   **Interface Client** :
+    *   Navigation intuitive par catégories (Plats, Desserts, Boissons, Divers).
+    *   Visualisation des produits et menus.
+    *   Tableau de bord personnel avec statistiques (nombre de commandes, dépenses, statut du compte...).
+*   **Administration** :
+    *   Gestion des utilisateurs et supervision.
+    *   Suivi des commandes en temps réel.
+*   **Authentification & Sécurité** :
+    *   Système de connexion sécurisé.
+    *   Protection des routes via des **Guards** (Vérification de token, Rôle Admin).
+    *   **Intercepteurs HTTP** pour la gestion automatique des tokens d'authentification (JWT).
 
+## 🛠 Technologies et Librairies
+
+Ce projet s'appuie sur un stack technique moderne :
+
+*   **Core** : [Angular](https://angular.io/) (Framework SPA).
+*   **Design & UI** :
+    *   [Bootstrap 5](https://getbootstrap.com/) : Framework CSS pour le responsive design et les composants graphiques.
+    *   [Bootstrap Icons](https://icons.getbootstrap.com/) : Bibliothèque d'icônes vectorielles.
+*   **Expérience Utilisateur** :
+    *   [SweetAlert2](https://sweetalert2.github.io/) : Pour l'affichage de popups et d'alertes dynamiques et esthétiques.
+*   **Programmation Réactive** :
+    *   [RxJS](https://rxjs.dev/) : Gestion des flux de données asynchrones (Observables).
+*   **Documentation** :
+    *   [Compodoc](https://compodoc.app/) : Outil de génération de documentation technique pour applications Angular.
+
+## 📦 Installation et Démarrage
+
+### Prérequis
+Assurez-vous d'avoir **Node.js** et **npm** installés sur votre machine.
+
+### Installation des dépendances
+À la racine du projet, lancez :
+```bash
+npm install
+```
+
+### Lancer le serveur de développement
+Pour démarrer l'application en local :
 ```bash
 ng serve
+# ou via le script npm
+npm start
 ```
+Une fois le serveur lancé, ouvrez votre navigateur à l'adresse `http://localhost:4200/`. L'application se rechargera automatiquement à chaque modification des fichiers.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🏗 Structure du Code
 
-## Code scaffolding
+L'architecture du projet dans `src/app` est organisée comme suit :
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+*   `components/` : Contient l'ensemble des vues et composants graphiques de l'application (Pages, Composants réutilisables).
+*   `services/` : Contient la logique métier et les appels API vers le backend (ex: `OrderService`, `AuthService`).
+*   `guards/` : Contient les règles de sécurité pour l'accès aux routes (ex: `AuthGuard`).
+*   `interceptor/` : Gère l'interception des requêtes HTTP (ex: ajout du header Authorization).
+*   `pipes/` : Transformateurs de données pour l'affichage (ex: formatage de dates ou devises).
+*   `interfaces/` & `class/` : Modèles de données TypeScript forts pour garantir la cohérence des types.
 
+## 📚 Documentation Technique
+
+Ce projet est configuré avec **Compodoc** pour générer une documentation statique du code.
+
+**Générer la documentation :**
 ```bash
-ng generate component component-name
+npx compodoc -p tsconfig.app.json
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
+**Générer et servir la documentation (sur le port 8080 par défaut) :**
 ```bash
-ng generate --help
+npx compodoc -p tsconfig.app.json -s
 ```
 
-## Building
+## 🧪 Tests
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+Pour exécuter les tests unitaires via son framework de test (Karma/Jasmine) :
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## 🔨 Build de Production
 
-For end-to-end (e2e) testing, run:
-
+Pour compiler le projet pour la mise en production (fichiers optimisés dans le dossier `dist/`) :
 ```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
-
-## generate documentation
-
-```bash
-npx compodoc -p tsconfig.app.json
-
-npx compodoc -p tsconfig.app.json --exportFormat json
-
+ng build
 ```

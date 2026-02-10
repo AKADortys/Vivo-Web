@@ -38,6 +38,13 @@
             <span>Statistiques</span>
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'settings'"
+            (click)="setView('settings')" role="button">
+            <i class="bi bi-gear me-3 fs-5"></i>
+            <span>Paramètres</span>
+          </a>
+        </li>
       </ul>
 
       <div class="mt-auto px-3 py-4 border-top border-secondary">
@@ -119,6 +126,47 @@
         </div>
         <div class="mb-4">
           <app-user-stats></app-user-stats>
+        </div>
+      </div>
+    </div>
+    } @case ('settings') {
+    <div class="fade-in">
+      <h2 class="h3 mb-4 text-gray-800">Paramètres du Magasin</h2>
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">État du magasin</h5>
+
+          <div class="form-check form-switch mb-4">
+            <input class="form-check-input" type="checkbox" role="switch" id="storeOpenSwitch"
+              [(ngModel)]="storeConfig.isStoreOpen">
+            <label class="form-check-label" for="storeOpenSwitch">
+              {{ storeConfig.isStoreOpen ? 'Magasin Ouvert' : 'Magasin Fermé' }}
+            </label>
+          </div>
+
+          <div class="mb-3">
+            <label for="reason" class="form-label">Message de fermeture (Optionnel)</label>
+            <input type="text" class="form-control" id="reason" [(ngModel)]="storeConfig.reason"
+              placeholder="Ex: Fermé pour congés exceptionnels">
+          </div>
+
+          <hr>
+
+          <h5 class="card-title mt-4">Fermeture Programmée</h5>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="startDate" class="form-label">Date de début</label>
+              <input type="datetime-local" class="form-control" id="startDate"
+                [(ngModel)]="storeConfig.closingSchedule.start">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="endDate" class="form-label">Date de fin</label>
+              <input type="datetime-local" class="form-control" id="endDate"
+                [(ngModel)]="storeConfig.closingSchedule.end">
+            </div>
+          </div>
+
+          <button class="btn btn-primary mt-3" (click)="saveConfig()">Enregistrer les modifications</button>
         </div>
       </div>
     </div>

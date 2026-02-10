@@ -5,6 +5,7 @@ import { Pagination } from '../../shared/utils/pagination/pagination';
 import { ProductCard } from '../../shared/product/product-card/product-card';
 import { QueryHandleProduct } from '../../shared/product/query-handle-product/query-handle-product';
 import { AuthUserService } from '../../../services/auth-user';
+import { AlertHandler } from '../../../services/alert-handler';
 
 @Component({
     selector: 'app-client-menu',
@@ -28,7 +29,8 @@ export class ClientMenu {
 
     constructor(
         private productService: ProductService,
-        public authUserService: AuthUserService
+        public authUserService: AuthUserService,
+        private alertHandler: AlertHandler
     ) { }
 
     selectCategory(category: string | undefined) {
@@ -58,7 +60,12 @@ export class ClientMenu {
             },
             error: (error) => {
                 console.error('Error loading products:', error);
-                this.errorMessage.set('Impossible de charger le menu pour le moment.');
+                if (error.status === 503) {
+                    this.alertHandler.showError(error.error?.message || 'Le magasin est actuellement fermé.', 'Fermeture du magasin');
+                    this.errorMessage.set(error.error?.message || 'Le magasin est actuellement fermé.');
+                } else {
+                    this.errorMessage.set('Impossible de charger le menu pour le moment.');
+                }
                 this.isLoading.set(false);
             }
         });

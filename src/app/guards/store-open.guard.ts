@@ -11,25 +11,13 @@ export const storeOpenGuard = () => {
         take(1),
         map(res => {
             const config = res.data;
-            if (!config) return true; // Default open if no config
+            if (!config) return true;
 
-            // Check manual status
-            if (!config.isStoreOpen) {
-                alert(config.reason || "Le magasin est fermé.");
+            if (!configService.isStoreOpen(config)) {
+                const reason = configService.getClosureReason(config);
+                alert(reason);
                 router.navigate(['/']);
                 return false;
-            }
-
-            // Check schedule
-            if (config.closingSchedule && config.closingSchedule.start && config.closingSchedule.end) {
-                const now = new Date();
-                const start = new Date(config.closingSchedule.start);
-                const end = new Date(config.closingSchedule.end);
-                if (now >= start && now <= end) {
-                    alert(config.reason || "Le magasin est fermé selon les horaires définis.");
-                    router.navigate(['/']);
-                    return false;
-                }
             }
 
             return true;

@@ -4,7 +4,7 @@ import { ProductsList } from '../../shared/product/products-list/products-list';
 import { OrderList } from '../../shared/order/order-list/order-list';
 import { OrderStats } from '../../shared/order/order-stats/order-stats.component';
 import { UserStatsComponent } from '../../shared/user/user-stats/user-stats.component';
-import { ConfigService, StoreConfig } from '../../../services/config';
+import { ConfigService, StoreConfig, PlannedClosure } from '../../../services/config';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AlertHandler } from '../../../services/alert-handler';
@@ -22,7 +22,18 @@ export class DashboardClient implements OnInit {
 
   storeConfig: StoreConfig = {
     isStoreOpen: true,
+    openingHours: [],
+    plannedClosures: [],
+    // Legacy support init
     closingSchedule: { start: null, end: null },
+    reason: ''
+  };
+
+  daysOfWeek = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+
+  newClosure: Partial<PlannedClosure> = {
+    start: '',
+    end: '',
     reason: ''
   };
 
@@ -34,6 +45,18 @@ export class DashboardClient implements OnInit {
     this.configService.getConfig().subscribe(res => {
       if (res.data) {
         this.storeConfig = res.data;
+
+        // Ensure openingHours has all days if empty (migration/init)
+        if (!this.storeConfig.openingHours || this.storeConfig.openingHours.length === 0) {
+          this.storeConfig.openingHours = this.daysOfWeek.map((_, index) => ({
+            dayOfWeek: index,
+            isOpen: true,
+            morning: { start: '09:00', end: '12:00' },
+            afternoon: { start: '14:00', end: '18:00' }
+          }));
+        }
+
+        if (!this.storeConfig.plannedClosures) this.storeConfig.plannedClosures = [];
       }
     });
   }
@@ -46,7 +69,12 @@ export class DashboardClient implements OnInit {
         this.configService.updateConfig(this.storeConfig).subscribe({
           next: (res) => {
             this.alertHandler.showSuccess('Configuration mise à jour avec succès', 'Succès');
-            if (res.data) this.storeConfig = res.data;
+            if (res.data) {
+              this.storeConfig = res.data;
+              // Ensure arrays exist after save
+              if (!this.storeConfig.openingHours) this.storeConfig.openingHours = [];
+              if (!this.storeConfig.plannedClosures) this.storeConfig.plannedClosures = [];
+            }
           },
           error: (err) => {
             console.error(err);
@@ -54,6 +82,27 @@ export class DashboardClient implements OnInit {
           }
         });
       });
+  }
+
+  addClosure() {
+    if (!this.newClosure.start || !this.newClosure.end) {
+      this.alertHandler.showError('Veuillez sélectionner une date de début et de fin.', 'Erreur');
+      return;
+    }
+
+    // Add to list
+    this.storeConfig.plannedClosures.push({
+      start: this.newClosure.start,
+      end: this.newClosure.end,
+      reason: this.newClosure.reason || 'Fermeture exceptionnelle'
+    });
+
+    // Reset form
+    this.newClosure = { start: '', end: '', reason: '' };
+  }
+
+  removeClosure(index: number) {
+    this.storeConfig.plannedClosures.splice(index, 1);
   }
 
   setView(view: string) {

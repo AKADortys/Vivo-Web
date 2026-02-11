@@ -45,14 +45,8 @@ export class App {
   }
 
   isStoreOpen(config: StoreConfig): boolean {
-    if (!config.isStoreOpen) return false;
-    if (config.closingSchedule && config.closingSchedule.start && config.closingSchedule.end) {
-      const now = new Date();
-      const start = new Date(config.closingSchedule.start);
-      const end = new Date(config.closingSchedule.end);
-      if (now >= start && now <= end) return false;
-    }
-    return true;
+    // Use the centralized logic from service which handles hours and planned closures
+    return this.configService.isStoreOpen(config);
   }
 
   openCart() {

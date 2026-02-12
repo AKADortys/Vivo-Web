@@ -23,16 +23,20 @@ export class Modal implements AfterViewInit, OnDestroy {
 
   private modalInstance: any;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) { }
 
   ngAfterViewInit() {
     const modalElement = this.el.nativeElement.querySelector(`#${this.id}`);
+    document.body.appendChild(this.el.nativeElement);
     this.modalInstance = new bootstrap.Modal(modalElement);
     modalElement.addEventListener('hidden.bs.modal', () => this.closed.emit());
   }
 
   ngOnDestroy() {
     if (this.modalInstance) this.modalInstance.dispose();
+    if (this.el.nativeElement.parentNode === document.body) {
+      document.body.removeChild(this.el.nativeElement);
+    }
   }
 
   open() {

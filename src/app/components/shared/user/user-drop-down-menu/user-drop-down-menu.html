@@ -1,25 +1,24 @@
 <div class="dropdown">
-  <button
-    class="btn btn-secondary dropdown-toggle"
-    type="button"
-    id="userDropdownMenuButton"
-    data-bs-toggle="dropdown"
-    aria-haspopup="true"
-    aria-expanded="false"
-    data-bs-display="static"
-  >
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="userDropdownMenuButton" data-bs-toggle="dropdown"
+    aria-haspopup="true" aria-expanded="false" data-bs-display="static">
     <i class="bi bi-person-circle"></i>
     Paramètres
   </button>
-  <div
-    class="dropdown-menu dropdown-menu-end"
-    aria-labelledby="userDropdownMenuButton"
-  >
+  <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownMenuButton">
     <p class="dropdown-item-text text-center text-warning text-bold">
       {{ user.name }} {{ user.lastName }}
     </p>
     <hr />
-    <app-logout-button class="dropdown-item-text text-center" />
+    <button class="dropdown-item" (click)="openModal()">
+      <i class="bi bi-person-lines-fill me-2"></i>Modifier mon profil
+    </button>
+    <button class="dropdown-item" (click)="logout()">
+      <i class="bi bi-box-arrow-right me-2"></i>Se déconnecter
+    </button>
     <app-toggle-theme class="dropdown-item-text" />
   </div>
 </div>
+
+<app-modal id="userEditModal" title="Modifier mon profil">
+  <app-user-edit [user]="user" (save)="onUserSaved()"></app-user-edit>
+</app-modal>

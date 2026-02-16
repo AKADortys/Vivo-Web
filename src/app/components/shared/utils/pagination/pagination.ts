@@ -23,10 +23,39 @@ export class Pagination {
 
   // Tableau des numéros de page à afficher
   pages = computed(() => {
+    const total = this.totalPages();
+    const current = this.currentPage();
     const pages: number[] = [];
-    for (let i = 1; i <= this.totalPages(); i++) {
-      pages.push(i);
+
+    if (total <= 7) {
+      // Si moins de 7 pages, tout afficher
+      for (let i = 1; i <= total; i++) {
+        pages.push(i);
+      }
+    } else {
+      // Toujours afficher la première page
+      pages.push(1);
+
+      if (current > 4) {
+        pages.push(-1); // Ellipsis début
+      }
+
+      // Pages autour de la page courante
+      const start = Math.max(2, current - 1);
+      const end = Math.min(total - 1, current + 1);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (current < total - 3) {
+        pages.push(-1); // Ellipsis fin
+      }
+
+      // Toujours afficher la dernière page
+      pages.push(total);
     }
+
     return pages;
   });
 

@@ -5,7 +5,7 @@ import { ValidateOrderBtn } from '../validate-order-btn/validate-order-btn';
 import { RefuseOrderBtn } from '../refuse-order-btn/refuse-order-btn';
 import { ClientCancelOrderBtn } from '../client-cancel-order-btn/client-cancel-order-btn';
 
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgClass } from '@angular/common';
 import { AuthUserService } from '../../../../services/auth-user';
 @Component({
   selector: 'app-order-card',
@@ -15,6 +15,7 @@ import { AuthUserService } from '../../../../services/auth-user';
     RefuseOrderBtn,
     CurrencyPipe,
     ClientCancelOrderBtn,
+    NgClass,
   ],
   templateUrl: './order-card.html',
   styleUrl: './order-card.scss',
@@ -31,5 +32,22 @@ export class OrderCard {
 
   onRemove() {
     this.removeOrder.emit();
+  }
+
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Confirmée':
+        return 'text-bg-primary';
+      case 'Accepté':
+        return 'text-bg-success';
+      case 'Refusée':
+        return 'text-bg-danger';
+      case 'Annulée':
+        return 'text-bg-secondary';
+      case 'Complétée':
+        return 'text-bg-info';
+      default:
+        return 'text-bg-light';
+    }
   }
 }

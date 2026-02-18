@@ -12,7 +12,7 @@ export class RemoveProduct {
   constructor(
     private http: ProductService,
     private alertService: AlertHandler
-  ) {}
+  ) { }
 
   @Input() productId?: string;
   @Output() onRemoved = new EventEmitter<boolean>();
@@ -36,7 +36,7 @@ export class RemoveProduct {
             },
             error: (error) => {
               this.alertService.showError(
-                error.error.message || error.message,
+                error.message,
                 'Erreur'
               );
               this.isLoading.set(false);

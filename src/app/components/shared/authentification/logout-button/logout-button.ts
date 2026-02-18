@@ -16,7 +16,7 @@ export class LogoutButton {
     private alertHandler: AlertHandler,
     private authUService: AuthUserService,
     private router: Router
-  ) {}
+  ) { }
 
   logout(): void {
     this.httpService.Logout().subscribe({
@@ -27,7 +27,7 @@ export class LogoutButton {
       },
       error: (error) =>
         this.alertHandler.showError(
-          error.error.message || error.message,
+          error.message,
           'Erreur'
         ),
     });

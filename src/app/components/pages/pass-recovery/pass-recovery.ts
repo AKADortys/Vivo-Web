@@ -65,7 +65,7 @@ export class PassRecovery implements OnInit {
           this.router.navigate(['/']);
         },
         error: (err) => {
-          this.alert.showError(err.message || err.error.message);
+          this.alert.showError(err.message);
           this.router.navigate(['/']);
         },
       });

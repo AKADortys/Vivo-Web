@@ -43,7 +43,7 @@ export class UserDropDownMenu {
       },
       error: (error) =>
         this.alertHandler.showError(
-          error.error.message || error.message,
+          error.message,
           'Erreur'
         ),
     });

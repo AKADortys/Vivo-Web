@@ -12,14 +12,14 @@ export class ClientCancelOrderBtn {
   @Input() orderId!: string;
   @Input() displayMode!: boolean; // true for table (icon only?), false for card (full button?) - wait, previous buttons used displayMode but didn't seem to use it in ts logic, maybe for template?
   // Let's check previous buttons templates closer next time, but for now I'll include it.
-  
+
   isLoading = signal<boolean>(false);
   @Output() editOrder = new EventEmitter<void>();
 
   constructor(
     private readonly orderService: OrderService,
     private readonly alertHandler: AlertHandler
-  ) {}
+  ) { }
 
   cancelOrder() {
     this.isLoading.set(true);
@@ -45,7 +45,7 @@ export class ClientCancelOrderBtn {
             },
             error: (error) => {
               console.error(error.message);
-              this.alertHandler.showError(error.error.message, 'Erreur');
+              this.alertHandler.showError(error.message, 'Erreur');
             },
           });
       });

@@ -16,7 +16,7 @@ export class ConfirmAccount implements OnInit {
     private http: AuthService,
     private alertHandler: AlertHandler,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.token.set(this.route.snapshot.paramMap.get('token'));
@@ -35,7 +35,7 @@ export class ConfirmAccount implements OnInit {
         },
         error: async (error) => {
           await this.alertHandler.showError(
-            error.error.message || error.message,
+            error.message,
             'Erreur'
           );
           this.router.navigate(['/login']);

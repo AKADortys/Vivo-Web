@@ -16,7 +16,7 @@ export class RemoveUser {
   constructor(
     private httpService: UserService,
     private alertHandler: AlertHandler
-  ) {}
+  ) { }
 
   onRemove() {
     if (this.userId) {
@@ -35,7 +35,7 @@ export class RemoveUser {
               this.removed.emit(true);
             },
             error: (error) => {
-              this.alertHandler.showError(error.message || error.error.message);
+              this.alertHandler.showError(error.message);
               this.isLoading.set(false);
             },
           });

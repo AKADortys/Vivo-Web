@@ -1,5 +1,6 @@
 // src/app/services/user.service.ts
 import { Injectable } from '@angular/core';
+import { extractApiErrorMessage } from '../utils/api-error-handler';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -86,7 +87,8 @@ export class UserService {
   } //
 
   private handleError(error: any) {
-    console.error('HTTP Error:', error.message || error);
-    return throwError(() => error);
+    const message = extractApiErrorMessage(error);
+    console.error('HTTP Error:', message);
+    return throwError(() => new Error(message));
   }
 }

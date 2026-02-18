@@ -26,7 +26,7 @@ export class AddProduct {
     private fb: FormBuilder,
     private httpService: ProductService,
     private alertHandler: AlertHandler,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
@@ -61,7 +61,7 @@ export class AddProduct {
       error: (error) => {
         this.alertHandler.showError(
           'Erreur lors de la création',
-          error.message || error.error.message,
+          error.message,
         );
         this.isLoading.set(false);
       },

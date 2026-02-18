@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { extractApiErrorMessage } from '../utils/api-error-handler';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -17,7 +18,7 @@ import {
 export class ProductService {
   private readonly baseUrl = `${environment.apiUrl}products`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getProducts(
     page = 1,
@@ -87,7 +88,8 @@ export class ProductService {
   } //
 
   private handleError(error: any) {
-    console.error('HTTP Error:', error.message || error);
-    return throwError(() => error);
+    const message = extractApiErrorMessage(error);
+    console.error('HTTP Error:', message);
+    return throwError(() => new Error(message));
   }
 }

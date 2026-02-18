@@ -37,7 +37,7 @@ export class UsersList implements OnInit {
   paginatedFilter = signal<UserFilter>({ pageSize: 30 });
   displayMode = signal<'card' | 'table'>('card');
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.loadUsers();
@@ -65,7 +65,7 @@ export class UsersList implements OnInit {
       },
       error: (error) => {
         this.isLoading.set(false);
-        this.errorMessage.set('Error loading users:' + error.error.message);
+        this.errorMessage.set('Error loading users:' + error.message);
       },
     });
   }

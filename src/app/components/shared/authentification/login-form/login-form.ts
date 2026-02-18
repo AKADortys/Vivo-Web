@@ -26,7 +26,7 @@ export class LoginForm {
     private alertHandler: AlertHandler,
     private AuthUService: AuthUserService,
     private router: Router
-  ) {}
+  ) { }
 
   form: FormGroup = new FormGroup({
     mail: new FormControl('', [Validators.required, Validators.email]),
@@ -54,8 +54,7 @@ export class LoginForm {
           console.error('Login failed:', error);
           this.alertHandler.showError(
             'Échec de la connexion',
-            error.error.message ||
-              'Une erreur est survenue lors de la connexion.'
+            error.message
           );
         },
         complete: () => {

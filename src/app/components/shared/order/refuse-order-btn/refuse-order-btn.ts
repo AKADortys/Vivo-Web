@@ -16,7 +16,7 @@ export class RefuseOrderBtn {
   constructor(
     private readonly orderService: OrderService,
     private readonly alertHandler: AlertHandler
-  ) {}
+  ) { }
 
   refuseOrder() {
     this.isLoading.set(true);
@@ -42,7 +42,7 @@ export class RefuseOrderBtn {
             },
             error: (error) => {
               console.error(error.message);
-              this.alertHandler.showError(error.error.message, 'Erreur');
+              this.alertHandler.showError(error.message, 'Erreur');
             },
           });
       });

@@ -85,7 +85,7 @@ export class RegisterForm {
       },
       error: (error: any) => {
         this.alertHandler.showError(
-          error.error.message || error.message,
+          error.message,
           'Erreur'
         );
         this.isLoading.set(false);

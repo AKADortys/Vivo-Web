@@ -48,7 +48,7 @@ export class ProductEdit implements OnInit {
   constructor(
     private httpService: ProductService,
     private alertHandler: AlertHandler,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -124,7 +124,7 @@ export class ProductEdit implements OnInit {
           },
           error: (error) => {
             this.alertHandler.showError(
-              error.message || error.error.message,
+              error.message,
               'Erreur',
             );
             this.isLoading.set(false);

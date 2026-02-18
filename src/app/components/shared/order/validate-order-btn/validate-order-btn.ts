@@ -17,7 +17,7 @@ export class ValidateOrderBtn {
   constructor(
     private readonly orderService: OrderService,
     private readonly alertHandler: AlertHandler
-  ) {}
+  ) { }
 
   validateOrder() {
     this.isLoading.set(true);
@@ -43,7 +43,7 @@ export class ValidateOrderBtn {
             },
             error: (error) => {
               console.error(error.message);
-              this.alertHandler.showError(error.error.message, 'Erreur');
+              this.alertHandler.showError(error.message, 'Erreur');
             },
           });
       });

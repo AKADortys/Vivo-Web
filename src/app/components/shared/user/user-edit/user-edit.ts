@@ -147,7 +147,7 @@ export class UserEdit implements OnInit {
               error: (error) => {
                 this.alertHandler.showError(
                   'Error updating user',
-                  error.error.message || 'Unknown error'
+                  error.message
                 );
                 this.isLoading.set(false);
               },

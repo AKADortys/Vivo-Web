@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { extractApiErrorMessage } from '../utils/api-error-handler';
 import {
   AuthentificationRequest,
   AuthentificationResponse,
@@ -15,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   private readonly baseUrl = `${environment.apiUrl}auth`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   Login(
     credentials: AuthentificationRequest,
@@ -53,7 +54,8 @@ export class AuthService {
   } //
 
   private handleError(error: any) {
-    console.error('HTTP Error:', error.message || error);
-    return throwError(() => error);
+    const message = extractApiErrorMessage(error);
+    console.error('HTTP Error:', message);
+    return throwError(() => new Error(message));
   }
 }

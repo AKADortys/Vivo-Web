@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UsersList } from '../../shared/user/users-list/users-list';
 import { ProductsList } from '../../shared/product/products-list/products-list';
 import { OrderList } from '../../shared/order/order-list/order-list';
@@ -8,17 +8,21 @@ import { ConfigService, StoreConfig, PlannedClosure } from '../../../services/co
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { AlertHandler } from '../../../services/alert-handler';
+import { OptionsComponent } from '../../shared/config/options/options.component';
 
 @Component({
   selector: 'app-dashboard-client',
-  imports: [UsersList, ProductsList, OrderList, OrderStats, UserStatsComponent, FormsModule, DatePipe],
+  imports: [UsersList, ProductsList, OrderList, OrderStats, UserStatsComponent, OptionsComponent, FormsModule, DatePipe],
   templateUrl: './dashboard-client.html',
   styleUrl: './dashboard-client.scss',
 })
 export class DashboardClient implements OnInit {
   currentView: string = 'users';
-  private configService = inject(ConfigService);
-  private alertHandler = inject(AlertHandler);
+
+  constructor(
+    private configService: ConfigService,
+    private alertHandler: AlertHandler
+  ) { }
 
   storeConfig: StoreConfig = {
     isStoreOpen: true,
@@ -42,7 +46,7 @@ export class DashboardClient implements OnInit {
   }
 
   loadConfig() {
-    this.configService.getConfig().subscribe(res => {
+    this.configService.getConfig().subscribe((res: any) => {
       if (res.data) {
         this.storeConfig = res.data;
 
@@ -63,11 +67,11 @@ export class DashboardClient implements OnInit {
 
   saveConfig() {
     this.alertHandler.showConfirm('Voulez-vous vraiment mettre à jour la configuration du magasin ?', 'Confirmation')
-      .then((confirm) => {
+      .then((confirm: boolean) => {
         if (!confirm) return;
 
         this.configService.updateConfig(this.storeConfig).subscribe({
-          next: (res) => {
+          next: (res: any) => {
             this.alertHandler.showSuccess('Configuration mise à jour avec succès', 'Succès');
             if (res.data) {
               this.storeConfig = res.data;
@@ -76,7 +80,7 @@ export class DashboardClient implements OnInit {
               if (!this.storeConfig.plannedClosures) this.storeConfig.plannedClosures = [];
             }
           },
-          error: (err) => {
+          error: (err: any) => {
             console.error(err);
             this.alertHandler.showError('Erreur lors de la mise à jour', 'Erreur');
           }

@@ -1,0 +1,55 @@
+<div class="row" *ngIf="storeConfig">
+  <!-- Site Info -->
+  <div class="col-xl-6 mb-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header py-3">
+        <h5 class="card-title mb-0">Informations du Site</h5>
+      </div>
+      <div class="card-body" *ngIf="storeConfig.siteInfo">
+        <div class="mb-3">
+          <label class="form-label small text-muted">Adresse</label>
+          <input type="text" class="form-control" [(ngModel)]="storeConfig.siteInfo.address" placeholder="Ex: 123 Rue Principale">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small text-muted">Téléphone</label>
+          <input type="text" class="form-control" [(ngModel)]="storeConfig.siteInfo.phone" placeholder="Ex: 01 23 45 67 89">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small text-muted">Email de contact</label>
+          <input type="email" class="form-control" [(ngModel)]="storeConfig.siteInfo.email" placeholder="contact@example.com">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small text-muted">Description courte (Footer/About)</label>
+          <textarea class="form-control" rows="3" [(ngModel)]="storeConfig.siteInfo.description" placeholder="Une brève description de votre établissement..."></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label small text-muted">Contenu "À Propos" (Détail)</label>
+          <textarea class="form-control" rows="5" [(ngModel)]="storeConfig.siteInfo.aboutUsContent" placeholder="Histoire, mission, valeurs..."></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Socials -->
+  <div class="col-xl-6 mb-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header py-3">
+        <h5 class="card-title mb-0">Réseaux Sociaux</h5>
+      </div>
+      <div class="card-body" *ngIf="storeConfig.socials">
+        <div class="mb-3">
+          <label class="form-label small text-muted"><i class="bi bi-facebook me-2"></i>Facebook</label>
+          <input type="text" class="form-control" [(ngModel)]="storeConfig.socials.facebook" placeholder="https://facebook.com/page">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small text-muted"><i class="bi bi-instagram me-2"></i>Instagram</label>
+          <input type="text" class="form-control" [(ngModel)]="storeConfig.socials.instagram" placeholder="https://instagram.com/page">
+        </div>
+        <div class="mb-3">
+          <label class="form-label small text-muted"><i class="bi bi-twitter me-2"></i>Twitter / X</label>
+          <input type="text" class="form-control" [(ngModel)]="storeConfig.socials.twitter" placeholder="https://twitter.com/page">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

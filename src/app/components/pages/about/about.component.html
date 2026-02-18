@@ -1,0 +1,98 @@
+<div class="container py-5" *ngIf="storeConfig">
+    <!-- Hero Section -->
+    <div class="text-center mb-5 fade-in">
+        <h1 class="display-4 fw-bold text-primary mb-3">À Propos de Nous</h1>
+        <p class="lead text-muted mx-auto" style="max-width: 700px;">
+            {{ storeConfig.siteInfo?.description || 'Découvrez notre histoire et notre passion.' }}
+        </p>
+    </div>
+
+    <div class="row g-5">
+        <!-- Content Section -->
+        <div class="col-lg-7 fade-in" style="animation-delay: 0.1s;">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body p-4 p-lg-5">
+                    <h2 class="h3 mb-4">Notre Histoire</h2>
+                    <div class="about-content"
+                        [innerHTML]="storeConfig.siteInfo?.aboutUsContent || 'Contenu à venir...'"></div>
+
+                    <hr class="my-5 opacity-10">
+
+                    <h3 class="h4 mb-4">Nos Horaires</h3>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0"
+                                    *ngFor="let day of storeConfig.openingHours">
+                                    <span class="fw-medium">{{ daysOfWeek[day.dayOfWeek] }}</span>
+                                    <span *ngIf="!day.isOpen"
+                                        class="badge bg-light text-secondary rounded-pill">Fermé</span>
+                                    <span *ngIf="day.isOpen" class="text-muted small">
+                                        {{ day.morning.start }} - {{ day.morning.end }} / {{ day.afternoon.start }} - {{
+                                        day.afternoon.end }}
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact & Map Section -->
+        <div class="col-lg-5 fade-in" style="animation-delay: 0.2s;">
+            <div class="vstack gap-4">
+                <!-- Contact Info -->
+                <div class="card border-0 shadow-sm bg-primary text-white">
+                    <div class="card-body p-4">
+                        <h3 class="h4 mb-4">Contactez-nous</h3>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="bi bi-geo-alt-fill me-3 fs-5 opacity-75"></i>
+                                <span>{{ storeConfig.siteInfo?.address || 'Adresse non renseignée' }}</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center">
+                                <i class="bi bi-telephone-fill me-3 fs-5 opacity-75"></i>
+                                <a [href]="'tel:' + storeConfig.siteInfo?.phone"
+                                    class="text-white text-decoration-none">
+                                    {{ storeConfig.siteInfo?.phone || 'Non renseigné' }}
+                                </a>
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <i class="bi bi-envelope-fill me-3 fs-5 opacity-75"></i>
+                                <a [href]="'mailto:' + storeConfig.siteInfo?.email"
+                                    class="text-white text-decoration-none">
+                                    {{ storeConfig.siteInfo?.email || 'Non renseigné' }}
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Socials -->
+                        <div class="mt-4 pt-4 border-top border-white border-opacity-25" *ngIf="storeConfig.socials">
+                            <h6 class="text-uppercase small letter-spacing-2 mb-3 opacity-75">Suivez-nous</h6>
+                            <div class="d-flex gap-3">
+                                <a *ngIf="storeConfig.socials.facebook" [href]="storeConfig.socials.facebook"
+                                    target="_blank" class="text-white fs-4 hover-scale">
+                                    <i class="bi bi-facebook"></i>
+                                </a>
+                                <a *ngIf="storeConfig.socials.instagram" [href]="storeConfig.socials.instagram"
+                                    target="_blank" class="text-white fs-4 hover-scale">
+                                    <i class="bi bi-instagram"></i>
+                                </a>
+                                <a *ngIf="storeConfig.socials.twitter" [href]="storeConfig.socials.twitter"
+                                    target="_blank" class="text-white fs-4 hover-scale">
+                                    <i class="bi bi-twitter-x"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="card border-0 shadow-sm overflow-hidden" style="min-height: 300px;">
+                    <div id="map" class="h-100 w-100" style="min-height: 300px; z-index: 1;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

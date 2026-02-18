@@ -21,11 +21,27 @@ export interface PlannedClosure {
     reason?: string;
 }
 
+export interface SiteInfo {
+    address: string;
+    phone: string;
+    email: string;
+    description: string;
+    aboutUsContent: string;
+}
+
+export interface Socials {
+    facebook: string;
+    instagram: string;
+    twitter: string;
+}
+
 export interface StoreConfig {
     _id?: string;
     isStoreOpen: boolean;
     openingHours: OpeningHour[];
     plannedClosures: PlannedClosure[];
+    siteInfo?: SiteInfo;
+    socials?: Socials;
     // Deprecated
     closingSchedule?: {
         start: string | null;

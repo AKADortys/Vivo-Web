@@ -1,45 +1,45 @@
 <div class="row g-0 min-vh-100">
   <!-- SIDEBAR -->
-  <div class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+  <div class="col-md-3 col-lg-2 d-md-block  collapse">
     <div class="position-sticky pt-3 sidebar-sticky">
       <div class="px-3 mb-4">
-        <h5 class="text-white text-uppercase fs-6 letter-spacing-2">
+        <h5 class=" text-uppercase fs-6 letter-spacing-2">
           Dashboard
         </h5>
-        <div class="text-white-50 small">Administration</div>
+        <div class="-50 small">Administration</div>
       </div>
 
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'users'"
+          <a class="nav-link  d-flex align-items-center py-3 px-3" [class.active]="currentView === 'users'"
             (click)="setView('users')" role="button">
             <i class="bi bi-people me-3 fs-5"></i>
             <span>Utilisateurs</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'products'"
+          <a class="nav-link  d-flex align-items-center py-3 px-3" [class.active]="currentView === 'products'"
             (click)="setView('products')" role="button">
             <i class="bi bi-box-seam me-3 fs-5"></i>
             <span>Produits</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'orders'"
+          <a class="nav-link  d-flex align-items-center py-3 px-3" [class.active]="currentView === 'orders'"
             (click)="setView('orders')" role="button">
             <i class="bi bi-receipt me-3 fs-5"></i>
             <span>Commandes</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'stats'"
+          <a class="nav-link  d-flex align-items-center py-3 px-3" [class.active]="currentView === 'stats'"
             (click)="setView('stats')" role="button">
             <i class="bi bi-graph-up me-3 fs-5"></i>
             <span>Statistiques</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white d-flex align-items-center py-3 px-3" [class.active]="currentView === 'settings'"
+          <a class="nav-link  d-flex align-items-center py-3 px-3" [class.active]="currentView === 'settings'"
             (click)="setView('settings')" role="button">
             <i class="bi bi-gear me-3 fs-5"></i>
             <span>Paramètres</span>
@@ -48,7 +48,7 @@
       </ul>
 
       <div class="mt-auto px-3 py-4 border-top border-secondary">
-        <div class="d-flex align-items-center text-white-50 small">
+        <div class="d-flex align-items-center -50 small">
           <i class="bi bi-info-circle me-2"></i>
           <span>Version 1.0.0</span>
         </div>

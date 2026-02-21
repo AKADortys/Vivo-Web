@@ -80,9 +80,55 @@
   }
   <div class="row">
     <!-- CONTENU -->
-    <main class="col-md-9 col-lg-10 mx-auto py-4 min-vh-100">
+    <main class="col-md-12 col-lg-10 mx-auto py-4 min-vh-100">
       <router-outlet></router-outlet>
     </main>
+    <!-- FOOTER -->
+    <footer class="bg-dark pt-5 pb-3">
+      <div class="container pt-4">
+        <div class="row g-4 mb-5">
+          <div class="col-lg-4">
+            <h4 class="fw-bold mb-4">Au P'tit Vivo</h4>
+            <p class="text-white-50">Votre service traiteur pour des plats authentiques et savoureux.
+              Commandez
+              en ligne et savourez nos plats !</p>
+            <div class="d-flex gap-3 mt-4">
+              <a href="https://www.facebook.com/100063936575056/mentions/"
+                class="btn btn-outline-light rounded-circle p-2 d-flex align-items-center justify-content-center"
+                style="width: 40px; height: 40px;"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.instagram.com/au_ptit_vivo/"
+                class="btn btn-outline-light rounded-circle p-2 d-flex align-items-center justify-content-center"
+                style="width: 40px; height: 40px;"><i class="bi bi-instagram"></i></a>
+            </div>
+          </div>
+          <div class="col-lg-2 col-6">
+            <h5 class="fw-bold mb-4">Liens Rapides</h5>
+            <ul class="list-unstyled text-white-50">
+              <li class="mb-2"><a routerLink="/" class="text-decoration-none text-white-50 hover-white">Accueil</a></li>
+              <li class="mb-2"><a routerLink="/menu" class="text-decoration-none text-white-50 hover-white">Menu</a>
+              </li>
+              <li class="mb-2"><a routerLink="/about" class="text-decoration-none text-white-50 hover-white">À
+                  Propos</a></li>
+              <li class="mb-2"><a routerLink="/contact"
+                  class="text-decoration-none text-white-50 hover-white">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4">
+            <h5 class="fw-bold mb-4">Newsletter</h5>
+            <p class="text-white-50 small">Inscrivez-vous pour recevoir nos dernières offres.</p>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control bg-transparent border-secondary text-white"
+                placeholder="Votre email" aria-label="Votre email">
+              <button class="btn btn-primary" type="button">S'inscrire</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-top border-secondary pt-4 text-center text-white-50 small">
+          <p class="mb-0">&copy; 2026 Au P'tit Vivo. Tous droits réservés.</p>
+        </div>
+      </div>
+    </footer>
   </div>
 </div>
 

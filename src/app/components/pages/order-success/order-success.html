@@ -1,0 +1,35 @@
+<div class="container-fluid py-5" style="min-height: 70vh; display: flex; align-items: center; justify-content: center;">
+  <div class="row w-100 justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6 text-center">
+      <div class="card border-0 shadow-lg" style="border-radius: 1rem;">
+        <div class="card-body p-5">
+          <!-- Icon de succès (un cercle vert avec un check, très classique mais efficace) -->
+          <div class="mb-4">
+            <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
+          </div>
+
+          <h2 class="fw-bold mb-3 text-dark">Paiement Réussi !</h2>
+          
+          <p class="text-muted fs-5 mb-4">
+            Merci pour votre commande ! Votre paiement a été validé avec succès.
+            Vous allez recevoir un e-mail de confirmation avec les détails de votre achat d'ici quelques minutes.
+          </p>
+
+          <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-5">
+            <a routerLink="/" class="btn btn-primary px-4 py-2" style="border-radius: 50rem;">
+              <i class="bi bi-house-door-fill me-2"></i>Retour à l'accueil
+            </a>
+            <a routerLink="/menu" class="btn btn-outline-secondary px-4 py-2" style="border-radius: 50rem;">
+              <i class="bi bi-shop me-2"></i>Continuer mes achats
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Optionnel: petit mot de réassurance -->
+      <div class="mt-4 text-muted small">
+        <i class="bi bi-shield-lock-fill me-1 text-success"></i> Transaction sécurisée par Stripe
+      </div>
+    </div>
+  </div>
+</div>

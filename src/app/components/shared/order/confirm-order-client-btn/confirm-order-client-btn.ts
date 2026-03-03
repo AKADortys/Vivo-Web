@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { OrderService } from '../../../../services/order.service';
 import { AlertHandler } from '../../../../services/alert-handler';
 import { ConfigService, StoreConfig } from '../../../../services/config';
+import { CartService } from '../../../../services/cart';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
@@ -17,7 +18,8 @@ export class ConfirmOrderClientBtn {
 
   constructor(
     private readonly orderService: OrderService,
-    private alertService: AlertHandler
+    private alertService: AlertHandler,
+    private cartService: CartService
   ) { }
 
   isStoreOpen(config: StoreConfig): boolean {
@@ -32,12 +34,37 @@ export class ConfirmOrderClientBtn {
   }
 
   createOrder(): void {
-    this.orderService.createOrderFromCart().subscribe({
+    const cart = this.cartService.currentCart;
+
+    if (cart.getTotalItems() === 0) {
+      this.alertService.showError('Le panier est vide', 'Erreur !');
+      return;
+    }
+
+    if (cart.userId === 'anonymous') {
+      this.alertService.showError('Vous devez être connecté pour passer une commande', 'Erreur !');
+      return;
+    }
+
+    const cartItems = cart.productsDetails.map((item) => ({
+      productId: item._id,
+      name: item.label, // Sending name might be useful for Stripe Checkout session rendering
+      quantity: item.quantity,
+      price: item.price,
+    }));
+
+    this.orderService.createCheckoutSession(cartItems).subscribe({
       next: (response) => {
-        this.alertService.showSuccess(response.message, 'Succès !');
+        const url = response.url || response.data?.url;
+        if (url) {
+          window.location.href = url;
+        } else {
+          this.alertService.showError("Impossible de récupérer l'URL de paiement", 'Erreur !');
+        }
       },
       error: (error) => {
-        this.alertService.showError(error.message, 'Erreur !');
+        console.error('Erreur lors de la création de la session Checkout:', error);
+        this.alertService.showError(error.message || 'Une erreur est survenue lors du paiement', 'Erreur !');
       },
     });
   }

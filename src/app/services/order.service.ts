@@ -99,6 +99,12 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
+  createCheckoutSession(cartItems: any[]): Observable<{ url?: string; data?: { url: string } }> {
+    return this.http
+      .post<{ url?: string; data?: { url: string } }>(`${this.baseUrl}/checkout-session`, { cartItems })
+      .pipe(catchError(this.handleError));
+  }
+
   getUserHistory(
     page: number,
     limit: number,

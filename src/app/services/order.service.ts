@@ -99,9 +99,28 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
-  createCheckoutSession(cartItems: any[]): Observable<{ url?: string; data?: { url: string } }> {
+  createCheckoutSession(): Observable<{ url?: string; data?: { url: string } }> {
+    const cart = this.cartService.currentCart;
+    if (cart.getTotalItems() === 0) {
+      return throwError(() => new Error('le panier est vide'));
+    }
+
+    if (cart.userId === 'anonymous') {
+      return throwError(() => new Error('Vous devez être connecté pour passer une commande'));
+    }
+
+    const payload = {
+      products: cart.productsDetails.map((item) => ({
+        productId: item._id,
+        quantity: item.quantity,
+        price: item.price,
+        name: item.label, // Ajouté pour l'affichage Stripe
+      })),
+      deliveryAddress: cart.deliveryAddress ? cart.deliveryAddress : 'En Magasin',
+    };
+
     return this.http
-      .post<{ url?: string; data?: { url: string } }>(`${this.baseUrl}/checkout-session`, { cartItems })
+      .post<{ url?: string; data?: { url: string } }>(`${this.baseUrl}/checkout-session`, payload)
       .pipe(catchError(this.handleError));
   }
 

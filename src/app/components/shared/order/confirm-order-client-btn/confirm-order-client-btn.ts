@@ -53,7 +53,7 @@ export class ConfirmOrderClientBtn {
       price: item.price,
     }));
 
-    this.orderService.createCheckoutSession(cartItems).subscribe({
+    this.orderService.createCheckoutSession().subscribe({
       next: (response) => {
         const url = response.url || response.data?.url;
         if (url) {

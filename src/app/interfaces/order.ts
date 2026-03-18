@@ -1,9 +1,7 @@
 export interface OrderProduct {
   _id: string;
-  productId: {
-    _id: string;
-    label: string;
-  } | null;
+  productId: string;
+  productName: string;
   quantity: number;
   price: number;
 }
@@ -29,6 +27,7 @@ export interface NewOrder {
   userId: string;
   products: {
     productId: string;
+    productName: string;
     quantity: number;
     price: number;
   }[];
@@ -38,6 +37,7 @@ export interface NewOrder {
 export interface UpdateOrder {
   products?: {
     productId: string;
+    productName?: string;
     quantity: number;
     price: number;
   }[];

@@ -86,6 +86,7 @@ export class OrderService {
     const order: Partial<NewOrder> = {
       products: cart.productsDetails.map((item) => ({
         productId: item._id,
+        productName: item.label || 'Produit inconnu',
         quantity: item.quantity,
         price: item.price,
       })),
@@ -114,7 +115,7 @@ export class OrderService {
         productId: item._id,
         quantity: item.quantity,
         price: item.price,
-        name: item.label, // Ajouté pour l'affichage Stripe
+        productName: item.label || 'Produit inconnu',
       })),
       deliveryAddress: cart.deliveryAddress ? cart.deliveryAddress : 'En Magasin',
     };

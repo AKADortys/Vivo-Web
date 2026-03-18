@@ -48,7 +48,7 @@ export class ConfirmOrderClientBtn {
 
     const cartItems = cart.productsDetails.map((item) => ({
       productId: item._id,
-      name: item.label, // Sending name might be useful for Stripe Checkout session rendering
+      productName: item.label,
       quantity: item.quantity,
       price: item.price,
     }));

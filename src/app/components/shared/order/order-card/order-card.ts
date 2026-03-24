@@ -7,6 +7,8 @@ import { ClientCancelOrderBtn } from '../client-cancel-order-btn/client-cancel-o
 
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { AuthUserService } from '../../../../services/auth-user';
+import { RouterLink } from '@angular/router';
+
 @Component({
   selector: 'app-order-card',
   imports: [
@@ -16,6 +18,7 @@ import { AuthUserService } from '../../../../services/auth-user';
     CurrencyPipe,
     ClientCancelOrderBtn,
     NgClass,
+    RouterLink,
   ],
   templateUrl: './order-card.html',
   styleUrl: './order-card.scss',

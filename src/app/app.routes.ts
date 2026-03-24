@@ -11,6 +11,7 @@ import { AboutComponent } from './components/pages/about/about.component';
 import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
 import { OrderSuccess } from './components/pages/order-success/order-success';
+import { OrderDetailsComponent } from './components/pages/order-details/order-details';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -23,4 +24,5 @@ export const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'pass-recovery/:token', component: PassRecovery },
   { path: 'order-success', component: OrderSuccess },
+  { path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [authGuard, adminGuard] },
 ];

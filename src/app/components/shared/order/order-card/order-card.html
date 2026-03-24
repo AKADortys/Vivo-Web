@@ -62,14 +62,22 @@
 
     <hr />
 
-    <button class="btn btn-outline-primary w-100 d-flex justify-content-between align-items-center" type="button"
-      data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse-' + order()._id">
-      <span>
-        <i class="bi bi-box-seam"></i>
-        Produits
-      </span>
-      <i class="bi bi-chevron-down"></i>
-    </button>
+    <div class="d-flex gap-2">
+      <button class="btn btn-outline-primary w-100 d-flex justify-content-between align-items-center" type="button"
+        data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse-' + order()._id">
+        <span>
+          <i class="bi bi-box-seam"></i>
+          Produits
+        </span>
+        <i class="bi bi-chevron-down"></i>
+      </button>
+
+      @if (authUserService.isAdmin()) {
+        <button class="btn btn-primary" [routerLink]="['/order-details', order()._id]" title="Voir les détails complets">
+          <i class="bi bi-eye"></i>
+        </button>
+      }
+    </div>
 
     <div class="collapse mt-3" [id]="'collapse-' + order()._id">
       @if (order().products!.length > 0) {

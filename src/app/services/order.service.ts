@@ -46,6 +46,12 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
+  getOrderDetailById(id: string): Observable<ResponseOrder> {
+    return this.http
+      .get<ResponseOrder>(`${this.baseUrl}/detail/${id}`)
+      .pipe(catchError(this.handleError));
+  }
+
   getUserOrders(id: string): Observable<ResponseOrders> {
     return this.http
       .get<ResponseOrders>(`${this.baseUrl}/user/${id}`)

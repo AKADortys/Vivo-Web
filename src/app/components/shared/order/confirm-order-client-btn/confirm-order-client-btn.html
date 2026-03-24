@@ -6,7 +6,7 @@
 } @else {
 <div class="alert alert-warning mb-0 p-2 text-center small">
   <i class="bi bi-clock-history me-1"></i>
-  {{ config.reason || 'Le magasin est actuellement fermé.' }}
+  {{ getClosureReason(config) }}
 </div>
 }
 }

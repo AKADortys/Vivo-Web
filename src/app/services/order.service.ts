@@ -131,6 +131,12 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
+  verifyCheckoutSession(sessionId: string): Observable<{ success: boolean; message: string; data: { status: string; payment_status: string; orderId: string } }> {
+    return this.http
+      .get<{ success: boolean; message: string; data: { status: string; payment_status: string; orderId: string } }>(`${this.baseUrl}/checkout-session/${sessionId}/verify`)
+      .pipe(catchError(this.handleError));
+  }
+
   getUserHistory(
     page: number,
     limit: number,

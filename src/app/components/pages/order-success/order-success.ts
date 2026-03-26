@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { CartService } from '../../../services/cart';
 import { OrderService } from '../../../services/order.service';
@@ -14,6 +14,7 @@ export class OrderSuccess implements OnInit {
   private route = inject(ActivatedRoute);
   private orderService = inject(OrderService);
   private cartService = inject(CartService);
+  private cdr = inject(ChangeDetectorRef);
 
   loading = true;
   error = false;
@@ -30,7 +31,7 @@ export class OrderSuccess implements OnInit {
       this.verifySession(sessionId);
     } else {
       this.loading = false;
-      // Si pas de session id, on affiche quand même le succès par défaut (compatibilité)
+      this.cdr.detectChanges();
     }
   }
 
@@ -38,19 +39,21 @@ export class OrderSuccess implements OnInit {
     this.orderService.verifyCheckoutSession(sessionId).subscribe({
       next: (response) => {
         this.loading = false;
-        if (response.success) {
+        if (response.success && response.data) {
           this.orderStatus = response.data.status;
           if (this.orderStatus === 'Annulée') {
             this.error = true;
             this.errorMessage = "Une rupture de stock est survenue juste après votre paiement. Votre commande a dû être annulée, mais ne vous inquiétez pas : vous avez été automatiquement remboursé(e).";
           }
         }
+        this.cdr.detectChanges(); // Vital pour Zoneless !
       },
       error: (err) => {
         this.loading = false;
         this.error = true;
         this.errorMessage = "Impossible de vérifier le statut de votre paiement. Veuillez contacter notre support.";
         console.error('Erreur verification session:', err);
+        this.cdr.detectChanges(); // Vital pour Zoneless !
       }
     });
   }

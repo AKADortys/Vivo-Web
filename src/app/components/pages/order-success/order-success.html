@@ -4,33 +4,7 @@
     <div class="col-12 col-md-8 col-lg-6 text-center">
       <div class="card border-0 shadow-lg" style="border-radius: 1rem;">
         <div class="card-body p-5">
-
-          @if (loading) {
-          <div class="text-center py-4">
-            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
-              <span class="visually-hidden">Vérification...</span>
-            </div>
-            <p class="text-muted">Vérification de votre paiement en cours...</p>
-          </div>
-          } @else if (error) {
-          <!-- Cas d'Erreur / Annulation (Overselling) -->
-          <div class="mb-4">
-            <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size: 5rem;"></i>
-          </div>
-
-          <h2 class="fw-bold mb-3 text-dark">Oups ! Un petit problème...</h2>
-
-          <p class="text-muted fs-5 mb-4">
-            {{ errorMessage }}
-          </p>
-
-          <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-5">
-            <a routerLink="/" class="btn btn-primary px-4 py-2" style="border-radius: 50rem;">
-              <i class="bi bi-house-door-fill me-2"></i>Retour à l'accueil
-            </a>
-          </div>
-          } @else {
-          <!-- Cas de Succès Standard -->
+          <!-- Icon de succès (un cercle vert avec un check, très classique mais efficace) -->
           <div class="mb-4">
             <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem;"></i>
           </div>
@@ -50,8 +24,6 @@
               <i class="bi bi-shop me-2"></i>Continuer mes achats
             </a>
           </div>
-          }
-
         </div>
       </div>
 

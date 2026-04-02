@@ -9,6 +9,8 @@ import { Pagination } from '../../utils/pagination/pagination';
 import { OrderCard } from '../order-card/order-card';
 import { OrderTable } from '../order-table/order-table';
 import { QueryHandleOrder } from '../query-handle-order/query-handle-order';
+import { SocketService } from '../../../../services/socket.service';
+import { AlertHandler } from '../../../../services/alert-handler';
 
 @Component({
   selector: 'app-order-list',
@@ -17,7 +19,11 @@ import { QueryHandleOrder } from '../query-handle-order/query-handle-order';
   styleUrl: './order-list.scss',
 })
 export class OrderList implements OnInit {
-  constructor(private readonly orderService: OrderService) {}
+  constructor(
+    private readonly orderService: OrderService,
+    private readonly socketService: SocketService,
+    private readonly alertHandler: AlertHandler
+  ) {}
   orders = signal<Order[]>([]);
   isLoading = signal<boolean>(false);
   errorMessage = signal<string | null>(null);
@@ -29,6 +35,11 @@ export class OrderList implements OnInit {
 
   ngOnInit(): void {
     this.loadOrders();
+
+    this.socketService.listen('admin_new_order').subscribe((data: any) => {
+      this.alertHandler.showSuccess('Nouvelle vente ! Une nouvelle commande a été passée.', 'Succès');
+      this.loadOrders();
+    });
   }
   resetProps() {
     this.isLoading.set(true);

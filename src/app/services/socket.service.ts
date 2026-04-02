@@ -11,7 +11,7 @@ export class SocketService {
 
   constructor() {
     // Connexion au serveur Node.js
-    this.socket = io(environment.apiUrl.replace('/api/', ''), {
+    this.socket = io(environment.apiUrl, {
       withCredentials: true,
     });
   }

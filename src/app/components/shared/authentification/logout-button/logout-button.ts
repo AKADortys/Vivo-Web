@@ -3,6 +3,7 @@ import { AuthService } from '../../../../services/auth';
 import { AlertHandler } from '../../../../services/alert-handler';
 import { AuthUserService } from '../../../../services/auth-user';
 import { Router } from '@angular/router';
+import { SocketService } from '../../../../services/socket.service';
 
 @Component({
   selector: 'app-logout-button',
@@ -15,13 +16,15 @@ export class LogoutButton {
     private httpService: AuthService,
     private alertHandler: AlertHandler,
     private authUService: AuthUserService,
-    private router: Router
+    private router: Router,
+    private socketService: SocketService
   ) { }
 
   logout(): void {
     this.httpService.Logout().subscribe({
       next: () => {
         this.alertHandler.showSuccess('Déconnection réusie !', 'Succès !');
+        this.socketService.disconnect();
         this.authUService.logout();
         this.router.navigate(['/']);
       },

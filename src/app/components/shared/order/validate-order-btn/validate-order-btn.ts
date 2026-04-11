@@ -32,7 +32,7 @@ export class ValidateOrderBtn {
           return;
         }
         this.orderService
-          .updateOrder(this.orderId, { status: 'Accepté' })
+          .updateOrder(this.orderId, { status: 'En préparation' })
           .subscribe({
             next: (res) => {
               this.alertHandler.showSuccess(

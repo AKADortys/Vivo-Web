@@ -46,11 +46,11 @@ export class OrderDetailsComponent implements OnInit {
 
   getStatusClass(status: string): string {
     switch (status) {
-      case 'Confirmée': return 'text-bg-primary';
-      case 'Accepté': return 'text-bg-success';
+      case 'Payée': return 'text-bg-primary';
+      case 'En préparation': return 'text-bg-success';
       case 'Refusée': return 'text-bg-danger';
       case 'Annulée': return 'text-bg-secondary';
-      case 'Complétée': return 'text-bg-info';
+      case 'Terminée': return 'text-bg-info';
       default: return 'text-bg-light';
     }
   }

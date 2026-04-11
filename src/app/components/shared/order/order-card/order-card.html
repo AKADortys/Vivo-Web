@@ -101,13 +101,13 @@
         </li>
         }
       </ul>
-      @if (authUserService.isAdmin() && order().status === 'Confirmée') {
+      @if (authUserService.isAdmin() && order().status === 'Payée') {
       <div class="d-flex gap-2">
         <app-validate-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="false" />
         <app-refuse-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="false" />
       </div>
       }
-      @if (!authUserService.isAdmin() && order().status !== 'Accepté' && order().status !== 'Refusée' && order().status
+      @if (!authUserService.isAdmin() && order().status !== 'En préparation' && order().status !== 'Refusée' && order().status
       !== 'Annulée') {
       <div class="d-flex text-center mt-3">
         <app-client-cancel-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="false"

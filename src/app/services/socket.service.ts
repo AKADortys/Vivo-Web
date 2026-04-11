@@ -19,7 +19,7 @@ export class SocketService {
   // Permet à un composant d'écouter un événement spécifique
   listen(eventName: string): Observable<any> {
     return new Observable((subscriber) => {
-      this.socket.on(eventName, (data) => {
+      this.socket.on(eventName, (data: any) => {
         subscriber.next(data);
       });
     });

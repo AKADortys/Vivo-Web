@@ -24,12 +24,12 @@
 <td>
   {{ order().updatedAt | formatDate }}
 </td>
-@if (authUserService.isAdmin() && order().status === 'Confirmée') {
+@if (authUserService.isAdmin() && order().status === 'Payée') {
 <td>
   <app-validate-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="true" />
   <app-refuse-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="true" />
 </td>
-} @else if (order().status !== 'Accepté' && order().status !== 'Refusée' && order().status !== 'Annulée') {
+} @else if (order().status !== 'En préparation' && order().status !== 'Refusée' && order().status !== 'Annulée') {
 <td>
   <app-client-cancel-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="true" />
 </td>

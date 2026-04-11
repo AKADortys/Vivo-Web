@@ -1,0 +1,25 @@
+#map {
+  height: 300px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 15px;
+  z-index: 1; /* Pour éviter de chevaucher les modales parfois */
+}
+
+.delivery-options {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+
+  .form-check {
+    cursor: pointer;
+    padding: 10px 15px 10px 30px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    transition: all 0.2s;
+    
+    &:hover {
+      background-color: #f8f9fa;
+    }
+  }
+}

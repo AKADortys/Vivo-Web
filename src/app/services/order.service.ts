@@ -96,9 +96,7 @@ export class OrderService {
         quantity: item.quantity,
         price: item.price,
       })),
-      deliveryAddress: cart.deliveryAddress
-        ? cart.deliveryAddress
-        : 'En Magasin',
+      ...(cart.deliveryAddress ? { deliveryAddress: cart.deliveryAddress } : {})
     };
     this.cartService.clearCart();
     return this.http
@@ -123,7 +121,7 @@ export class OrderService {
         price: item.price,
         productName: item.label || 'Produit inconnu',
       })),
-      deliveryAddress: cart.deliveryAddress ? cart.deliveryAddress : 'En Magasin',
+      ...(cart.deliveryAddress ? { deliveryAddress: cart.deliveryAddress } : {})
     };
 
     return this.http

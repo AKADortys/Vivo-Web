@@ -88,7 +88,7 @@ export class CartService implements OnDestroy {
     this.updateCart(cart);
   }
 
-  setDeliveryAddress(address: string): void {
+  setDeliveryAddress(address: any): void {
     const cart = this.cartSubject.value;
     cart.setDeliveryAddress(address);
     this.updateCart(cart);

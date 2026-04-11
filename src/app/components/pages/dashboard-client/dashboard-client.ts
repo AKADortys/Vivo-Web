@@ -61,6 +61,9 @@ export class DashboardClient implements OnInit {
         }
 
         if (!this.storeConfig.plannedClosures) this.storeConfig.plannedClosures = [];
+        if (!this.storeConfig.deliveryArea) {
+          this.storeConfig.deliveryArea = { center: { lat: 50.7436, lng: 3.2241 }, radiusInMeters: 2000 };
+        }
       }
     });
   }
@@ -78,6 +81,9 @@ export class DashboardClient implements OnInit {
               // Ensure arrays exist after save
               if (!this.storeConfig.openingHours) this.storeConfig.openingHours = [];
               if (!this.storeConfig.plannedClosures) this.storeConfig.plannedClosures = [];
+              if (!this.storeConfig.deliveryArea) {
+                this.storeConfig.deliveryArea = { center: { lat: 50.7436, lng: 3.2241 }, radiusInMeters: 2000 };
+              }
             }
           },
           error: (err: any) => {

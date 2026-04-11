@@ -42,6 +42,10 @@ export interface StoreConfig {
     plannedClosures: PlannedClosure[];
     siteInfo?: SiteInfo;
     socials?: Socials;
+    deliveryArea?: {
+        center: { lat: number; lng: number };
+        radiusInMeters: number;
+    };
     // Deprecated
     closingSchedule?: {
         start: string | null;

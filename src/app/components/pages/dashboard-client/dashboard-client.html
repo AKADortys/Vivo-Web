@@ -165,6 +165,36 @@
           </div>
         </div>
 
+        <!-- Zone de Livraison (Delivery Area) -->
+        <div class="col-md-12 mb-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header py-3">
+              <h5 class="card-title mb-0"><i class="bi bi-geo-alt-fill text-primary me-2"></i>Zone de Livraison (Point central & Rayon)</h5>
+            </div>
+            <div class="card-body">
+              @if (storeConfig.deliveryArea) {
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label text-muted small mb-1">Latitude du Magasin</label>
+                  <input type="number" class="form-control" [(ngModel)]="storeConfig.deliveryArea.center.lat" step="0.0001">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label text-muted small mb-1">Longitude du Magasin</label>
+                  <input type="number" class="form-control" [(ngModel)]="storeConfig.deliveryArea.center.lng" step="0.0001">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label text-muted small mb-1">Rayon Autorisée (en mètres)</label>
+                  <input type="number" class="form-control" [(ngModel)]="storeConfig.deliveryArea.radiusInMeters" step="100" min="0">
+                </div>
+                <div class="col-12 mt-2">
+                  <small class="text-muted"><i class="bi bi-info-circle me-1"></i>Définissez les coordonnées exactes du centre logistique (ex: 50.7436, 3.2241 pour Mouscron) et le rayon maximum autorisé pour que le système accepte les commandes à domicile.</small>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+
         <!-- Opening Hours -->
         <div class="col-xl-6 mb-4">
           <div class="card border-0 shadow-sm h-100">

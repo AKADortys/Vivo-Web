@@ -4,7 +4,12 @@ export class Cart {
   productsDetails: any[];
   totalPrice: number;
   userId: string;
-  deliveryAddress?: string;
+  deliveryAddress?: {
+    street: string;
+    city: string;
+    zipCode: string;
+    coordinates: { lat: number; lng: number };
+  } | any;
 
   constructor(userId: string, productsDetails: [] = []) {
     this.userId = userId;
@@ -67,7 +72,7 @@ export class Cart {
     return this.productsDetails.reduce((sum, item) => sum + item.quantity, 0);
   }
 
-  setDeliveryAddress(address: string): void {
+  setDeliveryAddress(address: any): void {
     this.deliveryAddress = address;
   }
 

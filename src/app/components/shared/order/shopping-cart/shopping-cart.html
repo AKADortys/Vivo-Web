@@ -98,20 +98,57 @@
           </div>
           }
 
-          <!-- Adresse de livraison -->
+          <!-- Mode de réception -->
           <div class="card border-0 shadow">
             <div class="card-body">
-              <label class="form-label fw-semibold mb-2">
-                <i class="bi bi-geo-alt-fill text-primary me-2"></i>
-                Adresse de livraison
+              <label class="form-label fw-semibold mb-3">
+                <i class="bi bi-box-seam text-primary me-2"></i>
+                Mode de réception
               </label>
-              <input type="text" class="form-control" placeholder="Saisissez votre adresse (optionnel)"
-                [(ngModel)]="cart.deliveryAddress" />
-              <small class="text-muted d-block mt-2">
-                <i class="bi bi-info-circle me-1"></i>
-                Si aucune adresse n'est précisée, votre commande sera à
-                récupérer en magasin.
-              </small>
+
+              <div class="delivery-options d-flex flex-column flex-md-row gap-3 mb-3">
+                <label class="form-check d-flex align-items-center mb-0 w-100 p-3 rounded" [class.bg-light]="deliveryMode === 'pickup'">
+                  <input class="form-check-input mt-0 me-3" type="radio" name="deliveryMode" value="pickup" 
+                         [checked]="deliveryMode === 'pickup'" (change)="setDeliveryMode('pickup')">
+                  <div>
+                    <div class="fw-semibold text-dark">Retrait en magasin (Click & Collect)</div>
+                    <div class="small text-muted">Gratuit - Retirez votre commande sur place</div>
+                  </div>
+                </label>
+
+                <label class="form-check d-flex align-items-center mb-0 w-100 p-3 rounded" [class.bg-light]="deliveryMode === 'delivery'">
+                  <input class="form-check-input mt-0 me-3" type="radio" name="deliveryMode" value="delivery"
+                         [checked]="deliveryMode === 'delivery'" (change)="setDeliveryMode('delivery')">
+                  <div>
+                    <div class="fw-semibold text-dark">Livraison à domicile</div>
+                    <div class="small text-muted">Vérifiez si vous êtes dans notre zone</div>
+                  </div>
+                </label>
+              </div>
+
+              @if (deliveryMode === 'delivery') {
+              <div class="mt-4 fade-in">
+                <label class="form-label fw-semibold mb-2">Rechercher votre adresse</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Entrez votre rue, ville" 
+                         [(ngModel)]="addressQuery" (keyup.enter)="searchAddress()" />
+                  <button class="btn btn-primary" type="button" (click)="searchAddress()">
+                    <i class="bi bi-search me-2"></i> Vérifier
+                  </button>
+                </div>
+                
+                @if (foundAddress && isAddressValid) {
+                  <div class="alert alert-success d-flex align-items-center py-2 mb-3">
+                    <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+                    <div>
+                      <strong>Adresse validée :</strong> {{ foundAddress.street }}, {{ foundAddress.zipCode }} {{ foundAddress.city }}
+                    </div>
+                  </div>
+                }
+
+                <div id="map" class="shadow-sm border"></div>
+              </div>
+              }
             </div>
           </div>
         </div>
@@ -124,7 +161,9 @@
               <i class="bi bi-x-circle me-2"></i>
               Vider le panier
             </button>
-            <app-confirm-order-client-btn />
+            <div [class.opacity-50]="!isAddressValid" [style.pointer-events]="!isAddressValid ? 'none' : 'auto'" [title]="!isAddressValid ? 'Veuillez renseigner une adresse valide' : ''">
+              <app-confirm-order-client-btn />
+            </div>
           </div>
         </div>
       </div>

@@ -11,11 +11,23 @@ export interface OrderUserId {
   mail: string;
 }
 
+export interface Coordinates {
+  longitude: number;
+  latitude: number;
+}
+
+export interface DeliveryAddress {
+  street: string;
+  city: string;
+  zipCode: string;
+  coordinates: Coordinates | null;
+}
+
 export interface Order {
   readonly _id: string;
   userId: OrderUserId | null;
   products: OrderProduct[];
-  deliveryAddress: string;
+  deliveryAddress: DeliveryAddress;
   status: string;
   totalPrice: number;
   readonly createdAt: string;

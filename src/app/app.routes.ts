@@ -12,6 +12,7 @@ import { authGuard } from './guards/auth.guard';
 import { adminGuard } from './guards/admin.guard';
 import { OrderSuccess } from './components/pages/order-success/order-success';
 import { OrderDetailsComponent } from './components/pages/order-details/order-details';
+import { OrderForm } from './components/pages/order-form/order-form';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -23,6 +24,7 @@ export const routes: Routes = [
   { path: 'menu', component: ClientMenu },
   { path: 'about', component: AboutComponent },
   { path: 'pass-recovery/:token', component: PassRecovery },
+  { path: 'order', component: OrderForm },
   { path: 'order-success', component: OrderSuccess },
   { path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [authGuard, adminGuard] },
 ];

@@ -11,7 +11,7 @@
       <!-- Client Info Section -->
       <div class="col-12 col-md-6 border-end-md">
         <h6 class="text-muted text-uppercase small mb-3">Informations Client</h6>
-        
+
         <div class="mb-2">
           <i class="bi bi-person-circle me-2 text-primary"></i>
           <span class="fw-medium">Client :</span>
@@ -24,7 +24,8 @@
           <i class="bi bi-geo-alt me-2 text-primary"></i>
           <span class="fw-medium">Adresse :</span>
           <span class="ms-1 text-truncate d-inline-block mw-100 align-bottom">
-            {{ order().deliveryAddress || "En magasin" }}
+            {{order().deliveryAddress.street + ", " + order().deliveryAddress.city + ", " +
+            order().deliveryAddress.zipCode}}
           </span>
         </div>
       </div>
@@ -73,9 +74,9 @@
       </button>
 
       @if (authUserService.isAdmin()) {
-        <button class="btn btn-primary" [routerLink]="['/order-details', order()._id]" title="Voir les détails complets">
-          <i class="bi bi-eye"></i>
-        </button>
+      <button class="btn btn-primary" [routerLink]="['/order-details', order()._id]" title="Voir les détails complets">
+        <i class="bi bi-eye"></i>
+      </button>
       }
     </div>
 
@@ -107,7 +108,8 @@
         <app-refuse-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="false" />
       </div>
       }
-      @if (!authUserService.isAdmin() && order().status !== 'En préparation' && order().status !== 'Refusée' && order().status
+      @if (!authUserService.isAdmin() && order().status !== 'En préparation' && order().status !== 'Refusée' &&
+      order().status
       !== 'Annulée') {
       <div class="d-flex text-center mt-3">
         <app-client-cancel-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="false"

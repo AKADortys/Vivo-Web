@@ -7,131 +7,134 @@
   </div>
 
   @if (isLoading()) {
-    <div class="text-center py-5">
-      <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Chargement...</span>
-      </div>
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
     </div>
+  </div>
   } @else if (error()) {
-    <div class="alert alert-danger" role="alert">
-      <i class="bi bi-exclamation-triangle-fill me-2"></i>
-      {{ error() }}
-    </div>
+  <div class="alert alert-danger" role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    {{ error() }}
+  </div>
   } @else if (order()) {
-    <div class="row g-4">
-      <!-- Colonne principale : Informations Commande et Produits -->
-      <div class="col-lg-8">
-        <div class="card shadow-sm mb-4">
-          <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-            <h5 class="mb-0">
-              <i class="bi bi-receipt me-2"></i>
-              Commande #{{ order()._id }}
-            </h5>
-            <span class="badge rounded-pill fs-6" [ngClass]="getStatusClass(order().status)">
-              {{ order().status }}
-            </span>
-          </div>
-          
-          <div class="card-body">
-            <div class="row mb-4">
-              <div class="col-sm-6">
-                <p class="text-muted mb-1 text-uppercase small fw-bold">Date de création</p>
-                <p class="mb-0">{{ order().createdAt | formatDate }}</p>
-              </div>
-              <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
-                <p class="text-muted mb-1 text-uppercase small fw-bold">Dernière mise à jour</p>
-                <p class="mb-0">{{ order().updatedAt | formatDate }}</p>
-              </div>
-            </div>
-            
-            <h6 class="text-muted text-uppercase fw-bold mb-3 border-bottom pb-2">Produits achetés</h6>
-            
-            <div class="table-responsive">
-              <table class="table table-borderless align-middle">
-                <thead class="table-light">
-                  <tr>
-                    <th>Produit</th>
-                    <th class="text-center">Quantité</th>
-                    <th class="text-end">Prix unitaire</th>
-                    <th class="text-end">Total</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @for (p of order().products; track p.productId) {
-                    <tr>
-                      <td>
-                        <div class="fw-medium">{{ p.productName }}</div>
-                        <small class="text-muted text-truncate d-inline-block" style="max-width: 150px;">ID: {{ p.productId }}</small>
-                      </td>
-                      <td class="text-center">{{ p.quantity }}</td>
-                      <td class="text-end">{{ p.price | currency:'EUR' }}</td>
-                      <td class="text-end fw-bold">{{ (p.price * p.quantity) | currency:'EUR' }}</td>
-                    </tr>
-                  }
-                </tbody>
-                <tfoot class="border-top">
-                  <tr>
-                    <td colspan="3" class="text-end text-uppercase fw-bold pt-3">Montant Total :</td>
-                    <td class="text-end fs-5 text-success fw-bold pt-3">{{ order().totalPrice | currency:'EUR' }}</td>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-          </div>
+  <div class="row g-4">
+    <!-- Colonne principale : Informations Commande et Produits -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+          <h5 class="mb-0">
+            <i class="bi bi-receipt me-2"></i>
+            Commande #{{ order()._id }}
+          </h5>
+          <span class="badge rounded-pill fs-6" [ngClass]="getStatusClass(order().status)">
+            {{ order().status }}
+          </span>
         </div>
-      </div>
 
-      <!-- Colonne latérale : Informations Client -->
-      <div class="col-lg-4">
-        <div class="card shadow-sm sticky-top" style="top: 2rem; z-index: 10;">
-          <div class="card-header bg-white py-3">
-            <h5 class="mb-0">
-              <i class="bi bi-person-badge me-2"></i>
-              Informations Client
-            </h5>
-          </div>
-          <div class="card-body">
-            <div class="d-flex align-items-center mb-4">
-              <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 48px; height: 48px; font-size: 1.2rem;">
-                {{ order().user?.name?.[0] }}{{ order().user?.lastName?.[0] }}
-              </div>
-              <div>
-                <h6 class="mb-0 fw-bold">{{ order().user?.name }} {{ order().user?.lastName }}</h6>
-                <small class="text-muted">Client</small>
-              </div>
+        <div class="card-body">
+          <div class="row mb-4">
+            <div class="col-sm-6">
+              <p class="text-muted mb-1 text-uppercase small fw-bold">Date de création</p>
+              <p class="mb-0">{{ order().createdAt | formatDate }}</p>
             </div>
+            <div class="col-sm-6 text-sm-end mt-3 mt-sm-0">
+              <p class="text-muted mb-1 text-uppercase small fw-bold">Dernière mise à jour</p>
+              <p class="mb-0">{{ order().updatedAt | formatDate }}</p>
+            </div>
+          </div>
 
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item px-0 d-flex justify-content-between align-items-center text-break">
-                <span class="text-muted"><i class="bi bi-envelope me-2"></i>Email</span>
-                <span class="fw-medium text-end ms-2 m-w-60">
-                  <a href="mailto:{{ order().user?.mail }}" class="text-decoration-none">{{ order().user?.mail }}</a>
-                </span>
-              </li>
-              <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
-                <span class="text-muted"><i class="bi bi-telephone me-2"></i>Téléphone</span>
-                <span class="fw-medium">
-                  @if (order().user?.phone) {
-                    <a href="tel:{{ order().user?.phone }}" class="text-decoration-none">{{ order().user?.phone }}</a>
-                  } @else {
-                    <span class="text-muted fst-italic">Non renseigné</span>
-                  }
-                </span>
-              </li>
-              <li class="list-group-item px-0 flex-column align-items-start">
-                <div class="text-muted mb-2"><i class="bi bi-geo-alt me-2"></i>Adresse de livraison</div>
-                <div class="bg-light p-3 rounded">
-                  @if (order().deliveryAddress) {
-                    {{ order().deliveryAddress }}
-                  } @else {
-                    <span class="fst-italic text-muted">Retrait en magasin</span>
-                  }
-                </div>
-              </li>
-            </ul>
+          <h6 class="text-muted text-uppercase fw-bold mb-3 border-bottom pb-2">Produits achetés</h6>
+
+          <div class="table-responsive">
+            <table class="table table-borderless align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Produit</th>
+                  <th class="text-center">Quantité</th>
+                  <th class="text-end">Prix unitaire</th>
+                  <th class="text-end">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (p of order().products; track p.productId) {
+                <tr>
+                  <td>
+                    <div class="fw-medium">{{ p.productName }}</div>
+                    <small class="text-muted text-truncate d-inline-block" style="max-width: 150px;">ID: {{ p.productId
+                      }}</small>
+                  </td>
+                  <td class="text-center">{{ p.quantity }}</td>
+                  <td class="text-end">{{ p.price | currency:'EUR' }}</td>
+                  <td class="text-end fw-bold">{{ (p.price * p.quantity) | currency:'EUR' }}</td>
+                </tr>
+                }
+              </tbody>
+              <tfoot class="border-top">
+                <tr>
+                  <td colspan="3" class="text-end text-uppercase fw-bold pt-3">Montant Total :</td>
+                  <td class="text-end fs-5 text-success fw-bold pt-3">{{ order().totalPrice | currency:'EUR' }}</td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Colonne latérale : Informations Client -->
+    <div class="col-lg-4">
+      <div class="card shadow-sm sticky-top" style="top: 2rem; z-index: 10;">
+        <div class="card-header bg-white py-3">
+          <h5 class="mb-0">
+            <i class="bi bi-person-badge me-2"></i>
+            Informations Client
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="d-flex align-items-center mb-4">
+            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3"
+              style="width: 48px; height: 48px; font-size: 1.2rem;">
+              {{ order().user?.name?.[0] }}{{ order().user?.lastName?.[0] }}
+            </div>
+            <div>
+              <h6 class="mb-0 fw-bold">{{ order().user?.name }} {{ order().user?.lastName }}</h6>
+              <small class="text-muted">Client</small>
+            </div>
+          </div>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item px-0 d-flex justify-content-between align-items-center text-break">
+              <span class="text-muted"><i class="bi bi-envelope me-2"></i>Email</span>
+              <span class="fw-medium text-end ms-2 m-w-60">
+                <a href="mailto:{{ order().user?.mail }}" class="text-decoration-none">{{ order().user?.mail }}</a>
+              </span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+              <span class="text-muted"><i class="bi bi-telephone me-2"></i>Téléphone</span>
+              <span class="fw-medium">
+                @if (order().user?.phone) {
+                <a href="tel:{{ order().user?.phone }}" class="text-decoration-none">{{ order().user?.phone }}</a>
+                } @else {
+                <span class="text-muted fst-italic">Non renseigné</span>
+                }
+              </span>
+            </li>
+            <li class="list-group-item px-0 flex-column align-items-start">
+              <div class="text-muted mb-2"><i class="bi bi-geo-alt me-2"></i>Adresse de livraison</div>
+              <div class="bg-light p-3 rounded">
+                @if (order().deliveryAddress) {
+                {{ order().deliveryAddress.street + ", " + order().deliveryAddress.city + ", " +
+                order().deliveryAddress.zipCode }}
+                } @else {
+                <span class="fst-italic text-muted">Retrait en magasin</span>
+                }
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
   }
 </div>

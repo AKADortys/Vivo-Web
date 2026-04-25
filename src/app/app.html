@@ -29,7 +29,7 @@
           </a>
         </li>
         <li class="nav-item me-3">
-          <app-cart-badge class="" [navigate]="false" (badgeClick)="openCart()" />
+          <app-cart-badge />
         </li>
         @if (user) {
         @if (user.role === "admin") {

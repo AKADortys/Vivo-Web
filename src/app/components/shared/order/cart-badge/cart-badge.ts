@@ -17,14 +17,4 @@ export class CartBadge {
   constructor(private cartService: CartService) {
     this.cart$ = this.cartService.cart$;
   }
-
-  @Input() navigate = true;
-  @Output() badgeClick = new EventEmitter<void>();
-
-  onClick(event: Event) {
-    if (!this.navigate) {
-      event.preventDefault();
-      this.badgeClick.emit();
-    }
-  }
 }

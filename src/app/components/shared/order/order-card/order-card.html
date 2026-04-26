@@ -24,8 +24,7 @@
           <i class="bi bi-geo-alt me-2 text-primary"></i>
           <span class="fw-medium">Adresse :</span>
           <span class="ms-1 text-truncate d-inline-block mw-100 align-bottom">
-            {{order().deliveryAddress.street + ", " + order().deliveryAddress.city + ", " +
-            order().deliveryAddress.zipCode}}
+            {{getFullAddress()}}
           </span>
         </div>
       </div>
@@ -108,12 +107,14 @@
         <app-refuse-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="false" />
       </div>
       }
-      @if (!authUserService.isAdmin() && order().status !== 'En préparation' && order().status !== 'Refusée' &&
-      order().status
-      !== 'Annulée') {
-      <div class="d-flex text-center mt-3">
-        <app-client-cancel-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="false"
-          class="w-100" />
+      @if (!authUserService.isAdmin() && order().status !== 'En préparation' && order().status !== 'Refusée' && order().status !== 'Annulée') {
+      <div class="d-flex flex-column gap-2 mt-3">
+        @if (order().status === 'En attente') {
+          <button class="btn btn-warning w-100" (click)="onResumePayment()">
+            <i class="bi bi-credit-card me-2"></i>Reprendre le paiement
+          </button>
+        }
+        <app-client-cancel-order-btn (editOrder)="onRemove()" [orderId]="order()._id" [displayMode]="false" class="w-100" />
       </div>
       }
       } @else {

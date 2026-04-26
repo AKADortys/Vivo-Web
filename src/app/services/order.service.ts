@@ -129,6 +129,16 @@ export class OrderService {
       .pipe(catchError(this.handleError));
   }
 
+  resumeCheckoutSession(orderId: string): Observable<{ url?: string; data?: { url: string } }> {
+    return this.http
+      .post<{ url?: string; data?: { url: string } }>(`${this.baseUrl}/checkout-session/${orderId}/resume`, {})
+      .pipe(catchError((error) => {
+        // Log ou extraire le message pour l'utilisateur
+        const message = extractApiErrorMessage(error);
+        return throwError(() => new Error(message));
+      }));
+  }
+
   verifyCheckoutSession(sessionId: string): Observable<{ success: boolean; message: string; data: { status: string; payment_status: string; orderId: string } }> {
     return this.http
       .get<{ success: boolean; message: string; data: { status: string; payment_status: string; orderId: string } }>(`${this.baseUrl}/checkout-session/${sessionId}/verify`)

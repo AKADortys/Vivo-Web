@@ -1,15 +1,17 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthUserService } from './auth-user';
 import { Cart } from '../class/cart';
 import { Product } from '../interfaces/product';
+import { ProductService } from './product';
 
 @Injectable({ providedIn: 'root' })
 export class CartService implements OnDestroy {
   private cartSubject: BehaviorSubject<Cart>;
   cart$: Observable<Cart>;
   private destroy$ = new Subject<void>();
+  private productService = inject(ProductService);
 
   constructor(private authService: AuthUserService) {
     const user = this.authService.getUser();
@@ -19,6 +21,26 @@ export class CartService implements OnDestroy {
     this.cart$ = this.cartSubject.asObservable();
 
     this.initCart();
+
+    // Sync cart with real-time product updates
+    this.productService.productUpdated$.pipe(takeUntil(this.destroy$)).subscribe((updatedProduct: Product) => {
+      const currentCart = this.cartSubject.value;
+      const item = currentCart.productsDetails.find((i: any) => i._id === updatedProduct._id);
+      if (item) {
+        if (!updatedProduct.available || updatedProduct.stock <= 0) {
+          currentCart.removeItem(updatedProduct._id);
+        } else {
+          // Update properties from the new product
+          item.price = updatedProduct.price;
+          item.label = updatedProduct.label;
+          if (item.quantity > updatedProduct.stock) {
+            item.quantity = updatedProduct.stock;
+          }
+          currentCart.calculateTotal();
+        }
+        this.updateCart(currentCart);
+      }
+    });
   }
 
   private initCart(): void {

@@ -11,6 +11,7 @@ import { AuthUserService } from './services/auth-user';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { UserDropDownMenu } from './components/shared/user/user-drop-down-menu/user-drop-down-menu';
 import { CartBadge } from './components/shared/order/cart-badge/cart-badge';
+import { OrderBadge } from './components/shared/order/order-badge/order-badge';
 import { Modal } from './components/shared/utils/modal/modal';
 import { ShoppingCart } from './components/shared/order/shopping-cart/shopping-cart';
 import { ConfigService, StoreConfig } from './services/config';
@@ -26,6 +27,7 @@ import { SocketService } from './services/socket.service';
     RouterLinkActive,
     UserDropDownMenu,
     CartBadge,
+    OrderBadge,
     AsyncPipe,
     DatePipe,
     Modal,

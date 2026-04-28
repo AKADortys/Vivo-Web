@@ -47,6 +47,19 @@ export class ProductsList {
 
   ngOnInit() {
     this.loadProduct();
+
+    // Écouter les mises à jour en temps réel
+    this.productService.productUpdated$.subscribe((updatedProduct: Product) => {
+      this.products.update(prods => prods.map(p => p._id === updatedProduct._id ? updatedProduct : p));
+    });
+
+    this.productService.productDeleted$.subscribe((deletedProduct: Product) => {
+      this.products.update(prods => prods.filter(p => p._id !== deletedProduct._id));
+    });
+
+    this.productService.productCreated$.subscribe(() => {
+      this.loadProduct(); 
+    });
   }
   resetProps() {
     this.isLoading.set(true);

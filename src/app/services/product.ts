@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { extractApiErrorMessage } from '../utils/api-error-handler';
 import { HttpClient } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { SocketService } from './socket.service';
 import {
   NewProduct,
   ProductFilter,
   ResponseProduct,
   ResponseProducts,
   UpdateProduct,
+  Product
 } from '../interfaces/product';
 
 @Injectable({
@@ -17,8 +19,28 @@ import {
 })
 export class ProductService {
   private readonly baseUrl = `${environment.apiUrl}products`;
+  private socketService = inject(SocketService);
 
-  constructor(private http: HttpClient) { }
+  private productUpdatedSubject = new Subject<Product>();
+  public productUpdated$ = this.productUpdatedSubject.asObservable();
+
+  private productCreatedSubject = new Subject<Product>();
+  public productCreated$ = this.productCreatedSubject.asObservable();
+
+  private productDeletedSubject = new Subject<Product>();
+  public productDeleted$ = this.productDeletedSubject.asObservable();
+
+  constructor(private http: HttpClient) {
+    this.socketService.listen('product:updated').subscribe((product: Product) => {
+      this.productUpdatedSubject.next(product);
+    });
+    this.socketService.listen('product:created').subscribe((product: Product) => {
+      this.productCreatedSubject.next(product);
+    });
+    this.socketService.listen('product:deleted').subscribe((product: Product) => {
+      this.productDeletedSubject.next(product);
+    });
+  }
 
   getProducts(
     page = 1,

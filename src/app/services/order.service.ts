@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { extractApiErrorMessage } from '../utils/api-error-handler';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import {
   NewOrder,
@@ -13,15 +13,43 @@ import {
   UpdateOrder,
 } from '../interfaces/order';
 import { CartService } from './cart';
+import { SocketService } from './socket.service';
+import { AuthUserService } from './auth-user';
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
   private readonly baseUrl = `${environment.apiUrl}orders`;
+  private readonly socketService = inject(SocketService);
+  private readonly authService = inject(AuthUserService);
+
+  private newOrdersCountSubject = new BehaviorSubject<number>(0);
+  public newOrdersCount$ = this.newOrdersCountSubject.asObservable();
+
   constructor(
     private readonly http: HttpClient,
     private readonly cartService: CartService,
-  ) { }
+  ) { 
+    this.initAdminBadge();
+  }
+
+  private initAdminBadge() {
+    this.authService.user$.subscribe(user => {
+      if (user?.role === 'admin') {
+        this.fetchNewOrdersCount();
+        this.socketService.listen('admin_new_order').subscribe(() => {
+          this.fetchNewOrdersCount();
+        });
+      }
+    });
+  }
+
+  public fetchNewOrdersCount() {
+    this.getOrders(1, 1, { status: 'Payée' }).subscribe({
+      next: (res) => this.newOrdersCountSubject.next(res.data?.total || 0),
+      error: () => this.newOrdersCountSubject.next(0)
+    });
+  }
 
   private handleError(error: any) {
     const message = extractApiErrorMessage(error);
@@ -70,7 +98,10 @@ export class OrderService {
   ): Observable<ResponseOrder> {
     return this.http
       .put<ResponseOrder>(`${this.baseUrl}/${id}`, order)
-      .pipe(catchError(this.handleError));
+      .pipe(
+        tap(() => this.fetchNewOrdersCount()),
+        catchError(this.handleError)
+      );
   }
 
   deleteOrder(id: string): Observable<ResponseOrder> {

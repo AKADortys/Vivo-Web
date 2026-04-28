@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { SocketService } from './socket.service';
 
 export interface TimeRange {
     start: string;
@@ -60,6 +61,7 @@ export interface StoreConfig {
 export class ConfigService {
     private readonly baseUrl = `${environment.apiUrl}config`;
     private http = inject(HttpClient);
+    private socketService = inject(SocketService);
 
     // Initial default state with safe defaults
     private storeStatusSubject = new BehaviorSubject<StoreConfig>({
@@ -72,6 +74,11 @@ export class ConfigService {
 
     constructor() {
         this.refreshConfig();
+
+        // Écouter les mises à jour en temps réel via WebSocket
+        this.socketService.listen('config:updated').subscribe((newConfig: StoreConfig) => {
+            this.storeStatusSubject.next(newConfig);
+        });
     }
 
     refreshConfig(): void {

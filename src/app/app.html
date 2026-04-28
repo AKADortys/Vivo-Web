@@ -34,9 +34,7 @@
         @if (user) {
         @if (user.role === "admin") {
         <li class="nav-item me-3">
-          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
-            <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
-          </a>
+          <app-order-badge />
         </li>
         } @else if (user.role === "client") {
         <li class="nav-item">
@@ -109,6 +107,7 @@
               </li>
               <li class="mb-2"><a routerLink="/about" class="text-decoration-none text-white-50 hover-white">À
                   Propos</a></li>
+              <li class="mb-2"><a routerLink="/projet" class="text-decoration-none text-white-50 hover-white">Projet (Features)</a></li>
               <li class="mb-2"><a routerLink="/contact"
                   class="text-decoration-none text-white-50 hover-white">Contact</a></li>
             </ul>

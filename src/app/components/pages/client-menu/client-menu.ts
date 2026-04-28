@@ -41,6 +41,21 @@ export class ClientMenu {
 
     ngOnInit() {
         this.loadProducts();
+
+        // Écouter les mises à jour en temps réel
+        this.productService.productUpdated$.subscribe((updatedProduct: Product) => {
+            this.products.update(prods => prods.map(p => p._id === updatedProduct._id ? updatedProduct : p));
+        });
+
+        this.productService.productDeleted$.subscribe((deletedProduct: Product) => {
+            this.products.update(prods => prods.filter(p => p._id !== deletedProduct._id));
+        });
+
+        // Pour la création, on peut recharger la liste si le produit correspond au filtre
+        // Ou plus simplement recharger la page courante pour garder la pagination correcte
+        this.productService.productCreated$.subscribe(() => {
+            this.loadProducts(); 
+        });
     }
 
     loadProducts(

@@ -1,0 +1,74 @@
+<div class="fade-in bg-light min-vh-100">
+    <!-- HERO SECTION -->
+    <header class="hero-section position-relative d-flex align-items-center text-white py-5" style="background-color: var(--bs-primary); background-image: linear-gradient(135deg, var(--bs-primary) 0%, #1a1a2e 100%);">
+        <div class="container position-relative z-2 py-5 text-center">
+            <span class="d-inline-block py-1 px-3 rounded-pill bg-warning text-dark fw-bold text-uppercase mb-3 small letter-spacing-2 shadow-sm">
+                Vue d'ensemble du projet
+            </span>
+            <h1 class="display-4 fw-bold mb-4">
+                Fonctionnalités <span class="text-info">Techniques</span>
+            </h1>
+            <p class="lead mb-0 text-white-50 mx-auto" style="max-width: 700px;">
+                Découvrez l'ensemble des fonctionnalités et technologies implémentées dans les parties Front-End et Back-End de notre application. Cette liste est évolutive.
+            </p>
+        </div>
+    </header>
+
+    <!-- CONTENT SECTION -->
+    <section class="py-5">
+        <div class="container py-4">
+            
+            <!-- Filters -->
+            <div class="d-flex justify-content-center mb-5 flex-wrap gap-2">
+                @for (category of categories; track category) {
+                    <button 
+                        class="btn rounded-pill px-4" 
+                        [class.btn-primary]="activeFilter === category"
+                        [class.btn-outline-primary]="activeFilter !== category"
+                        (click)="filterCategory(category)">
+                        {{ category }}
+                    </button>
+                }
+            </div>
+
+            <!-- Features Grid -->
+            <div class="row g-4">
+                @for (feature of filteredFeatures; track feature.id) {
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm feature-card hover-lift transition-all">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div class="icon-circle bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                                        style="width: 60px; height: 60px;">
+                                        <i class="bi {{ feature.icon }} fs-3"></i>
+                                    </div>
+                                    <span class="badge rounded-pill px-3 py-2 small fw-semibold shadow-sm" [ngClass]="getStatusClass(feature.status)">
+                                        {{ feature.status }}
+                                    </span>
+                                </div>
+                                <span class="text-primary fw-bold text-uppercase small letter-spacing-1 mb-2 d-block">
+                                    {{ feature.category }}
+                                </span>
+                                <h4 class="fw-bold text-dark mb-3">{{ feature.title }}</h4>
+                                <p class="text-muted mb-0 lh-lg">
+                                    {{ feature.description }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+                
+                @if (filteredFeatures.length === 0) {
+                    <div class="col-12 text-center py-5">
+                        <div class="p-5 bg-white rounded-4 shadow-sm">
+                            <i class="bi bi-inbox fs-1 text-muted mb-3 d-block"></i>
+                            <h4 class="text-dark">Aucune fonctionnalité trouvée</h4>
+                            <p class="text-muted">Il n'y a pas encore de fonctionnalités dans cette catégorie.</p>
+                        </div>
+                    </div>
+                }
+            </div>
+            
+        </div>
+    </section>
+</div>

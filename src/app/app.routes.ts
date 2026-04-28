@@ -13,6 +13,7 @@ import { adminGuard } from './guards/admin.guard';
 import { OrderSuccess } from './components/pages/order-success/order-success';
 import { OrderDetailsComponent } from './components/pages/order-details/order-details';
 import { OrderForm } from './components/pages/order-form/order-form';
+import { ProjectFeaturesComponent } from './components/pages/project-features/project-features.component';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -27,4 +28,5 @@ export const routes: Routes = [
   { path: 'order', component: OrderForm },
   { path: 'order-success', component: OrderSuccess },
   { path: 'order-details/:id', component: OrderDetailsComponent, canActivate: [authGuard, adminGuard] },
+  { path: 'projet', component: ProjectFeaturesComponent, canActivate: [adminGuard] },
 ];

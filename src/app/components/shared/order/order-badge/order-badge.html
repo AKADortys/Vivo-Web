@@ -1,0 +1,10 @@
+<a routerLink="/dashboard" routerLinkActive="active" class="nav-link position-relative" style="cursor: pointer">
+  <i class="bi bi-speedometer2 me-2"></i>Tableau de bord
+  @if(newOrdersCount$ | async; as count) {
+    @if(count > 0) {
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        {{ count }}
+      </span>
+    }
+  }
+</a>

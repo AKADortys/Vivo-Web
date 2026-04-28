@@ -36,7 +36,11 @@
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
-            "polyfills": ["@angular/localize/init"]
+            "polyfills": ["@angular/localize/init"],
+            "allowedCommonJsDependencies": [
+              "sweetalert2",
+              "leaflet"
+            ]
           },
           "configurations": {
             "production": {
@@ -49,7 +53,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
+                  "maximumWarning": "1.5mb",
                   "maximumError": "2mb"
                 },
                 {

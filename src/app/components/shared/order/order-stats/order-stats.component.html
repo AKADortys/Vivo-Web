@@ -1,71 +1,140 @@
-<div class="container mt-4">
-  <div class="row mb-4 align-items-end">
-    <div class="col-md-3">
-      <label for="startDate" class="form-label">Date de début</label>
-      <input type="date" id="startDate" class="form-control" [ngModel]="startDate()"
-        (ngModelChange)="startDate.set($event)">
-    </div>
-    <div class="col-md-3">
-      <label for="endDate" class="form-label">Date de fin</label>
-      <input type="date" id="endDate" class="form-control" [ngModel]="endDate()" (ngModelChange)="endDate.set($event)">
-    </div>
-    <div class="col-md-4 d-flex gap-2">
-      <button class="btn btn-primary" (click)="filterByDate()" [disabled]="!startDate() || !endDate()">
-        Filtrer
-      </button>
-      <button class="btn btn-secondary" (click)="resetFilter()" [disabled]="!startDate() && !endDate()">
-        Réinitialiser
-      </button>
-    </div>
+<!-- ─── FILTRES DATE ─────────────────────────────────────────── -->
+<div class="stats-filter-bar">
+  <div class="filter-group">
+    <label class="filter-label" for="startDate">
+      <i class="bi bi-calendar-event me-1"></i> Début
+    </label>
+    <input
+      type="date" id="startDate"
+      class="filter-input"
+      [ngModel]="startDate()"
+      (ngModelChange)="startDate.set($event)"
+    />
+  </div>
+  <div class="filter-group">
+    <label class="filter-label" for="endDate">
+      <i class="bi bi-calendar-check me-1"></i> Fin
+    </label>
+    <input
+      type="date" id="endDate"
+      class="filter-input"
+      [ngModel]="endDate()"
+      (ngModelChange)="endDate.set($event)"
+    />
+  </div>
+  <div class="filter-actions">
+    <button
+      class="btn-filter btn-filter--primary"
+      (click)="filterByDate()"
+      [disabled]="!startDate() || !endDate()"
+    >
+      <i class="bi bi-funnel-fill me-1"></i> Filtrer
+    </button>
+    <button
+      class="btn-filter btn-filter--secondary"
+      (click)="resetFilter()"
+      [disabled]="!startDate() && !endDate()"
+    >
+      <i class="bi bi-arrow-counterclockwise me-1"></i> Réinitialiser
+    </button>
   </div>
 </div>
 
-<div class="container" *ngIf="stats() as data">
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <div class="card text-white bg-primary h-100">
-        <div class="card-header">Total des Commandes</div>
-        <div class="card-body">
-          <h2 class="card-title display-4">{{ data.totalOrders }}</h2>
-        </div>
+<!-- ─── SKELETON LOADER ──────────────────────────────────────── -->
+@if (isLoading()) {
+  <div class="skeleton-grid">
+    <div class="skeleton-card" *ngFor="let i of [1,2,3]"></div>
+  </div>
+}
+
+<!-- ─── ERREUR ───────────────────────────────────────────────── -->
+@if (!isLoading() && errorMessage()) {
+  <div class="stats-error">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    {{ errorMessage() }}
+  </div>
+}
+
+<!-- ─── CONTENU PRINCIPAL ────────────────────────────────────── -->
+@if (!isLoading() && stats(); as data) {
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card kpi-card--blue">
+      <div class="kpi-icon"><i class="bi bi-receipt-cutoff"></i></div>
+      <div class="kpi-body">
+        <div class="kpi-label">Total Commandes</div>
+        <div class="kpi-value">{{ data.totalOrders }}</div>
       </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <div class="card text-white bg-success h-100">
-        <div class="card-header">Revenu Total</div>
-        <div class="card-body">
-          <h2 class="card-title display-4">{{ data.totalRevenue | currency:'EUR' }}</h2>
-        </div>
+
+    <div class="kpi-card kpi-card--green">
+      <div class="kpi-icon"><i class="bi bi-currency-euro"></i></div>
+      <div class="kpi-body">
+        <div class="kpi-label">Chiffre d'affaires</div>
+        <div class="kpi-value">{{ data.totalRevenue | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
       </div>
     </div>
-    <div class="col-md-4 mb-3">
-      <div class="card text-white bg-info h-100">
-        <div class="card-header">Panier Moyen</div>
-        <div class="card-body">
-          <h2 class="card-title display-4">{{ data.averageBasket | currency:'EUR' }}</h2>
-        </div>
+
+    <div class="kpi-card kpi-card--purple">
+      <div class="kpi-icon"><i class="bi bi-basket3-fill"></i></div>
+      <div class="kpi-body">
+        <div class="kpi-label">Panier Moyen</div>
+        <div class="kpi-value">{{ data.averageBasket | currency:'EUR':'symbol':'1.2-2':'fr' }}</div>
       </div>
     </div>
   </div>
 
-  <div class="row mt-4">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          Commandes par Statut
+  <!-- BOTTOM ROW: bar chart + status list -->
+  <div class="stats-bottom-row">
+
+    <!-- BAR CHART -->
+    <div class="chart-card">
+      <div class="chart-card__header">
+        <i class="bi bi-bar-chart-fill me-2"></i>
+        Revenus par Jour
+      </div>
+      @if (data.revenueByDate.length) {
+        <div class="bar-chart">
+          @for (day of data.revenueByDate; track day._id) {
+            <div class="bar-wrap" [title]="dayLabel(day._id) + ' — ' + (day.total | currency:'EUR':'symbol':'1.2-2':'fr')">
+              <div class="bar" [style.height.%]="barHeight(day)">
+                <span class="bar-tooltip">{{ day.total | currency:'EUR':'symbol':'1.0-0':'fr' }}</span>
+              </div>
+              <div class="bar-label">{{ dayLabel(day._id) }}</div>
+            </div>
+          }
         </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item d-flex justify-content-between align-items-center"
-            *ngFor="let status of data.ordersByStatus">
-            {{ status._id }}
-            <span class="badge bg-secondary rounded-pill">{{ status.count }}</span>
+      } @else {
+        <div class="chart-empty">
+          <i class="bi bi-graph-down-arrow fs-2 text-muted"></i>
+          <p class="text-muted mt-2 mb-0">Aucune donnée pour cette période</p>
+        </div>
+      }
+    </div>
+
+    <!-- STATUS BREAKDOWN -->
+    <div class="status-card">
+      <div class="chart-card__header">
+        <i class="bi bi-pie-chart-fill me-2"></i>
+        Répartition par Statut
+      </div>
+      <ul class="status-list">
+        @for (s of data.ordersByStatus; track s._id) {
+          <li class="status-item">
+            <span class="status-badge" [ngClass]="statusClass(s._id)">{{ s._id }}</span>
+            <div class="status-bar-wrap">
+              <div
+                class="status-bar"
+                [style.width.%]="data.totalOrders > 0 ? (s.count / data.totalOrders) * 100 : 0"
+              ></div>
+            </div>
+            <span class="status-count">{{ s.count }}</span>
           </li>
-        </ul>
-      </div>
+        }
+      </ul>
     </div>
-  </div>
-</div>
 
-<div *ngIf="errorMessage()" class="alert alert-danger mt-3">
-  {{ errorMessage() }}
-</div>
+  </div>
+
+}

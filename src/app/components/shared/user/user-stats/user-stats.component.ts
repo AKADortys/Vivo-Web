@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe, DecimalPipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { UserService } from '../../../../services/user';
@@ -8,7 +8,7 @@ import { UserStats } from '../../../../interfaces/user';
 @Component({
     selector: 'app-user-stats',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, CurrencyPipe, DecimalPipe],
     templateUrl: './user-stats.component.html',
     styleUrls: ['./user-stats.component.scss'],
 })
@@ -24,7 +24,7 @@ export class UserStatsComponent implements OnInit {
             map(response => response.data),
             catchError(err => {
                 console.error('Error fetching user stats:', err);
-                this.error = 'Failed to load user statistics.';
+                this.error = 'Impossible de charger les statistiques utilisateurs.';
                 return of(undefined);
             })
         );

@@ -1,50 +1,100 @@
-<ng-container *ngIf="stats$ | async as stats; else loadingOrError">
-    <div class="user-stats-container">
-        <div class="stats-grid">
-            <!-- Active User Rate -->
-            <div class="stat-card">
-                <h3>Active User Rate</h3>
-                <div class="stat-value">{{ stats.activeUserRate.activeRate * 100 | number:'1.0-2' }}%</div>
-                <div class="stat-detail">
-                    {{ stats.activeUserRate.activeUsers }} active / {{ stats.activeUserRate.totalUsers }} total
-                </div>
-            </div>
+@if (stats$ | async; as stats) {
+  <div class="us-wrapper">
 
-            <!-- New Users -->
-            <div class="stat-card">
-                <h3>New Users</h3>
-                <div class="stat-value">{{ stats.newUsers }}</div>
-                <div class="stat-detail">Recently joined</div>
-            </div>
+    <!-- ── KPI ROW ─────────────────────────────────────────────────── -->
+    <div class="us-kpi-row">
+
+      <!-- Taux d'utilisateurs actifs -->
+      <div class="us-kpi-card us-kpi-card--teal">
+        <div class="us-kpi-icon"><i class="bi bi-person-check-fill"></i></div>
+        <div class="us-kpi-body">
+          <div class="us-kpi-label">Taux d'Activité</div>
+          <div class="us-kpi-value">
+            {{ stats.activeUserRate.activeRate * 100 | number:'1.0-1' }}%
+          </div>
+          <div class="us-kpi-sub">
+            {{ stats.activeUserRate.activeUsers }} actifs /
+            {{ stats.activeUserRate.totalUsers }} inscrits
+          </div>
         </div>
 
-        <div class="top-users-grid">
-            <!-- Top Spenders -->
-            <div class="list-card">
-                <h3>Top Spenders</h3>
-                <ul>
-                    <li *ngFor="let user of stats.usersByMoneySpent">
-                        <span class="user-name">{{ user.name }} {{ user.lastName }}</span>
-                        <span class="user-value">{{ user.totalSpent | currency:'EUR' }}</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Top Orders -->
-            <div class="list-card">
-                <h3>Most Frequent Buyers</h3>
-                <ul>
-                    <li *ngFor="let user of stats.usersByOrderCount">
-                        <span class="user-name">{{ user.name }} {{ user.lastName }}</span>
-                        <span class="user-value">{{ user.ordersCount }} orders</span>
-                    </li>
-                </ul>
-            </div>
+        <!-- Donut CSS -->
+        <div class="us-donut" role="img" [attr.aria-label]="(stats.activeUserRate.activeRate * 100 | number:'1.0-1') + '% actifs'">
+          <svg viewBox="0 0 36 36" class="us-donut-svg">
+            <circle cx="18" cy="18" r="15.9155" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="3.5"/>
+            <circle cx="18" cy="18" r="15.9155" fill="none"
+              stroke="#2dd4bf"
+              stroke-width="3.5"
+              [attr.stroke-dasharray]="(stats.activeUserRate.activeRate * 100) + ', 100'"
+              stroke-linecap="round"
+              transform="rotate(-90 18 18)"
+            />
+          </svg>
         </div>
+      </div>
+
+      <!-- Nouveaux utilisateurs -->
+      <div class="us-kpi-card us-kpi-card--orange">
+        <div class="us-kpi-icon"><i class="bi bi-person-plus-fill"></i></div>
+        <div class="us-kpi-body">
+          <div class="us-kpi-label">Nouveaux Inscrits</div>
+          <div class="us-kpi-value">{{ stats.newUsers }}</div>
+          <div class="us-kpi-sub">ces 30 derniers jours</div>
+        </div>
+      </div>
+
     </div>
-</ng-container>
 
-<ng-template #loadingOrError>
-    <div *ngIf="!error" class="loading">Loading stats...</div>
-    <div *ngIf="error" class="error">{{ error }}</div>
-</ng-template>
+    <!-- ── LEADERBOARDS ──────────────────────────────────────────────── -->
+    <div class="us-boards-row">
+
+      <!-- Top Dépensiers -->
+      <div class="us-board">
+        <div class="us-board__header">
+          <i class="bi bi-trophy-fill me-2 text-warning"></i>
+          Top Dépensiers
+        </div>
+        <ol class="us-board__list">
+          @for (user of stats.usersByMoneySpent; track user._id; let i = $index) {
+            <li class="us-board__item">
+              <span class="us-rank" [ngClass]="'us-rank--' + (i + 1)">{{ i + 1 }}</span>
+              <span class="us-avatar">{{ user.name[0] }}{{ user.lastName[0] }}</span>
+              <span class="us-name">{{ user.name }} {{ user.lastName }}</span>
+              <span class="us-value us-value--green">{{ user.totalSpent | currency:'EUR':'symbol':'1.2-2':'fr' }}</span>
+            </li>
+          }
+        </ol>
+      </div>
+
+      <!-- Top Commandeurs -->
+      <div class="us-board">
+        <div class="us-board__header">
+          <i class="bi bi-receipt-cutoff me-2 text-info"></i>
+          Meilleurs Clients
+        </div>
+        <ol class="us-board__list">
+          @for (user of stats.usersByOrderCount; track user._id; let i = $index) {
+            <li class="us-board__item">
+              <span class="us-rank" [ngClass]="'us-rank--' + (i + 1)">{{ i + 1 }}</span>
+              <span class="us-avatar">{{ user.name[0] }}{{ user.lastName[0] }}</span>
+              <span class="us-name">{{ user.name }} {{ user.lastName }}</span>
+              <span class="us-value us-value--blue">{{ user.ordersCount }} commandes</span>
+            </li>
+          }
+        </ol>
+      </div>
+
+    </div>
+  </div>
+
+} @else {
+  @if (error) {
+    <div class="us-error">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}
+    </div>
+  } @else {
+    <div class="us-skeleton-row">
+      <div class="us-skeleton-card" *ngFor="let i of [1,2]"></div>
+    </div>
+  }
+}

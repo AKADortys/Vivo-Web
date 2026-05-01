@@ -123,15 +123,19 @@
     } @case ('stats') {
     <div class="fade-in">
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h3 mb-0 text-gray-800">Statistiques des Commandes</h2>
+        <h2 class="h3 mb-0 text-gray-800">Tableau de Bord</h2>
       </div>
-      <div class="card border-0 shadow-sm">
-        <div class="card-body p-0">
-          <app-order-stats />
-        </div>
-        <div class="mb-4">
-          <app-user-stats></app-user-stats>
-        </div>
+      <div class="mb-3">
+        <app-order-stats />
+      </div>
+      <div class="d-flex align-items-center my-4">
+        <h5 class="text-muted text-uppercase fw-bold mb-0" style="font-size:0.78rem;letter-spacing:0.08em;">
+          <i class="bi bi-people-fill me-2"></i>Statistiques Utilisateurs
+        </h5>
+        <hr class="ms-3 flex-grow-1 opacity-25">
+      </div>
+      <div class="mb-4">
+        <app-user-stats></app-user-stats>
       </div>
     </div>
     } @case ('settings') {

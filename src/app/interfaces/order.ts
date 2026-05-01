@@ -90,11 +90,17 @@ export interface OrderStatusStat {
   count: number;
 }
 
+export interface RevenueByDate {
+  _id: string;   // format 'YYYY-MM-DD'
+  total: number;
+}
+
 export interface OrderStatsData {
   ordersByStatus: OrderStatusStat[];
   totalOrders: number;
   totalRevenue: number;
   averageBasket: number;
+  revenueByDate: RevenueByDate[];
 }
 
 export interface OrderStatsResponse {

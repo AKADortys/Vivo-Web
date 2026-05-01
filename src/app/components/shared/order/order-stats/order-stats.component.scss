@@ -1,3 +1,331 @@
-.card-title {
-    font-weight: bold;
+// ─── CSS VARIABLES ───────────────────────────────────────────────────────────
+:host {
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --blue:   #3b82f6;
+  --green:  #10b981;
+  --purple: #8b5cf6;
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+  display: block;
+  padding: 1.5rem;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+// ─── FILTER BAR ──────────────────────────────────────────────────────────────
+.stats-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(12px);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.filter-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.filter-input {
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.08);
+  color: inherit;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus { border-color: var(--blue); }
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+.btn-filter {
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &:not(:disabled):hover { transform: translateY(-2px); }
+
+  &--primary {
+    background: var(--blue);
+    color: #fff;
+  }
+  &--secondary {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-muted);
+    border: 1px solid var(--glass-border);
+  }
+}
+
+// ─── SKELETON LOADER ─────────────────────────────────────────────────────────
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.skeleton-card {
+  height: 110px;
+  border-radius: var(--radius);
+  background: linear-gradient(90deg, rgba(255,255,255,0.05) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+// ─── ERROR ───────────────────────────────────────────────────────────────────
+.stats-error {
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-sm);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+// ─── KPI CARDS ───────────────────────────────────────────────────────────────
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  &--blue  { border-left: 4px solid var(--blue);   .kpi-icon { color: var(--blue);   background: rgba(59,130,246,0.15); } }
+  &--green { border-left: 4px solid var(--green);  .kpi-icon { color: var(--green);  background: rgba(16,185,129,0.15); } }
+  &--purple{ border-left: 4px solid var(--purple); .kpi-icon { color: var(--purple); background: rgba(139,92,246,0.15); } }
+}
+
+.kpi-icon {
+  font-size: 1.5rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kpi-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.kpi-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+// ─── BOTTOM ROW ──────────────────────────────────────────────────────────────
+.stats-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 1rem;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── SHARED CARD HEADER ──────────────────────────────────────────────────────
+.chart-card,
+.status-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--glass-shadow);
+  padding: 1.25rem 1.5rem;
+}
+
+.chart-card__header {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+}
+
+// ─── BAR CHART ───────────────────────────────────────────────────────────────
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 180px;
+  overflow-x: auto;
+  padding-bottom: 2rem;
+  position: relative;
+}
+
+.bar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  min-width: 28px;
+  height: 100%;
+  position: relative;
+
+  &:hover .bar { filter: brightness(1.3); }
+  &:hover .bar-tooltip { opacity: 1; transform: translateY(0); }
+}
+
+.bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--blue) 0%, #1d4ed8 100%);
+  border-radius: 6px 6px 0 0;
+  min-height: 4px;
+  transition: height 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s;
+  position: relative;
+}
+
+.bar-tooltip {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #1e293b;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 3px 7px;
+  border-radius: 6px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.bar-label {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  white-space: nowrap;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  height: 2rem;
+  line-height: 1;
+}
+
+.chart-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+}
+
+// ─── STATUS LIST ─────────────────────────────────────────────────────────────
+.status-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.status-item {
+  display: grid;
+  grid-template-columns: 120px 1fr 32px;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.status-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  text-align: center;
+
+  &.badge-paid        { background: rgba(16,185,129,0.2); color: #34d399; }
+  &.badge-pending     { background: rgba(251,191,36,0.2); color: #fbbf24; }
+  &.badge-preparing   { background: rgba(59,130,246,0.2); color: #60a5fa; }
+  &.badge-done        { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+  &.badge-refused     { background: rgba(239,68,68,0.2);  color: #f87171; }
+  &.badge-cancelled   { background: rgba(148,163,184,0.2);color: #94a3b8; }
+  &.badge-default     { background: rgba(255,255,255,0.1);color: #e2e8f0; }
+}
+
+.status-bar-wrap {
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.status-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.status-count {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: right;
 }

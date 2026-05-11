@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://tfm-sgbd-ancelt.onrender.com/',
+  apiUrl: '/api/',
   debugMode: false,
 };
